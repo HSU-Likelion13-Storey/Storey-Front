@@ -1,12 +1,35 @@
-# React + Vite
+# [주제 미정] - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> 한성대학교 멋쟁이사자처럼 13기 중앙톤 프론트엔드  
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📌 프로젝트 소개
 
-## Expanding the ESLint configuration
+(미정)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠 기술 스택
+
+- **Language**: Javascript
+- **Framework**: React + Vite
+- **Styling**: SCSS
+
+---
+## ✏️ 커밋 메시지 규칙
+
+| 깃모지 | 커밋 유형 | 설명 |
+|-------|-----------|------|
+|✨| `feat` | 새로운 기능 추가 또는 기존 기능 개선 |
+|🐛| `fix` | 버그 수정 |
+|♻️| `refactor` | 코드 리팩토링 (기능 변화 없이 구조 개선) |
+|📝| `doc` | 문서 작업 (README 등) |
+|✅| `test` | 테스트 코드 추가 또는 수정 |
+|⚡️| `perform` | 성능 개선 |
+|🔥| `clean` | 불필요한 코드 제거, 정리 |
+|💄| `design` | UI/UX 스타일 작업 또는 개선 |
+|🎨| `style` | 코드 스타일 변경 (세미콜론, 들여쓰기 등) – 기능 변화 없음 |
+|💡| `comment` | 주석 수정, 추가 |
+|🔀| `merge` | 브랜치 병합 |
+|🚀| `deploy` | 배포 작업 |
