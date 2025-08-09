@@ -18,6 +18,7 @@ const LoginScreen = () => {
         <LoginForm role={role} />
 
         <div className="login-links">
+          {/* TODO: 회원가입 페이지 라우팅 연결 */}
           <a href="#" className="link">손님 회원 가입</a>
           <span className="divider" aria-hidden>│</span>
           <a href="#" className="link">스토어 사장님 가입</a>

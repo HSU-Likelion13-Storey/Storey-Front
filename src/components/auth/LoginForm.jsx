@@ -11,6 +11,8 @@ const LoginForm = ({ role }) => {
 
   const submit = (e) => {
     e.preventDefault();
+    // TODO: 유효성 검사 로직 추가
+    // TODO: API 연동 및 성공/실패 처리
     console.log(`로그인 시도 (${role})`, values);
   };
 
