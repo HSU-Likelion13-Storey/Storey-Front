@@ -23,7 +23,7 @@ const LoginForm = ({ role }) => {
           placeholder="아이디 입력"
           value={values.id}
           onChange={handleChange}
-          required
+          required // 입력x 임시 처리
         />
       </div>
 
@@ -35,7 +35,7 @@ const LoginForm = ({ role }) => {
           placeholder="비밀번호 입력 (영문, 숫자 포함 8~20자 이내)"
           value={values.password}
           onChange={handleChange}
-          required
+          required // 입력x 임시 처리
         />
         <button
           type="button"
