@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
+import B2CSignupPage from "./pages/B2CSignupPage";
+import B2BSignupPage from "./pages/B2BSignupPage";
 
 function App() {
   return (
@@ -9,7 +10,8 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/signup/b2c" element={<B2CSignupPage />} />
+          <Route path="/signup/b2b" element={<B2BSignupPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
