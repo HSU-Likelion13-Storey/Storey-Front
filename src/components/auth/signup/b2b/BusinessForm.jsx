@@ -1,5 +1,5 @@
 import React from 'react';
-import './BusinessForm.scss';
+import '../common/SignupCommonForm.scss';
 import SignupHeader from '../common/SignupHeader.jsx';
 import BrandHeading from '../common/BrandHeading.jsx';
 
