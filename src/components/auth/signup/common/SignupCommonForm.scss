@@ -1,0 +1,62 @@
+@use '../../../../styles/function' as *;
+@use '../../../../styles/variables' as *;
+
+.signup-form {
+  max-width: rem(420px);
+  margin: 0;
+  padding: 0 rem(30px) rem(28px);
+}
+
+.form-field {
+  margin-bottom: rem(14px);
+  position: relative;
+}
+
+.form-label {
+  display: block;
+  font-size: rem(14px);
+  font-weight: 500;
+  color: $color-font-main;
+  margin: rem(30px) 0 rem(6px);
+}
+
+.input {
+  width: 100%;
+  padding: rem(18px) rem(20px) rem(18px) rem(17px);
+  border: rem(1px) solid #DDDDDD;
+  border-radius: rem(12px);
+  font-size: rem(14px);
+  font-weight: 500;
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+  }
+}
+
+.row {
+  display: flex;
+  gap: rem(10px);
+}
+
+.btn {
+  padding: rem(12px) rem(16px);
+  border-radius: rem(12px);
+  border: rem(1px) solid transparent;
+  cursor: pointer;
+
+  &.primary {
+    background: $color-primary;
+    color: #FFFFFF;
+    width: 100%;
+    margin-top: rem(90px);
+  }
+
+  &.ghost {
+    height: rem(48px);
+    padding: 0 rem(30px);
+    white-space: nowrap;
+    background: #F0F0F0;
+    color: #696969;
+  }
+}

@@ -36,12 +36,6 @@ export default function SignupCommonForm({
             onChange={handleChange}
             autoComplete="username"
           />
-          <button
-            type="button"
-            className="clear-btn"
-            onClick={() => setField('username','')}
-            aria-label="아이디 지우기"
-          />
         </div>
 
         {/* 비밀번호 */}
@@ -57,12 +51,6 @@ export default function SignupCommonForm({
             onChange={handleChange}
             autoComplete="new-password"
           />
-          <button
-            type="button"
-            className="clear-btn"
-            onClick={() => setField('password','')}
-            aria-label="비밀번호 지우기"
-          />
         </div>
 
         {/* 비밀번호 재입력 */}
@@ -76,12 +64,6 @@ export default function SignupCommonForm({
             value={values.passwordConfirm}
             onChange={handleChange}
             autoComplete="new-password"
-          />
-          <button
-            type="button"
-            className="clear-btn"
-            onClick={() => setField('passwordConfirm','')}
-            aria-label="비밀번호 재입력 지우기"
           />
         </div>
 
@@ -117,11 +99,6 @@ export default function SignupCommonForm({
           />
           <Button type="button" variant="ghost" onClick={verifyCode}>확인</Button>
         </div>
-
-        {/* 인증 완료 피드백 */}
-        {values.verified && (
-          <p className="helper-text" aria-live="polite">인증이 완료되었습니다.</p>
-        )}
 
         <Button type="submit" disabled={submitting} className="w-full">
           {submitLabel}
