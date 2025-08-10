@@ -48,8 +48,11 @@
   &.primary {
     background: $color-primary;
     color: #FFFFFF;
-    width: 100%;
+    width: rem(370px);
+    height: rem(64px);
     margin-top: rem(90px);
+    font-size: rem(16px);
+    font-weight: 600;
   }
 
   &.ghost {
