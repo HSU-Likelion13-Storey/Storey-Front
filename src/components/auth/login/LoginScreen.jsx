@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import LoginTabs from './LoginTabs';
 import LoginForm from './LoginForm';
 import './Login.scss';
-import logo from '../../assets/logo-text.svg';
-import kakaologo from '../../assets/kakao-logo.svg';
+import logo from '../../../assets/logo-text.svg';
+import kakaologo from '../../../assets/kakao-logo.svg';
 
 const LoginScreen = () => {
   const [role, setRole] = useState('guest'); // 로그인 유형 상태 (손님/스토어 사장님)
