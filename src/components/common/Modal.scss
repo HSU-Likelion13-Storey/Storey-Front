@@ -10,6 +10,17 @@
   top: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  &.fade-in {
+    opacity: 1;
+  }
+
+  &.fade-out {
+    opacity: 0;
+  }
+
   .modal-content {
     @include flex(column);
     display: flex;
@@ -45,12 +56,10 @@
         padding: rem(16px) 0;
         border-radius: 14px;
         border: none;
-        background: $color-primary;
         font-size: rem(18px);
         letter-spacing: -0.45px;
         transition: filter 0.3s ease;
         &.cancel {
-          border-radius: 14px;
           background: #e4e4e4;
           color: #878787;
           font-weight: 500;

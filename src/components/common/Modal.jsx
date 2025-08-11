@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./Modal.scss";
 export const Modal = ({
   title,
@@ -10,12 +10,13 @@ export const Modal = ({
   confirmType = true,
   img = "",
 }) => {
+  const [isVisible, setIsVisible] = useState(false); // fade-in, out을 설정할 상태
   // 타이머 타입일 경우 3초간 띄우기
   useEffect(() => {
     let timer;
     if (!confirmType) {
       timer = setTimeout(() => {
-        cancelFn();
+        clickHandle(cancelFn);
       }, 3000);
     }
     return () => {
@@ -23,8 +24,17 @@ export const Modal = ({
     };
   }, [confirmType, cancelFn]);
 
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  const clickHandle = (callback) => {
+    setIsVisible(false);
+    setTimeout(callback, 300);
+  };
+
   return (
-    <div className={`confirm-modal`} onClick={cancelFn}>
+    <div className={`confirm-modal ${isVisible ? "fade-in" : "fade-out"}`} onClick={() => clickHandle(cancelFn)}>
       <div className="modal-content">
         <div className="modal-text">
           <div className="modal-title">{title}</div>
@@ -32,10 +42,10 @@ export const Modal = ({
         </div>
         {confirmType ? (
           <div className="modal-btn-wrapper">
-            <button className="modal-btn cancel" onClick={cancelFn}>
+            <button className="modal-btn cancel" onClick={() => clickHandle(cancelFn)}>
               {cancel}
             </button>
-            <button className="modal-btn confirm" onClick={confirmFn}>
+            <button className="modal-btn confirm" onClick={() => clickHandle(confirmFn)}>
               {confirm}
             </button>
           </div>
