@@ -48,8 +48,6 @@ const B2BSignupPage = () => {
           values={account.values}
           setField={account.setField}
           handleChange={account.handleChange}
-          requestCode={account.requestCode}
-          verifyCode={account.verifyCode}
           onSubmit={goNext}
           submitting={account.submitting}
           submitLabel="다음으로"

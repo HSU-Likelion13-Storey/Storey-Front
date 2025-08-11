@@ -8,8 +8,6 @@ export default function SignupCommonForm({
   values,
   setField,
   handleChange,
-  requestCode,
-  verifyCode,
   onSubmit,
   submitting,
   submitLabel = "다음으로",
@@ -65,45 +63,6 @@ export default function SignupCommonForm({
             onChange={handleChange}
             autoComplete="new-password"
           />
-        </div>
-
-        {/* 휴대전화 인증 */}
-        <div className="form-field">
-          <label className="form-label" htmlFor="phone">
-            휴대전화 인증
-          </label>
-          <div className="row">
-            <input
-              id="phone"
-              className="input"
-              name="phone"
-              placeholder="전화번호 입력"
-              value={values.phone}
-              onChange={handleChange}
-              inputMode="tel"
-              autoComplete="tel"
-            />
-            <Button type="button" variant="ghost" onClick={requestCode}>
-              인증요청
-            </Button>
-          </div>
-        </div>
-
-        {/* 인증 코드 */}
-        <div className="row">
-          <input
-            id="code"
-            className="input"
-            name="code"
-            placeholder="인증 코드 입력"
-            value={values.code}
-            onChange={handleChange}
-            inputMode="numeric"
-            autoComplete="one-time-code"
-          />
-          <Button type="button" variant="ghost" onClick={verifyCode}>
-            확인
-          </Button>
         </div>
 
         <Button type="submit" disabled={submitting} className="w-full">
