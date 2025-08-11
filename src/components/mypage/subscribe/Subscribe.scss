@@ -90,7 +90,10 @@
       color: white;
       font-size: rem(16px);
       font-weight: 600;
-      transition: filter 0.3s ease;
+      transition:
+        filter 0.3s ease,
+        background 0.3s ease,
+        padding 0.3s ease;
       &:hover {
         cursor: pointer;
         filter: brightness(0.9);
