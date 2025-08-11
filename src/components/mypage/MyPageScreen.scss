@@ -6,13 +6,21 @@
   height: 100%;
   @include flex(column);
   background: #f5f5f5;
+  overflow: hidden;
   .header {
     width: 100%;
     padding: rem(68px) 0 rem(2px) rem(30px);
     background-color: white;
+    z-index: 1;
     img {
       width: rem(89px);
     }
+  }
+  .header-user {
+    @include flex();
+    width: 100%;
+    padding: rem(68px) 0 rem(28px) 0;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.06);
   }
   .profile-card {
     max-height: 418px;
@@ -30,6 +38,9 @@
         letter-spacing: -0.8px;
       }
     }
+  }
+  .profile-user {
+    padding: rem(35px) 0 rem(46px) 0;
   }
   .list-content {
     @include flex(column, $justify-content: flex-start);
@@ -63,7 +74,16 @@
           cursor: pointer;
           background-color: transparent;
         }
+        .icon {
+          width: 19px;
+          height: 19px;
+        }
       }
     }
   }
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
 }
