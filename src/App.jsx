@@ -4,6 +4,7 @@ import LoginPage from "./pages/LoginPage";
 import B2CSignupPage from "./pages/B2CSignupPage";
 import B2BSignupPage from "./pages/B2BSignupPage";
 import { MyPage } from "./pages/MyPage";
+import { SubscribePage } from "./pages/SubscribePage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/signup/b2c" element={<B2CSignupPage />} />
           <Route path="/signup/b2b" element={<B2BSignupPage />} />
           <Route path="/mypage" element={<MyPage />} />
+          <Route path="/mypage/subscribe" element={<SubscribePage />} />
         </Route>
       </Routes>
     </BrowserRouter>
