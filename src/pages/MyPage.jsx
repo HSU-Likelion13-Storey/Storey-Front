@@ -1,10 +1,11 @@
 import React from "react";
 import { Footer } from "@/components/common/Footer";
+import { MyPageScreen } from "@/components/mypage/MyPageScreen";
 
 export const MyPage = () => {
   return (
-    <div style={{ height: "100vh", width: "100%", position: "relative", background: "#F5F5F5" }}>
+    <MyPageScreen>
       <Footer />
-    </div>
+    </MyPageScreen>
   );
 };
