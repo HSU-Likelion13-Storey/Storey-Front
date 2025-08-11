@@ -24,7 +24,7 @@ export const Modal = ({
   }, [confirmType, cancelFn]);
 
   return (
-    <div className="confirm-modal" onClick={!confirmType ? cancelFn : () => {}}>
+    <div className={`confirm-modal`} onClick={cancelFn}>
       <div className="modal-content">
         <div className="modal-text">
           <div className="modal-title">{title}</div>

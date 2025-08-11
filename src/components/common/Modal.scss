@@ -48,7 +48,7 @@
         background: $color-primary;
         font-size: rem(18px);
         letter-spacing: -0.45px;
-        transition: background 0.3s ease;
+        transition: filter 0.3s ease;
         &.cancel {
           border-radius: 14px;
           background: #e4e4e4;
