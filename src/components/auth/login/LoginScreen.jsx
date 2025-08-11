@@ -34,21 +34,6 @@ const LoginScreen = () => {
         <div className={`login-helper-chip ${role === "guest" ? "left" : "right"}`}>
           지금 가입하고 빠르게 소식을 접해보세요!
         </div>
-
-        <div className="login-or">
-          <span>또는</span>
-        </div>
-
-        <button
-          className="login-kakao"
-          type="button"
-          aria-label="카카오톡으로 로그인"
-          onClick={() => {
-            // TODO: 카카오 OAuth 인증 로직 연결
-            console.log("카카오 로그인 요청");
-          }}>
-          <img src={kakaologo} alt="" aria-hidden="true" className="kakao-icon" />
-        </button>
       </div>
     </div>
   );
