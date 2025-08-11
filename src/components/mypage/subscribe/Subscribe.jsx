@@ -7,9 +7,11 @@ import { LuCalendar } from "react-icons/lu";
 import { IoIosArrowForward } from "react-icons/io";
 import { useState } from "react";
 import "./Subscribe.scss";
+import { Modal } from "@/components/common/Modal";
 
 export const Subscribe = () => {
-  const [isSubscribed, setIsSubscribed] = useState(true);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   return (
     <div className="subscribe">
@@ -43,7 +45,9 @@ export const Subscribe = () => {
         </div>
       </div>
       <div className="btn-wrapper">
-        <button className={`subs-btn ${isSubscribed ? "unsubs" : "subs"}`}>
+        <button
+          className={`subs-btn ${isSubscribed ? "unsubs" : "subs"}`}
+          onClick={isSubscribed ? () => setIsOpenModal(true) : () => setIsSubscribed(true)}>
           {isSubscribed ? (
             <>
               구독 해지 하기
@@ -68,6 +72,19 @@ export const Subscribe = () => {
           <li>도감 연동: 사용자의 도감에 새로운 방문 기록 저장불가 (기존 기록은 유지)</li>
         </ul>
       </div>
+      {isOpenModal && (
+        <Modal
+          title="정말 구독을 해지 하시겠어요?"
+          caption="다음에 또 보는거죠?"
+          cancel="하지않기"
+          confirm="해지하기"
+          cancelFn={() => setIsOpenModal(false)}
+          confirmFn={() => {
+            setIsSubscribed(false);
+            setIsOpenModal(false);
+          }}
+        />
+      )}
     </div>
   );
 };

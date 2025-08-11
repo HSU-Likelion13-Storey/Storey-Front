@@ -81,6 +81,7 @@
     width: 100%;
     margin-bottom: rem(15px);
     .subs-btn {
+      @include flex();
       width: 100%;
       padding: rem(20px);
       border-radius: 14px;
@@ -89,7 +90,6 @@
       color: white;
       font-size: rem(16px);
       font-weight: 600;
-      letter-spacing: -0.4px;
       transition: filter 0.3s ease;
       &:hover {
         cursor: pointer;
@@ -98,7 +98,6 @@
       &.unsubs {
         color: #696969;
         font-size: rem(14px);
-        letter-spacing: -0.35px;
         @include flex($justify-content: space-between);
         padding: rem(15px) rem(22px);
         background: rgba(241, 241, 241, 1);
