@@ -12,6 +12,7 @@
   position: absolute;
   bottom: 0;
   left: 0;
+  z-index: 1;
   .item {
     padding: rem(20px) rem(30px) rem(30px) rem(30px);
     flex: 1 1 0;

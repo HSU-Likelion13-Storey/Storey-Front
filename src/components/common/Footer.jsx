@@ -38,7 +38,7 @@ const FooterItem = ({ path = "", children }) => {
   const location = useLocation();
 
   // 현재 위치와 path가 일치할 경우 활성화(색상 변경)
-  const checkPath = (path) => location.pathname == `/${path}` && "active";
+  const checkPath = (path) => (location.pathname == `/${path}` ? "active" : "");
 
   return (
     <div className={"item"}>
