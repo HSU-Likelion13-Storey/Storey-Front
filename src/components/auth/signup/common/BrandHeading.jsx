@@ -1,6 +1,6 @@
-import React from 'react';
-import logo from '../../../../assets/logo-text.svg';
-import './BrandHeading.scss';
+import React from "react";
+import logo from "../../../../assets/logo-text.svg";
+import "./BrandHeading.scss";
 
 export default function BrandHeading({ title }) {
   return (

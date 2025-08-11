@@ -1,33 +1,33 @@
-import React from 'react';
-import '../common/SignupCommonForm.scss';
-import SignupHeader from '../common/SignupHeader.jsx';
-import BrandHeading from '../common/BrandHeading.jsx';
+import React from "react";
+import "../common/SignupCommonForm.scss";
+import SignupHeader from "../common/SignupHeader.jsx";
+import BrandHeading from "../common/BrandHeading.jsx";
 
-function Row({ children }) { return <div className="row">{children}</div>; }
-
-function Button({ children, variant='primary', className='', ...rest }) {
-  const cls = ['btn', variant, className].filter(Boolean).join(' ');
-  return <button className={cls} {...rest}>{children}</button>;
+function Row({ children }) {
+  return <div className="row">{children}</div>;
 }
 
-export default function BusinessForm({
-  values,
-  onChange,
-  onSubmit,
-  submitting,
-  clear,
-  headerOnBack,
-}) {
+function Button({ children, variant = "primary", className = "", ...rest }) {
+  const cls = ["btn", variant, className].filter(Boolean).join(" ");
+  return (
+    <button className={cls} {...rest}>
+      {children}
+    </button>
+  );
+}
+
+export default function BusinessForm({ values, onChange, onSubmit, submitting, clear, headerOnBack }) {
   return (
     <>
       <SignupHeader rightLabel="사업정보 입력" onBack={headerOnBack} />
-      <BrandHeading title={'가입하기 위해\n사업정보를 입력해주세요'} />
+      <BrandHeading title={"가입하기 위해\n사업정보를 입력해주세요"} />
 
       <form className="signup-form" onSubmit={(e) => onSubmit?.(e)}>
-
         {/* 상호 */}
         <div className="form-field">
-          <label className="form-label" htmlFor="bizName">상호</label>
+          <label className="form-label" htmlFor="bizName">
+            상호
+          </label>
           <input
             id="bizName"
             className="input"
@@ -40,7 +40,9 @@ export default function BusinessForm({
 
         {/* 대표자명 */}
         <div className="form-field">
-          <label className="form-label" htmlFor="owner">대표자명</label>
+          <label className="form-label" htmlFor="owner">
+            대표자명
+          </label>
           <input
             id="owner"
             className="input"
@@ -53,7 +55,9 @@ export default function BusinessForm({
 
         {/* 사업자 번호 */}
         <div className="form-field">
-          <label className="form-label" htmlFor="bizNo">사업자 번호</label>
+          <label className="form-label" htmlFor="bizNo">
+            사업자 번호
+          </label>
           <input
             id="bizNo"
             className="input"
@@ -67,31 +71,25 @@ export default function BusinessForm({
 
         {/* 업태 */}
         <div className="form-field">
-          <label className="form-label" htmlFor="bizType">업태</label>
-          <input
-            id="bizType"
-            className="input"
-            name="bizType"
-            value={values.bizType}
-            onChange={onChange}
-          />
+          <label className="form-label" htmlFor="bizType">
+            업태
+          </label>
+          <input id="bizType" className="input" name="bizType" value={values.bizType} onChange={onChange} />
         </div>
 
         {/* 업종 */}
         <div className="form-field">
-          <label className="form-label" htmlFor="bizCategory">업종</label>
-          <input
-            id="bizCategory"
-            className="input"
-            name="bizCategory"
-            value={values.bizCategory}
-            onChange={onChange}
-          />
+          <label className="form-label" htmlFor="bizCategory">
+            업종
+          </label>
+          <input id="bizCategory" className="input" name="bizCategory" value={values.bizCategory} onChange={onChange} />
         </div>
 
         {/* 사업장 주소 - 우편번호 */}
         <div className="form-field">
-          <label className="form-label" htmlFor="zip">사업장 주소</label>
+          <label className="form-label" htmlFor="zip">
+            사업장 주소
+          </label>
           <Row>
             <input
               id="zip"
@@ -104,7 +102,9 @@ export default function BusinessForm({
               pattern="[0-9]{5}"
               autoComplete="postal-code"
             />
-            <Button type="button" variant="ghost">우편번호 찾기</Button>
+            <Button type="button" variant="ghost">
+              우편번호 찾기
+            </Button>
           </Row>
         </div>
 
@@ -134,7 +134,9 @@ export default function BusinessForm({
           />
         </div>
 
-        <Button type="submit" disabled={submitting} className="w-full">가입하기</Button>
+        <Button type="submit" disabled={submitting} className="w-full">
+          가입하기
+        </Button>
       </form>
     </>
   );

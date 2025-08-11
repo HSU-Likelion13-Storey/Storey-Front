@@ -1,14 +1,15 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import './SignupHeader.scss';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./SignupHeader.scss";
 
 export default function SignupHeader({ rightLabel, onBack }) {
   const nav = useNavigate();
 
-  const handleBack = () => { // 뒤로가기 버튼 클릭 시
-    if (typeof onBack === 'function') return onBack();
+  const handleBack = () => {
+    // 뒤로가기 버튼 클릭 시
+    if (typeof onBack === "function") return onBack();
     if (window.history.length > 1) return nav(-1);
-    return nav('/login');
+    return nav("/login");
   };
 
   return (

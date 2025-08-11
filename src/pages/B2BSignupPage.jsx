@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
-import SignupCommonForm from '@/components/auth/signup/common/SignupCommonForm';
-import BusinessForm from '@/components/auth/signup/b2b/BusinessForm';
-import { useSignupAccountForm } from '@/hooks/useSignupAccountForm';
+import React, { useState } from "react";
+import SignupCommonForm from "@/components/auth/signup/common/SignupCommonForm";
+import BusinessForm from "@/components/auth/signup/b2b/BusinessForm";
+import { useSignupAccountForm } from "@/hooks/useSignupAccountForm";
 
 const initBiz = {
-  bizName: '', owner: '', bizNo: '', bizType: '', bizCategory: '',
-  zip: '', addr1: '', addr2: '',
+  bizName: "",
+  owner: "",
+  bizNo: "",
+  bizType: "",
+  bizCategory: "",
+  zip: "",
+  addr1: "",
+  addr2: "",
 };
 
 const B2BSignupPage = () => {
@@ -15,10 +21,10 @@ const B2BSignupPage = () => {
 
   const onBizChange = (e) => {
     const { name, value } = e.target;
-    setBiz(v => ({ ...v, [name]: value }));
+    setBiz((v) => ({ ...v, [name]: value }));
   };
 
-  const clearBiz = (name) => setBiz(v => ({ ...v, [name]: '' }));
+  const clearBiz = (name) => setBiz((v) => ({ ...v, [name]: "" }));
 
   const goNext = (e) => {
     e.preventDefault();
@@ -29,8 +35,8 @@ const B2BSignupPage = () => {
   const submitAll = async (e) => {
     e.preventDefault();
     // TODO: 2단계 유효성 + API 연동
-    console.log('B2B submit', { account: account.values, business: biz });
-    alert('B2B 가입(더미) 완료');
+    console.log("B2B submit", { account: account.values, business: biz });
+    alert("B2B 가입(더미) 완료");
   };
 
   return (

@@ -1,11 +1,15 @@
-import React from 'react';
-import './SignupCommonForm.scss';
-import SignupHeader from './SignupHeader.jsx';
-import BrandHeading from './BrandHeading.jsx';
+import React from "react";
+import "./SignupCommonForm.scss";
+import SignupHeader from "./SignupHeader.jsx";
+import BrandHeading from "./BrandHeading.jsx";
 
-function Button({ children, variant='primary', className='', ...rest }) {
-  const cls = ['btn', variant, className].filter(Boolean).join(' ');
-  return <button className={cls} {...rest}>{children}</button>;
+function Button({ children, variant = "primary", className = "", ...rest }) {
+  const cls = ["btn", variant, className].filter(Boolean).join(" ");
+  return (
+    <button className={cls} {...rest}>
+      {children}
+    </button>
+  );
 }
 
 export default function SignupCommonForm({
@@ -16,17 +20,19 @@ export default function SignupCommonForm({
   verifyCode,
   onSubmit,
   submitting,
-  submitLabel = '다음으로',
+  submitLabel = "다음으로",
 }) {
   return (
     <>
       <SignupHeader rightLabel="회원정보 입력" />
-      <BrandHeading title={'회원님의 정보를\n입력해주세요'} />
+      <BrandHeading title={"회원님의 정보를\n입력해주세요"} />
 
       <form className="signup-form" onSubmit={(e) => onSubmit?.(e)}>
         {/* 아이디 */}
         <div className="form-field">
-          <label className="form-label" htmlFor="username">아이디</label>
+          <label className="form-label" htmlFor="username">
+            아이디
+          </label>
           <input
             id="username"
             className="input"
@@ -40,7 +46,9 @@ export default function SignupCommonForm({
 
         {/* 비밀번호 */}
         <div className="form-field">
-          <label className="form-label" htmlFor="password">비밀번호</label>
+          <label className="form-label" htmlFor="password">
+            비밀번호
+          </label>
           <input
             id="password"
             className="input"
@@ -69,7 +77,9 @@ export default function SignupCommonForm({
 
         {/* 휴대전화 인증 */}
         <div className="form-field">
-          <label className="form-label" htmlFor="phone">휴대전화 인증</label>
+          <label className="form-label" htmlFor="phone">
+            휴대전화 인증
+          </label>
           <div className="row">
             <input
               id="phone"
@@ -81,7 +91,9 @@ export default function SignupCommonForm({
               inputMode="tel"
               autoComplete="tel"
             />
-            <Button type="button" variant="ghost" onClick={requestCode}>인증요청</Button>
+            <Button type="button" variant="ghost" onClick={requestCode}>
+              인증요청
+            </Button>
           </div>
         </div>
 
@@ -97,7 +109,9 @@ export default function SignupCommonForm({
             inputMode="numeric"
             autoComplete="one-time-code"
           />
-          <Button type="button" variant="ghost" onClick={verifyCode}>확인</Button>
+          <Button type="button" variant="ghost" onClick={verifyCode}>
+            확인
+          </Button>
         </div>
 
         <Button type="submit" disabled={submitting} className="w-full">

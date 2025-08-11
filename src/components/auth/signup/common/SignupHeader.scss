@@ -1,5 +1,5 @@
-@use '../../../../styles/function' as *;
-@use '../../../../styles/variables' as *;
+@use "../../../../styles/function" as *;
+@use "../../../../styles/variables" as *;
 
 .signup-header {
   position: sticky;
@@ -22,13 +22,13 @@
   display: inline-block;
   width: rem(15px);
   height: rem(15px);
-  border-left: rem(3px) solid #CFCFCF;
-  border-bottom: rem(3px) solid #CFCFCF;
+  border-left: rem(3px) solid #cfcfcf;
+  border-bottom: rem(3px) solid #cfcfcf;
   transform: rotate(45deg);
 }
 
 .right-label {
   font-size: rem(16px);
   font-weight: 600;
-  color: #CFCFCF;
+  color: #cfcfcf;
 }

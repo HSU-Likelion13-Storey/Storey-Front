@@ -1,5 +1,5 @@
-@use '../../../../styles/function' as *;
-@use '../../../../styles/variables' as *;
+@use "../../../../styles/function" as *;
+@use "../../../../styles/variables" as *;
 
 .signup-form {
   max-width: rem(420px);
@@ -23,7 +23,7 @@
 .input {
   width: 100%;
   padding: rem(18px) rem(20px) rem(18px) rem(17px);
-  border: rem(1px) solid #DDDDDD;
+  border: rem(1px) solid #dddddd;
   border-radius: rem(12px);
   font-size: rem(14px);
   font-weight: 500;
@@ -47,7 +47,7 @@
 
   &.primary {
     background: $color-primary;
-    color: #FFFFFF;
+    color: #ffffff;
     width: rem(370px);
     height: rem(64px);
     margin-top: rem(90px);
@@ -59,7 +59,7 @@
     height: rem(48px);
     padding: 0 rem(30px);
     white-space: nowrap;
-    background: #F0F0F0;
+    background: #f0f0f0;
     color: #696969;
   }
 }

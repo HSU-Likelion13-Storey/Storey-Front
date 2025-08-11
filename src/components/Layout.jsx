@@ -7,8 +7,7 @@ export const Layout = () => {
         maxWidth: "430px",
         height: "100vh",
         margin: "0 auto",
-      }}
-    >
+      }}>
       <Outlet />
     </div>
   );
