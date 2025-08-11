@@ -7,8 +7,10 @@ export const Modal = ({
   confirm = "",
   cancelFn = () => {},
   confirmFn = () => {},
-  confirmType = false,
+  confirmType = true,
+  img = "",
 }) => {
+  // 타이머 타입일 경우 3초간 띄우기
   useEffect(() => {
     let timer;
     if (!confirmType) {
@@ -22,7 +24,7 @@ export const Modal = ({
   }, [confirmType, cancelFn]);
 
   return (
-    <div className="confirm-modal" onClick={!confirmType && cancelFn}>
+    <div className="confirm-modal" onClick={!confirmType ? cancelFn : () => {}}>
       <div className="modal-content">
         <div className="modal-text">
           <div className="modal-title">{title}</div>
@@ -37,7 +39,9 @@ export const Modal = ({
               {confirm}
             </button>
           </div>
-        ) : null}
+        ) : (
+          <img src={img} className="modal-img" alt="" />
+        )}
       </div>
     </div>
   );

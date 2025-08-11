@@ -11,8 +11,10 @@
   background: rgba(0, 0, 0, 0.5);
   z-index: 10;
   .modal-content {
-    @include flex(column, $gap: 68px);
+    @include flex(column);
     display: flex;
+    width: 316px;
+
     padding: 36px 20px 15px 20px;
     border-radius: 21px;
     background: #fff;
@@ -37,6 +39,7 @@
     .modal-btn-wrapper {
       @include flex($gap: 8px);
       width: 100%;
+      margin-top: 68px;
       .modal-btn {
         flex: 1 1 0;
         padding: rem(16px) 0;
@@ -62,6 +65,11 @@
           filter: brightness(0.9);
         }
       }
+    }
+    .modal-img {
+      margin: 25px 35px 45px 54px;
+      width: 160px;
+      height: 160px;
     }
   }
 }
