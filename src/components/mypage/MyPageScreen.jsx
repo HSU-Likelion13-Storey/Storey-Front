@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { MdOutlineLogout } from "react-icons/md";
 import { logoText, profileImg } from "@/assets";
+import { useNavigate } from "react-router-dom";
 import "./MyPageScreen.scss";
 
 export const MyPageScreen = ({ children }) => {
-  const [role, setRole] = useState("user");
-
+  const [role, setRole] = useState("owner");
+  const nav = useNavigate();
   return (
     <div className="container">
       <header className={`header ${role === "user" && "header-user"}`}>
@@ -24,8 +25,8 @@ export const MyPageScreen = ({ children }) => {
           <ListItem text={"나의 캐릭터 도감"} />
         ) : (
           <>
-            <ListItem text={"구독 상태 확인하기"} />
-            <ListItem text={"QR코드 다운 받기"} />
+            <ListItem text={"구독 상태 확인하기"} onClick={() => nav("/mypage/subscribe")} />
+            <ListItem text={"QR코드 다운 받기"} onClick={() => nav("/mypage/download")} />
           </>
         )}
 
@@ -38,9 +39,9 @@ export const MyPageScreen = ({ children }) => {
   );
 };
 
-const ListItem = ({ children, logout = false, text }) => {
+const ListItem = ({ children, logout = false, text, onClick }) => {
   return (
-    <div className={`list-item ${logout && "logout"}`}>
+    <div className={`list-item ${logout && "logout"}`} onClick={onClick}>
       <span>{text}</span>
       {children ? children : <IoIosArrowForward className="icon" />}
     </div>
