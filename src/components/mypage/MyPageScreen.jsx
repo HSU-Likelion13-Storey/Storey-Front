@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "./MyPageScreen.scss";
 
 export const MyPageScreen = ({ children }) => {
-  const [role, setRole] = useState("owner");
+  const [role, setRole] = useState("user");
   const nav = useNavigate();
   return (
     <div className="container">
@@ -22,7 +22,7 @@ export const MyPageScreen = ({ children }) => {
       </div>
       <div className="list-content">
         {role === "user" ? (
-          <ListItem text={"나의 캐릭터 도감"} />
+          <ListItem text={"나의 캐릭터 도감"} onClick={() => nav("/mypage/collection")} />
         ) : (
           <>
             <ListItem text={"구독 상태 확인하기"} onClick={() => nav("/mypage/subscribe")} />
