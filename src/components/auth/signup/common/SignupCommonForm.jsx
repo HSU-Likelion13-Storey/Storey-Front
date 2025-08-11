@@ -2,15 +2,7 @@ import React from "react";
 import "./SignupCommonForm.scss";
 import SignupHeader from "./SignupHeader.jsx";
 import BrandHeading from "./BrandHeading.jsx";
-
-function Button({ children, variant = "primary", className = "", ...rest }) {
-  const cls = ["btn", variant, className].filter(Boolean).join(" ");
-  return (
-    <button className={cls} {...rest}>
-      {children}
-    </button>
-  );
-}
+import Button from "./Button.jsx";
 
 export default function SignupCommonForm({
   values,

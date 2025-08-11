@@ -2,18 +2,10 @@ import React from "react";
 import "../common/SignupCommonForm.scss";
 import SignupHeader from "../common/SignupHeader.jsx";
 import BrandHeading from "../common/BrandHeading.jsx";
+import Button from "../common/Button.jsx";
 
 function Row({ children }) {
   return <div className="row">{children}</div>;
-}
-
-function Button({ children, variant = "primary", className = "", ...rest }) {
-  const cls = ["btn", variant, className].filter(Boolean).join(" ");
-  return (
-    <button className={cls} {...rest}>
-      {children}
-    </button>
-  );
 }
 
 export default function BusinessForm({ values, onChange, onSubmit, submitting, clear, headerOnBack }) {
