@@ -6,6 +6,7 @@ import B2BSignupPage from "./pages/B2BSignupPage";
 import { MyPage } from "./pages/mypage/MyPage";
 import { SubscribePage } from "./pages/mypage/SubscribePage";
 import { DownloadePage } from "./pages/mypage/DownloadPage";
+import { CollectionPage } from "./pages/mypage/CollectionPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage/subscribe" element={<SubscribePage />} />
           <Route path="/mypage/download" element={<DownloadePage />} />
+          <Route path="/mypage/collection" element={<CollectionPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
