@@ -29,9 +29,6 @@
       top: 0;
       left: 0;
       transform: translateY(-105%) translateX(-50%);
-      transition:
-        transform 0.3s ease,
-        top 0.3s ease;
       .marker {
         @include flex();
         position: relative;
@@ -40,7 +37,14 @@
         background: linear-gradient(180deg, #664bbf 0%, #9889cb 100%);
         filter: drop-shadow(0 2.658px 2.658px rgba(0, 0, 0, 0.08));
         border-radius: 100px;
-        z-index: 20;
+        filter: brightness(1);
+        transition: filter 0.3s ease;
+        z-index: 3;
+
+        &:hover {
+          cursor: pointer;
+          filter: brightness(1.1);
+        }
         .logo-img {
           width: 59.511px;
           height: 59.511px;
@@ -62,13 +66,16 @@
         border-radius: 20px;
         background: #fff;
         min-width: 260px;
-        z-index: 20;
+        z-index: 2;
         opacity: 0;
         visibility: hidden;
         transition:
           opacity 0.3s ease,
           visibility 0.3s ease;
-
+        &.visible {
+          opacity: 0.5;
+          visibility: visible;
+        }
         &::before {
           content: "";
           position: absolute;
@@ -124,7 +131,6 @@
           cursor: pointer;
         }
       }
-
       .visible {
         opacity: 1;
         visibility: visible;
