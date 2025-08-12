@@ -24,7 +24,7 @@ function App() {
           <Route path="/mypage/download" element={<DownloadePage />} />
           <Route path="/mypage/collection" element={<CollectionPage />} />
           {/* user 페이지 */}
-          <Route path="/user" element={<UserHomePage />} />
+          <Route path="/home/user" element={<UserHomePage />} />
         </Route>
       </Routes>
     </BrowserRouter>

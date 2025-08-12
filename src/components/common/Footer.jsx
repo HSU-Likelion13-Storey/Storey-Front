@@ -12,7 +12,7 @@ export const Footer = () => {
     <footer className="footer">
       {/* TODO 라우터 변경 시 path값 변경필요 */}
       {/* 홈 페이지 이동 */}
-      <FooterItem path="home">
+      <FooterItem path="home" role={role}>
         <GoHomeFill className="icon" />
         <span>홈</span>
       </FooterItem>
@@ -34,7 +34,7 @@ export const Footer = () => {
   );
 };
 
-const FooterItem = ({ path = "", children }) => {
+const FooterItem = ({ path = "", children, role = "" }) => {
   const location = useLocation();
 
   // 현재 위치와 path가 일치할 경우 활성화(색상 변경)
@@ -42,7 +42,7 @@ const FooterItem = ({ path = "", children }) => {
 
   return (
     <div className={"item"}>
-      <Link to={`/${path}`} className={checkPath(path)}>
+      <Link to={`/${path}/${role}`} className={checkPath(path)}>
         {children}
       </Link>
     </div>
