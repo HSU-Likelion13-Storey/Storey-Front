@@ -1,10 +1,9 @@
-import { logoPig, logoText } from "@/assets";
-import "./UserHome.scss";
-import { CustomOverlayMap, Map, MapMarker, MarkerClusterer, useKakaoLoader } from "react-kakao-maps-sdk";
 import { useRef, useState } from "react";
-import { IoIosLock } from "react-icons/io";
+import { Map, MarkerClusterer, useKakaoLoader } from "react-kakao-maps-sdk";
+import { logoPig } from "@/assets";
+import { CustomMarker } from "./CustomMarker";
 
-export const UserHome = () => {
+export const MapContent = () => {
   const [zoomable, setZoomable] = useState(true); // 확대/축소 기능 제어
   const [draggable, setDraggable] = useState(true); // 드래그 제어
   const [activeMarker, setActiveMarker] = useState(null); // 클릭된 마커 id/인덱스
@@ -38,69 +37,35 @@ export const UserHome = () => {
     // 지도를 클릭된 클러스터의 마커의 위치를 기준으로 확대합니다
     map.setLevel(level, { anchor: cluster.getCenter() });
   };
-
   return (
-    <div className="user-home">
-      {/* Header */}
-      <header className={`header`}>
-        <img src={logoText} alt="" />
-      </header>
-      <div className="map-content">
-        {/* 지도. 카카오맵 라이브러리 사용 */}
-        <Map
-          center={{ lat: 37.5886230594546, lng: 127.00942586233262 }}
-          style={{ width: "100%", height: "100%" }}
-          zoomable={zoomable}
-          draggable={draggable}
-          level={2}
-          ref={mapRef}>
-          {/* 여러 마커 생성 */}
-          <MarkerClusterer
-            averageCenter={true} // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-            minLevel={2} // 클러스터 할 최소 지도 레벨
-            disableClickZoom={true} // 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
-            onClusterclick={onClusterclick}>
-            {mockData.map((data, index) => (
-              <CustomMarker
-                data={data}
-                key={index}
-                isActive={activeMarker === index}
-                onMarkerClick={() => markerClickHandle(index)}
-                blurHandle={blurHandle}
-                isClickMark={isClickMark}
-              />
-            ))}
-          </MarkerClusterer>
-        </Map>
-      </div>
+    <div className="map-content">
+      {/* 지도. 카카오맵 라이브러리 사용 */}
+      <Map
+        center={{ lat: 37.5886230594546, lng: 127.00942586233262 }}
+        style={{ width: "100%", height: "100%" }}
+        zoomable={zoomable}
+        draggable={draggable}
+        level={2}
+        ref={mapRef}>
+        {/* 여러 마커 생성 */}
+        <MarkerClusterer
+          averageCenter={true} // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+          minLevel={2} // 클러스터 할 최소 지도 레벨
+          disableClickZoom={true} // 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
+          onClusterclick={onClusterclick}>
+          {mockData.map((data, index) => (
+            <CustomMarker
+              data={data}
+              key={index}
+              isActive={activeMarker === index}
+              onMarkerClick={() => markerClickHandle(index)}
+              blurHandle={blurHandle}
+              isClickMark={isClickMark}
+            />
+          ))}
+        </MarkerClusterer>
+      </Map>
     </div>
-  );
-};
-
-const CustomMarker = ({ data, isActive, onMarkerClick, blurHandle, isClickMark }) => {
-  const [lock, setLock] = useState(true);
-
-  const hideMark = () => isClickMark && !isActive;
-
-  return (
-    <CustomOverlayMap position={data.position}>
-      <div className="marker-container">
-        {/* 마커 */}
-        <div className={`marker ${isClickMark && !isActive ? "invisible" : ""}`} onClick={onMarkerClick}>
-          <img src={data.image} className={`logo-img ${lock && "dark"}`} alt="" />
-          {lock && <IoIosLock className="icon" />}
-          {/* 오버레이 */}
-          <div className={`overlay ${isActive && "visible"}`}>
-            <div className="title">{data.name}</div>
-            <div className="address">{data.address}</div>
-            <div className="event">{data.event}</div>
-          </div>
-        </div>
-
-        {/* 블러 처리용 */}
-        <div className={`blur ${isActive && "visible"}`} onClick={blurHandle}></div>
-      </div>
-    </CustomOverlayMap>
   );
 };
 
