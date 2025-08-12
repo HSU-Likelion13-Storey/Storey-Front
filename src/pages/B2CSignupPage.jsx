@@ -1,29 +1,25 @@
-import React from "react";
-import SignupCommonForm from "../components/auth/signup/common/SignupCommonForm";
-import { useSignupAccountForm } from "../hooks/useSignupAccountForm";
+import React, { useState } from "react";
+import SignupCommonForm from "@/components/auth/signup/common/SignupCommonForm";
 import { useNavigate } from "react-router-dom";
 
 const B2CSignupPage = () => {
-  const form = useSignupAccountForm();
   const nav = useNavigate();
+  const [submitting, setSubmitting] = useState(false);
 
-  const submit = async (e) => {
-    e.preventDefault();
-    // TODO: 유효성 + API 연동
-    console.log("B2C 가입", form.values);
-    nav("/signup/complete");
+  const submit = async (data) => {
+    try {
+      setSubmitting(true);
+      // TODO: API 연동
+      console.log("B2C 가입", data);
+      nav("/signup/complete");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
     <div>
-      <SignupCommonForm
-        values={form.values}
-        setField={form.setField}
-        handleChange={form.handleChange}
-        onSubmit={submit}
-        submitting={form.submitting}
-        submitLabel="가입하기"
-      />
+      <SignupCommonForm onSubmit={submit} submitting={submitting} submitLabel="가입하기" />
     </div>
   );
 };
