@@ -24,11 +24,6 @@
     height: 100%;
     @include flex();
     .marker-container {
-      @include flex(column, $gap: 26px);
-      position: absolute;
-      top: 0;
-      left: 0;
-      transform: translateY(-105%) translateX(-50%);
       .marker {
         @include flex();
         position: relative;
@@ -38,9 +33,13 @@
         filter: drop-shadow(0 2.658px 2.658px rgba(0, 0, 0, 0.08));
         border-radius: 100px;
         filter: brightness(1);
-        transition: filter 0.3s ease;
+        transition:
+          filter 0.3s ease,
+          opacity 0.3s ease;
         z-index: 3;
-
+        &.invisible {
+          opacity: 0;
+        }
         &:hover {
           cursor: pointer;
           filter: brightness(1.1);
@@ -58,58 +57,60 @@
           width: 30px;
           height: 30px;
         }
-      }
-      .overlay {
-        @include flex(column, $gap: 6px);
-        position: relative;
-        padding: 20px;
-        border-radius: 20px;
-        background: #fff;
-        min-width: 260px;
-        z-index: 2;
-        opacity: 0;
-        visibility: hidden;
-        transition:
-          opacity 0.3s ease,
-          visibility 0.3s ease;
-        &.visible {
-          opacity: 0.5;
-          visibility: visible;
-        }
-        &::before {
-          content: "";
+
+        .overlay {
+          @include flex(column, $gap: 6px);
           position: absolute;
-          bottom: -12px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 0px;
-          height: 0px;
-          border-top: 13px solid white;
-          border-left: 23px solid transparent;
-          border-right: 23px solid transparent;
-        }
-        .title {
-          color: #422993;
-          font-size: rem(22px);
-          font-weight: 700;
-          letter-spacing: -0.55px;
-        }
-        .address {
-          color: #696969;
-          font-size: rem(15px);
-          font-weight: 500;
-        }
-        .event {
-          @include flex(column);
-          width: 100%;
-          padding: 15px;
-          border-radius: 13px;
-          margin-top: 14px;
-          background: rgba(151, 123, 244, 0.2);
-          color: #3a228a;
-          font-size: 15px;
-          font-weight: 600;
-          letter-spacing: -0.375px;
+          padding: 20px;
+          border-radius: 20px;
+          background: #fff;
+          min-width: 260px;
+          z-index: 5;
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(-90%);
+          transition:
+            opacity 0.3s ease,
+            visibility 0.3s ease;
+          &.visible {
+            opacity: 1;
+            visibility: visible;
+          }
+          &::before {
+            content: "";
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0px;
+            height: 0px;
+            border-top: 13px solid white;
+            border-left: 23px solid transparent;
+            border-right: 23px solid transparent;
+          }
+          .title {
+            color: #422993;
+            font-size: rem(22px);
+            font-weight: 700;
+            letter-spacing: -0.55px;
+          }
+          .address {
+            color: #696969;
+            font-size: rem(15px);
+            font-weight: 500;
+          }
+          .event {
+            @include flex(column);
+            width: 100%;
+            padding: 15px;
+            border-radius: 13px;
+            margin-top: 14px;
+            background: rgba(151, 123, 244, 0.2);
+            color: #3a228a;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.375px;
+          }
         }
       }
 
@@ -121,7 +122,7 @@
         transform: translate(-50%, -30%);
         width: 100vw;
         height: 200vh;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.7);
         opacity: 0;
         visibility: hidden;
         transition:

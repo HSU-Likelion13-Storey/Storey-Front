@@ -8,6 +8,7 @@ export const UserHome = () => {
   const [zoomable, setZoomable] = useState(true); // 확대/축소 기능 제어
   const [draggable, setDraggable] = useState(true); // 드래그 제어
   const [activeMarker, setActiveMarker] = useState(null); // 클릭된 마커 id/인덱스
+  const [isClickMark, setIsClickMark] = useState(false);
   const mapRef = useRef();
   // 최신 SDK를 사용하기 위해 script방법이 아닌 방법으로 로더를 호출하는 방법으로 설정
   useKakaoLoader({
@@ -19,12 +20,14 @@ export const UserHome = () => {
     setZoomable(true);
     setDraggable(true);
     setActiveMarker(null); // 클릭 해제
+    setIsClickMark(false);
   };
 
   const markerClickHandle = (index) => {
     setZoomable(false);
     setDraggable(false);
     setActiveMarker(index);
+    setIsClickMark(true);
   };
 
   const onClusterclick = (_target, cluster) => {
@@ -64,6 +67,7 @@ export const UserHome = () => {
                 isActive={activeMarker === index}
                 onMarkerClick={() => markerClickHandle(index)}
                 blurHandle={blurHandle}
+                isClickMark={isClickMark}
               />
             ))}
           </MarkerClusterer>
@@ -73,23 +77,24 @@ export const UserHome = () => {
   );
 };
 
-const CustomMarker = ({ data, isActive, onMarkerClick, blurHandle }) => {
+const CustomMarker = ({ data, isActive, onMarkerClick, blurHandle, isClickMark }) => {
   const [lock, setLock] = useState(true);
+
+  const hideMark = () => isClickMark && !isActive;
 
   return (
     <CustomOverlayMap position={data.position}>
       <div className="marker-container">
-        {/* 오버레이 */}
-        <div className={`overlay ${isActive && "visible"}`}>
-          <div className="title">{data.name}</div>
-          <div className="address">{data.address}</div>
-          <div className="event">{data.event}</div>
-        </div>
-
         {/* 마커 */}
-        <div className="marker" onClick={onMarkerClick}>
+        <div className={`marker ${isClickMark && !isActive ? "invisible" : ""}`} onClick={onMarkerClick}>
           <img src={data.image} className={`logo-img ${lock && "dark"}`} alt="" />
           {lock && <IoIosLock className="icon" />}
+          {/* 오버레이 */}
+          <div className={`overlay ${isActive && "visible"}`}>
+            <div className="title">{data.name}</div>
+            <div className="address">{data.address}</div>
+            <div className="event">{data.event}</div>
+          </div>
         </div>
 
         {/* 블러 처리용 */}
