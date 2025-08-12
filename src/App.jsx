@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "./components/Layout";
-import LoginPage from "./pages/LoginPage";
-import B2CSignupPage from "./pages/B2CSignupPage";
-import B2BSignupPage from "./pages/B2BSignupPage";
+import LoginPage from "./pages/auth/LoginPage";
+import B2CSignupPage from "./pages/auth/B2CSignupPage";
+import B2BSignupPage from "./pages/auth/B2BSignupPage";
 import { MyPage } from "./pages/mypage/MyPage";
 import { SubscribePage } from "./pages/mypage/SubscribePage";
 import { DownloadePage } from "./pages/mypage/DownloadPage";
