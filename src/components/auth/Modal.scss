@@ -1,0 +1,56 @@
+@use "../../styles/function" as *;
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+  animation: modal-fade-in 0.15s ease forwards;
+}
+
+.modal {
+  width: rem(330px);
+  height: rem(112px);
+
+  background: #fcfcfc;
+  border-radius: rem(16.455px);
+  box-shadow: 0 rem(1.645px) rem(4.114px) 0 rgba(62, 60, 60, 0.3);
+  backdrop-filter: blur(rem(0.411px));
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  animation: modal-pop-in 0.18s ease forwards;
+  outline: none;
+}
+
+.modal-body {
+  font-size: rem(16px);
+  line-height: normal;
+  color: #2a2a2a;
+  text-align: center;
+  padding: 0 rem(16px);
+}
+
+// 모달 창 애니메이션 효과
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes modal-pop-in {
+  from {
+    transform: translateY(6px) scale(0.98);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}

@@ -34,6 +34,8 @@
   }
 }
 
+/* row/ghost 버튼은 현재 화면에선 쓰지 않지만
+   다른 폼에서 재사용 중일 수 있어 유지 */
 .row {
   display: flex;
   gap: rem(10px);

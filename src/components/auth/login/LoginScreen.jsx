@@ -3,10 +3,12 @@ import LoginTabs from "./LoginTabs";
 import LoginForm from "./LoginForm";
 import "./Login.scss";
 import logo from "../../../assets/logo-text.svg";
-import kakaologo from "../../../assets/kakao-logo.svg";
+import Modal from "../Modal";
+import "../Modal.scss";
 
 const LoginScreen = () => {
   const [role, setRole] = useState("guest"); // 로그인 유형 상태 (손님/스토어 사장님)
+  const [modalMsg, setModalMsg] = useState(""); // 모달 메시지 상태
 
   return (
     <div className="login-wrap">
@@ -15,7 +17,7 @@ const LoginScreen = () => {
 
         <LoginTabs role={role} onChange={setRole} />
 
-        <LoginForm role={role} />
+        <LoginForm role={role} onError={(msg) => setModalMsg(msg)} onSuccess={() => setModalMsg("")} />
 
         <div className="login-links">
           {/* TODO: 회원가입 페이지 라우팅 연결 */}
@@ -34,22 +36,11 @@ const LoginScreen = () => {
         <div className={`login-helper-chip ${role === "guest" ? "left" : "right"}`}>
           지금 가입하고 빠르게 소식을 접해보세요!
         </div>
-
-        <div className="login-or">
-          <span>또는</span>
-        </div>
-
-        <button
-          className="login-kakao"
-          type="button"
-          aria-label="카카오톡으로 로그인"
-          onClick={() => {
-            // TODO: 카카오 OAuth 인증 로직 연결
-            console.log("카카오 로그인 요청");
-          }}>
-          <img src={kakaologo} alt="" aria-hidden="true" className="kakao-icon" />
-        </button>
       </div>
+
+      <Modal open={!!modalMsg} onClose={() => setModalMsg("")} autoCloseMs={1600}>
+        {modalMsg}
+      </Modal>
     </div>
   );
 };

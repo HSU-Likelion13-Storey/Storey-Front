@@ -1,0 +1,14 @@
+@use "../../../../styles/function" as *;
+@use "../../../../styles/variables" as *;
+@use "./SignupCommonForm.scss";
+
+.signup-complete {
+  padding: 0 rem(30px) rem(28px);
+}
+
+.complete-mascot {
+  display: block;
+  width: rem(230px);
+  height: rem(230px);
+  margin: rem(100px) rem(88px) rem(90px);
+}

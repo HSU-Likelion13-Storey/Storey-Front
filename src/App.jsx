@@ -7,6 +7,7 @@ import { MyPage } from "./pages/mypage/MyPage";
 import { SubscribePage } from "./pages/mypage/SubscribePage";
 import { DownloadePage } from "./pages/mypage/DownloadPage";
 import { CollectionPage } from "./pages/mypage/CollectionPage";
+import SignupComplete from "./components/auth/signup/common/SignupComplete.jsx";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup/b2c" element={<B2CSignupPage />} />
           <Route path="/signup/b2b" element={<B2BSignupPage />} />
+          <Route path="/signup/complete" element={<SignupComplete />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage/subscribe" element={<SubscribePage />} />
           <Route path="/mypage/download" element={<DownloadePage />} />
