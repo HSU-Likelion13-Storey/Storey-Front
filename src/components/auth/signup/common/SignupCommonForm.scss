@@ -78,6 +78,15 @@
   transition:
     opacity 0.2s ease,
     filter 0.2s ease;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      filter: brightness(0.95);
+    }
+    &:active {
+      filter: brightness(0.9);
+    }
+  }
 }
 
 .btn-disabled,
@@ -86,4 +95,11 @@ button:disabled {
   color: #fff;
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+.btn-disabled:hover,
+.btn-disabled:active,
+button:disabled:hover,
+button:disabled:active {
+  filter: none;
 }
