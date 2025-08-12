@@ -5,21 +5,26 @@ import { logoText, profileImg } from "@/assets";
 import { useNavigate } from "react-router-dom";
 import "./MyPageScreen.scss";
 
-export const MyPageScreen = ({ children }) => {
-  const [role, setRole] = useState("user");
+export const MyPageScreen = () => {
+  const [role, setRole] = useState("owner"); // TODO 테스트용 사용자 상태. 추후 보관된 사용자 정보를 불러올 예정.
   const nav = useNavigate();
   return (
     <div className="container">
+      {/* Header */}
       <header className={`header ${role === "user" && "header-user"}`}>
         <img src={logoText} alt="" />
         <div className="blank"></div>
       </header>
+
+      {/* 프로필 카드 */}
       <div className={`profile-card ${role === "user" && "profile-user"}`}>
         <div className="profile-content">
           <img src={profileImg} alt="" />
           <span>최사장</span>
         </div>
       </div>
+
+      {/* 네비게이션, 로그아웃 */}
       <div className="list-content">
         {role === "user" ? (
           <ListItem text={"나의 캐릭터 도감"} onClick={() => nav("/mypage/collection")} />
@@ -34,7 +39,6 @@ export const MyPageScreen = ({ children }) => {
           <MdOutlineLogout className="icon" />
         </ListItem>
       </div>
-      {children}
     </div>
   );
 };
