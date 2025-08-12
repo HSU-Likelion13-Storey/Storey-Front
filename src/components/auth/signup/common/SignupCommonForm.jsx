@@ -4,6 +4,7 @@ import "./SignupCommonForm.scss";
 import SignupHeader from "./SignupHeader.jsx";
 import BrandHeading from "./BrandHeading.jsx";
 import Button from "./Button.jsx";
+import { ID_RE, PW_RE, ID_MSG, PW_MSG, normalizeId } from "../../authRules.js";
 
 export default function SignupCommonForm({ onSubmit, submitting, submitLabel = "다음으로" }) {
   const {
@@ -38,14 +39,13 @@ export default function SignupCommonForm({ onSubmit, submitting, submitLabel = "
           <input
             id="username"
             className={`input ${errors.username ? "has-error" : ""}`}
-            placeholder="영문 8자 이내"
+            placeholder="영문 소문자/숫자 8자 이내"
             autoComplete="username"
+            maxLength={8}
             {...register("username", {
               required: true,
-              pattern: {
-                value: /^[a-z0-9]{1,8}$/,
-                message: "*영소문자/ 숫자로 8자 이내로 작성해주세요.",
-              },
+              setValueAs: normalizeId,
+              pattern: { value: ID_RE, message: ID_MSG },
             })}
           />
           {errors.username && <p className="field-error">{errors.username.message}</p>}
@@ -62,18 +62,10 @@ export default function SignupCommonForm({ onSubmit, submitting, submitLabel = "
             className={`input ${errors.password ? "has-error" : ""}`}
             placeholder="영문, 숫자를 포함한 8~20자리 이내"
             autoComplete="new-password"
+            maxLength={20}
             {...register("password", {
               required: true,
-              minLength: {
-                value: 8,
-                message: "*영문, 숫자를 포함한 8~20자리 이내로 입력해주세요.",
-              },
-              maxLength: {
-                value: 20,
-                message: "*영문, 숫자를 포함한 8~20자리 이내로 입력해주세요.",
-              },
-              validate: (v) =>
-                /[a-zA-Z]/.test(v) && /\d/.test(v) ? true : "*영문, 숫자를 포함한 8~20자리 이내로 입력해주세요.",
+              pattern: { value: PW_RE, message: PW_MSG },
             })}
           />
           {errors.password && <p className="field-error">{errors.password.message}</p>}
@@ -87,6 +79,7 @@ export default function SignupCommonForm({ onSubmit, submitting, submitLabel = "
             className={`input ${errors.passwordConfirm ? "has-error" : ""}`}
             placeholder="비밀번호 재입력"
             autoComplete="new-password"
+            maxLength={20}
             {...register("passwordConfirm", {
               required: true,
               validate: (v) => v === watch("password") || "*비밀번호가 일치하지 않습니다.",
