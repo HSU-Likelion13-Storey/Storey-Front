@@ -1,5 +1,6 @@
 @use "../../styles/function" as *;
 @use "../../styles/variables" as *;
+
 .user-home {
   width: 100%;
   height: 100%;
@@ -30,8 +31,8 @@
         width: 75px;
         height: 75px;
         background: linear-gradient(180deg, #664bbf 0%, #9889cb 100%);
-        filter: drop-shadow(0 2.658px 2.658px rgba(0, 0, 0, 0.08));
         border-radius: 100px;
+        filter: drop-shadow(0 2.658px 2.658px rgba(0, 0, 0, 0.08));
         filter: brightness(1);
         transition:
           filter 0.3s ease,
@@ -39,6 +40,7 @@
         z-index: 3;
         &.invisible {
           opacity: 0;
+          visibility: hidden;
         }
         &:hover {
           cursor: pointer;
@@ -65,7 +67,6 @@
           border-radius: 20px;
           background: #fff;
           min-width: 260px;
-          z-index: 5;
           opacity: 0;
           visibility: hidden;
           transform: translateY(-90%);
