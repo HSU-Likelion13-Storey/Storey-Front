@@ -6,7 +6,7 @@ export default function SummaryBlock({ title, content }) {
     <section className="summary">
       <h4 className="summary-title">{title}</h4>
       <div className="summary-box">
-        <p className="summary-ontent">{content}</p>
+        <p className="summary-content">{content}</p>
       </div>
       <div className="summary-edit">
         <button className="edit-inline" type="button" onClick={() => nav("/character/edit")}>
