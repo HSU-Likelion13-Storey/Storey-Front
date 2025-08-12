@@ -1,0 +1,174 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/function" as *;
+
+.login-wrap {
+  @include flex(column, center, center, null);
+}
+
+.login-card {
+  width: 100%;
+  min-height: 100vh;
+  padding: rem(140px) rem(52px) rem(164px);
+  background: #fefefe;
+}
+
+.login-logo {
+  display: block;
+  width: rem(229px);
+  height: rem(64px);
+  margin: 0 auto rem(82px);
+}
+
+.login-tabs {
+  position: relative;
+  margin: 0 0 rem(44px);
+  padding-bottom: rem(12px);
+  border-bottom: 1px solid #e9e6f5;
+  @include flex(row, center, stretch, null);
+
+  .tab {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+    background: none;
+    border: 0;
+    padding: 0;
+    font-size: rem(16px);
+    color: #e1e1e1;
+    cursor: pointer;
+
+    &.active {
+      color: $color-primary;
+      font-weight: 700;
+    }
+  }
+
+  .tab-underline {
+    position: absolute;
+    bottom: -1px;
+    height: 2px;
+    width: 50%;
+    background: $color-primary;
+    transition: transform 0.2s ease;
+    transform: translateX(0%);
+
+    &.right {
+      transform: translateX(100%);
+    }
+  }
+}
+
+.login-form {
+  margin-top: rem(20px);
+
+  .form-row {
+    position: relative;
+    margin-bottom: rem(10px);
+  }
+
+  .input {
+    width: rem(326px);
+    height: rem(52px);
+    border-radius: rem(10px);
+    border: 1px solid #dddddd;
+    padding: rem(18px) rem(20px);
+    font-size: rem(14px);
+    font-weight: 500;
+    color: $color-font-main;
+    outline: none;
+
+    &::placeholder {
+      color: #cfcfcf;
+    }
+
+    &:focus {
+      border-color: $color-primary;
+    }
+  }
+
+  .password-row {
+    .pw-toggle {
+      position: absolute;
+      right: rem(18px);
+      top: 50%;
+      transform: translateY(-50%);
+      border: 0;
+      background: none;
+      cursor: pointer;
+      font-size: rem(16px);
+      color: #cfcfcf;
+      transition: color 0.2s ease;
+
+      &.active {
+        color: #2a2a2a;
+      }
+    }
+  }
+
+  .btn-primary {
+    width: rem(326px);
+    height: rem(52px);
+    margin-top: rem(16px);
+    border: 0;
+    border-radius: rem(10px);
+    background: $color-primary;
+    color: #ffffff;
+    font-size: rem(16px);
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(0.95);
+    }
+    &:active {
+      filter: brightness(0.9);
+    }
+  }
+}
+
+.login-links {
+  margin-top: rem(20px);
+  @include flex(row, center, center, rem(40px));
+
+  .link {
+    font-size: rem(11px);
+    font-weight: 700;
+    color: $color-primary;
+    text-decoration: underline;
+  }
+  .divider {
+    color: #dddddd;
+  }
+}
+
+.login-helper-chip {
+  position: relative;
+  margin: rem(10px) auto 0;
+  width: max-content;
+  background: linear-gradient(90deg, #dcd2f4, #ede7fa);
+  color: #4f4376;
+  padding: rem(7px) rem(12px);
+  border-radius: 20px;
+  font-size: rem(10px);
+
+  // 말풍선 꼬리
+  &::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    border-width: 0 6px 6px 6px;
+    border-style: solid;
+  }
+
+  // 손님(왼쪽 꼬리)
+  &.left::before {
+    left: rem(28px);
+    border-color: transparent transparent #dcd2f4 transparent;
+  }
+
+  // 사장님(오른쪽 꼬리)
+  &.right::before {
+    right: rem(28px);
+    border-color: transparent transparent #ede7fa transparent;
+  }
+}

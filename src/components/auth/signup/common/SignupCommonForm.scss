@@ -1,0 +1,67 @@
+@use "../../../../styles/function" as *;
+@use "../../../../styles/variables" as *;
+
+.signup-form {
+  max-width: rem(420px);
+  margin: 0;
+  padding: 0 rem(30px) rem(28px);
+}
+
+.form-field {
+  margin-bottom: rem(14px);
+  position: relative;
+}
+
+.form-label {
+  display: block;
+  font-size: rem(14px);
+  font-weight: 500;
+  color: $color-font-main;
+  margin: rem(30px) 0 rem(6px);
+}
+
+.input {
+  width: 100%;
+  padding: rem(18px) rem(20px) rem(18px) rem(17px);
+  border: rem(1px) solid #dddddd;
+  border-radius: rem(12px);
+  font-size: rem(14px);
+  font-weight: 500;
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+  }
+}
+
+/* row/ghost 버튼은 현재 화면에선 쓰지 않지만
+   다른 폼에서 재사용 중일 수 있어 유지 */
+.row {
+  display: flex;
+  gap: rem(10px);
+}
+
+.btn {
+  padding: rem(12px) rem(16px);
+  border-radius: rem(12px);
+  border: rem(1px) solid transparent;
+  cursor: pointer;
+
+  &.primary {
+    background: $color-primary;
+    color: #ffffff;
+    width: rem(370px);
+    height: rem(64px);
+    margin-top: rem(90px);
+    font-size: rem(16px);
+    font-weight: 600;
+  }
+
+  &.ghost {
+    height: rem(48px);
+    padding: 0 rem(30px);
+    white-space: nowrap;
+    background: #f0f0f0;
+    color: #696969;
+  }
+}

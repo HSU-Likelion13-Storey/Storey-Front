@@ -1,0 +1,18 @@
+@use "../../../../styles/function" as *;
+
+.brand-heading {
+  padding: rem(0px) rem(30px) rem(13px);
+}
+.brand-logo {
+  width: rem(89px);
+  height: rem(25px);
+  display: block;
+  margin-bottom: rem(16px);
+}
+.brand-title {
+  font-size: rem(32px);
+  color: #2a2a2a;
+  line-height: rem(44px);
+  font-weight: 700;
+  white-space: pre-line;
+}
