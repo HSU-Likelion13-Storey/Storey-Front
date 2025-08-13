@@ -65,10 +65,7 @@
           font-size: 1rem;
           font-weight: 600;
           letter-spacing: -0.408px;
-          background: linear-gradient(270deg, #4b4a4a 0%, #6d6c6c 100%);
-          background-clip: text;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
+          color: #4b4a4a;
         }
         &::before {
           content: "";

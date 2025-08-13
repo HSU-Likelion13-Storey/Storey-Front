@@ -1,13 +1,14 @@
 import styles from "./CharacterDetail.module.scss";
 import { logoTest, logoText, shadowChar } from "@/assets";
 import { Modal } from "@/components/common/Modal";
+import { useDownload } from "@/hooks/useDownload";
 import { useState } from "react";
 import { FiDownload } from "react-icons/fi";
 import { HiCamera } from "react-icons/hi2";
 
 export const CharacterDetail = () => {
   const [modalOpen, setModalOpen] = useState(true);
-
+  const { ref, download, setDownModal, downModal } = useDownload("test.png");
   return (
     <div className={styles.container}>
       {/* 헤더 */}
@@ -23,7 +24,7 @@ export const CharacterDetail = () => {
           <span className={styles.headline}>참새방앗간</span>
           <span className={styles.address}>서울 성북구 삼선교로 11길 20 1층</span>
         </div>
-        <div className={styles.card}>
+        <div className={styles.card} ref={ref}>
           <div className={styles.message}>
             <span>“들어왔으면, 한 잔부터 받아요. 오늘은 어땠어요?”</span>
           </div>
@@ -36,7 +37,7 @@ export const CharacterDetail = () => {
             수다쟁이 & 다정다감하고, ‘하루쯤은 떠들고 웃고 맛있는 걸 마셔야지.’가 좌우명이다.
           </span>
         </div>
-        <div className={styles.download}>
+        <div className={styles.download} onClick={download}>
           <FiDownload className={styles.icon} />
           <span className={styles.downText}>이미지 저장</span>
         </div>
@@ -55,6 +56,14 @@ export const CharacterDetail = () => {
           title={`나의 캐릭터 도감에 저장이 되었습니다!`}
           caption="[마이 페이지 → 나의 캐릭터 도감에서 확인 가능]"
           cancelFn={() => setModalOpen(false)}
+          confirmType={false}
+        />
+      )}
+      {downModal && (
+        <Modal
+          title={`이미지가 저장되었습니다!`}
+          caption="저장한 이미지를 공유해보세요!"
+          cancelFn={() => setDownModal(false)}
           confirmType={false}
         />
       )}
