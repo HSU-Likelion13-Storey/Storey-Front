@@ -1,9 +1,13 @@
 import styles from "./CharacterDetail.module.scss";
 import { logoTest, logoText, shadowChar } from "@/assets";
+import { Modal } from "@/components/common/Modal";
+import { useState } from "react";
 import { FiDownload } from "react-icons/fi";
 import { HiCamera } from "react-icons/hi2";
 
 export const CharacterDetail = () => {
+  const [modalOpen, setModalOpen] = useState(true);
+
   return (
     <div className={styles.container}>
       {/* 헤더 */}
@@ -46,6 +50,14 @@ export const CharacterDetail = () => {
           하루 30개 한정의 수제버거, 그리고 ‘고추마요 쉬림프버거’에 담긴 정성이 이 가게의 심장이다.
         </div>
       </div>
+      {modalOpen && (
+        <Modal
+          title={`나의 캐릭터 도감에 저장이 되었습니다!`}
+          caption="[마이 페이지 → 나의 캐릭터 도감에서 확인 가능]"
+          cancelFn={() => setModalOpen(false)}
+          confirmType={false}
+        />
+      )}
     </div>
   );
 };
