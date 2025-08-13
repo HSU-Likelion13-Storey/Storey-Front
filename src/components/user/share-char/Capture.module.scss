@@ -52,9 +52,6 @@
         width: 40px;
         height: 40px;
       }
-      img {
-        width: 89px;
-      }
     }
 
     .contents {
@@ -104,7 +101,6 @@
           bottom: vh(30px);
           right: 30px;
           .img {
-            position: relative;
             width: auto; // 캡쳐 시 눌리는 오류 수정
             height: vh(174px);
             z-index: 3;
