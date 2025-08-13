@@ -1,0 +1,55 @@
+@use "@/styles/_variables" as *;
+@use "@/styles/_function" as *;
+
+.banner {
+  width: rem(372px);
+  height: rem(88px);
+  flex-shrink: 0;
+
+  border: none;
+  cursor: pointer;
+  border-radius: rem(18px);
+  padding: rem(24px) rem(26px);
+  color: #fff;
+
+  background: linear-gradient(94deg, #8b75d3 3.49%, #6c4fcc 110.23%);
+  @include flex(center, space-between);
+
+  .banner__left {
+    @include flex(center, flex-start);
+    gap: rem(24px);
+  }
+
+  .banner__emoji {
+    font-size: rem(34px);
+    line-height: rem(38px);
+    transform: translateY(rem(2px));
+  }
+
+  .banner__texts {
+    min-width: 0;
+  }
+
+  .banner-title {
+    font-weight: 600;
+    font-size: rem(20px);
+    line-height: rem(22px);
+    margin-bottom: rem(2px);
+    letter-spacing: -0.2px;
+  }
+
+  .banner-subtitle {
+    font-size: rem(14px);
+    font-weight: 600;
+    color: #e7e7e7;
+    line-height: rem(22px);
+    letter-spacing: -0.14px;
+  }
+
+  .banner-chevron {
+    font-size: rem(20px);
+    color: #fff;
+    margin-left: rem(90px);
+    transform: translateY(rem(12px));
+  }
+}
