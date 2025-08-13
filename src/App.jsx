@@ -9,6 +9,7 @@ import { DownloadePage } from "./pages/mypage/DownloadPage";
 import { CollectionPage } from "./pages/mypage/CollectionPage";
 import SignupComplete from "./components/auth/signup/common/SignupComplete.jsx";
 import { UserHomePage } from "./pages/user/UserHomePage";
+import { QrScanPage } from "./pages/user/QrScanPage";
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
           <Route path="/mypage/collection" element={<CollectionPage />} />
           {/* user 페이지 */}
           <Route path="/home/user" element={<UserHomePage />} />
-          <Route path="/scan" element={<UserHomePage />} />
+          <Route path="/scan" element={<QrScanPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
