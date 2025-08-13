@@ -1,5 +1,7 @@
 import QrScanner from "qr-scanner";
 import { useEffect, useRef } from "react";
+import { QrOverlay } from "./QrOverlay";
+import "./QrScan.scss";
 
 // 브라우저 정책 때문에 https 환경에서만 카메라 권한이 허용됨
 // 배포 후에는 문제 없으나 로컬 테스트할 때 오류 발생.
@@ -29,7 +31,12 @@ export const QrScan = () => {
     }
   }, []);
 
-  return <video ref={videoRef} style={{ width: "100%", height: "100%", objectFit: "cover" }} autoPlay playsInline />;
+  return (
+    <div className="qr-scan">
+      <video ref={videoRef} style={{ width: "100%", height: "100%", objectFit: "cover" }} autoPlay playsInline />
+      <QrOverlay />
+    </div>
+  );
 };
 
 const QrOptions = {
@@ -57,6 +64,6 @@ const QrOptions = {
       height: regionHeight,
     };
   },
-  highlightScanRegion: true, // 스캔 영역 표시
-  highlightCodeOutline: true, // 코드 윤곽선 표시
+  // highlightScanRegion: true, // 스캔 영역 표시
+  // highlightCodeOutline: true, // 코드 윤곽선 표시
 };
