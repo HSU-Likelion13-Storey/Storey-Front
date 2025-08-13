@@ -11,7 +11,7 @@ import SignupComplete from "./components/auth/signup/common/SignupComplete.jsx";
 import { UserHomePage } from "./pages/user/UserHomePage";
 import { QrScanPage } from "./pages/user/QrScanPage";
 import { CharacterDetailPage } from "./pages/user/CharacterDetailPage";
-import { Capture } from "./components/user/character-detail/Capture";
+import { Capture } from "./components/user/share-char/Capture";
 
 function App() {
   return (
