@@ -5,5 +5,6 @@ import logoShadow from "./logo-shadow.svg";
 import mascotHappy from "./mascot-happy.svg";
 import mascotNone from "./mascot-none.svg";
 import logoPig from "./pig-logo.svg";
+import qrOverlay from "./qr-overlay.svg";
 
-export { logoKakao, logoText, profileImg, logoShadow, mascotHappy, logoPig, mascotNone };
+export { logoKakao, logoText, profileImg, logoShadow, mascotHappy, logoPig, mascotNone, qrOverlay };
