@@ -18,7 +18,7 @@ export function useDownload(filename = "download.png") {
   };
 
   // 캡쳐 저장 함수
-  const showPreview = async () => {
+  const getPreview = async () => {
     const dataURL = await getDataURL();
     setPreview(dataURL);
   };
@@ -34,5 +34,5 @@ export function useDownload(filename = "download.png") {
     setDownModal(true);
   };
 
-  return { ref, download, setDownModal, downModal, showPreview, preview };
+  return { ref, download, setDownModal, downModal, getPreview, preview };
 }
