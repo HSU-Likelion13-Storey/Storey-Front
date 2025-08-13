@@ -10,23 +10,27 @@ import { CollectionPage } from "./pages/mypage/CollectionPage";
 import SignupComplete from "./components/auth/signup/common/SignupComplete.jsx";
 import { UserHomePage } from "./pages/user/UserHomePage";
 import { QrScanPage } from "./pages/user/QrScanPage";
+import { CharacterDetailPage } from "./pages/user/CharacterDetail";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
+          {/* 공통 페이지 */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup/b2c" element={<B2CSignupPage />} />
           <Route path="/signup/b2b" element={<B2BSignupPage />} />
           <Route path="/signup/complete" element={<SignupComplete />} />
           <Route path="/mypage" element={<MyPage />} />
+          {/* 사장님 페이지 */}
           <Route path="/mypage/subscribe" element={<SubscribePage />} />
           <Route path="/mypage/download" element={<DownloadePage />} />
-          <Route path="/mypage/collection" element={<CollectionPage />} />
           {/* user 페이지 */}
+          <Route path="/mypage/collection" element={<CollectionPage />} />
           <Route path="/home/user" element={<UserHomePage />} />
           <Route path="/scan" element={<QrScanPage />} />
+          <Route path="/detail/:id" element={<CharacterDetailPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
