@@ -10,7 +10,7 @@ import { CollectionPage } from "./pages/mypage/CollectionPage";
 import SignupComplete from "./components/auth/signup/common/SignupComplete.jsx";
 import { UserHomePage } from "./pages/user/UserHomePage";
 import { QrScanPage } from "./pages/user/QrScanPage";
-import { CharacterDetailPage } from "./pages/user/CharacterDetail";
+import { CharacterDetailPage } from "./pages/user/CharacterDetailPage";
 
 function App() {
   return (
