@@ -11,6 +11,7 @@ import SignupComplete from "./components/auth/signup/common/SignupComplete.jsx";
 import { UserHomePage } from "./pages/user/UserHomePage";
 import { QrScanPage } from "./pages/user/QrScanPage";
 import { CharacterDetailPage } from "./pages/user/CharacterDetailPage";
+import { Capture } from "./components/user/character-detail/Capture";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/home/user" element={<UserHomePage />} />
           <Route path="/scan" element={<QrScanPage />} />
           <Route path="/detail/:id" element={<CharacterDetailPage />} />
+          <Route path="/capture" element={<Capture />} />
         </Route>
       </Routes>
     </BrowserRouter>
