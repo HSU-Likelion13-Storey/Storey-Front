@@ -12,6 +12,7 @@ import { UserHomePage } from "./pages/user/UserHomePage";
 import { QrScanPage } from "./pages/user/QrScanPage";
 import { CharacterDetailPage } from "./pages/user/CharacterDetailPage";
 import { Capture } from "./components/user/share-char/Capture";
+import { Share } from "./components/user/share-char/Share";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/scan" element={<QrScanPage />} />
           <Route path="/detail/:id" element={<CharacterDetailPage />} />
           <Route path="/capture" element={<Capture />} />
+          <Route path="/share" element={<Share />} />
         </Route>
       </Routes>
     </BrowserRouter>
