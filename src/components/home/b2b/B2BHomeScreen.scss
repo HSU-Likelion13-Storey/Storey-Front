@@ -1,0 +1,19 @@
+@use "@/styles/_variables" as *;
+@use "@/styles/_function" as *;
+
+.b2b-header {
+  @include flex(center, space-between, null, null);
+  padding-top: rem(68px);
+  padding-left: rem(30px);
+  padding-bottom: rem(41px);
+  background: #fff;
+
+  img {
+    width: rem(89px);
+    height: rem(29px);
+  }
+}
+
+.b2b-home {
+  padding: 0 rem(29px) rem(88px);
+}

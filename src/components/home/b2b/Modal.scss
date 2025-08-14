@@ -1,0 +1,57 @@
+@use "@/styles/_function" as *;
+
+.qrmodal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.qrmodal-imgwrap {
+  position: relative;
+}
+
+.qrmodal-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.qrmodal-button {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: rem(22px);
+  min-width: 80%;
+  height: rem(54px);
+  border: 0;
+  border-radius: rem(12px);
+  font-weight: 600;
+  font-size: rem(16px);
+  color: #fff;
+  cursor: pointer;
+  background: #664bbf;
+
+  &:hover {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%), #664bbf;
+  }
+}
+
+.qrmodal-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.qrmodal-link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: rem(14px);
+  font-weight: 500;
+  color: #fff;
+}

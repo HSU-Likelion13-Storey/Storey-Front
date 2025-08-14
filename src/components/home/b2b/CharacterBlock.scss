@@ -1,0 +1,118 @@
+@use "@/styles/_variables" as *;
+@use "@/styles/_function" as *;
+
+.block {
+  margin-top: rem(20px);
+  margin-bottom: rem(28px);
+  color: $color-font-main;
+
+  .block-card {
+    border-radius: rem(20px);
+    background: linear-gradient(
+      180deg,
+      rgba(240, 198, 124, 0.2) 3.77%,
+      rgba(245, 229, 171, 0.2) 26.74%,
+      rgba(232, 144, 36, 0.2) 108.55%
+    );
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.04);
+    padding: rem(20px) rem(28px) rem(18px);
+    text-align: center;
+  }
+
+  .block-hint {
+    font-size: rem(14px);
+    font-weight: 500;
+    color: #8c8c8c;
+    margin-bottom: rem(28px);
+  }
+
+  .block-bubble {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: rem(19px) rem(14px);
+    max-width: 100%;
+    background: #fff;
+    color: #6d6c6c;
+    font-size: rem(16px);
+    font-weight: 600;
+    letter-spacing: -0.4px;
+    border-radius: rem(23px);
+    box-shadow: 0 rem(8px) rem(18px) rgba(0, 0, 0, 0.08);
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: rem(-8px);
+      width: rem(50px);
+      height: rem(10px);
+      background: #fff;
+      clip-path: polygon(50% 100%, 0 0, 100% 0);
+      filter: drop-shadow(0 rem(3px) rem(3px) rgba(0, 0, 0, 0.06));
+    }
+  }
+
+  .block-img {
+    width: rem(168px);
+    height: auto;
+    display: block;
+    margin: 0 auto 0;
+    filter: drop-shadow(0 rem(8px) rem(14px) rgba(0, 0, 0, 0.12)); // 이미지 그림자 효과(삭제해도 OK)
+  }
+
+  .block-name {
+    margin-top: rem(32px);
+    font-size: rem(32px);
+    line-height: rem(24px);
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    color: #3c3c3c;
+  }
+
+  .block-desc {
+    margin: rem(20px) auto;
+    max-width: rem(260px);
+    font-size: rem(16px);
+    line-height: rem(24px);
+    color: #7e7e7e;
+
+    strong,
+    b {
+      font-weight: 600;
+      color: #3c3c3c;
+    }
+  }
+
+  /* 하단 수정하기 (텍스트 링크) */
+  .block-edit {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: rem(38px);
+  }
+
+  .button-edit {
+    display: inline-flex;
+    align-items: center;
+    background: none;
+    border: none;
+    font-size: rem(14px);
+    font-weight: 600;
+    color: #878787;
+    cursor: pointer;
+    text-decoration: underline;
+
+    &:hover {
+      color: #696969;
+    }
+    &:active {
+      transform: translateY(1px);
+    }
+
+    .button-edit-icon {
+      font-size: rem(20px);
+    }
+  }
+}
