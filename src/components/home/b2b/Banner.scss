@@ -13,7 +13,7 @@
   color: #fff;
 
   background: linear-gradient(94deg, #8b75d3 3.49%, #6c4fcc 110.23%);
-  @include flex(center, space-between);
+  @include flex(center, center, space-between);
 
   .banner__left {
     @include flex(center, flex-start);
@@ -49,7 +49,5 @@
   .banner-chevron {
     font-size: rem(20px);
     color: #fff;
-    margin-left: rem(90px);
-    transform: translateY(rem(12px));
   }
 }
