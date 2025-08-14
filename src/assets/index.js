@@ -16,7 +16,7 @@ export {
   mascotHappy,
   logoPig,
   mascotNone,
-  testlogo
+  testlogo,
   qrOverlay,
   logoTest,
   shadowChar,
