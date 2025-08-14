@@ -15,6 +15,27 @@ export const Share = () => {
     console.log(state);
   }, [state]);
 
+  const shareHandle = async () => {
+    if (navigator.share) {
+      const res = await fetch(state.preview); // 또는 base64 url
+      const blob = await res.blob();
+      const file = new File([blob], "character.png", { type: blob.type });
+
+      try {
+        await navigator.share({
+          files: [file],
+          title: "내 캐릭터 공유",
+          text: "내 캐릭터를 공유합니다!",
+        });
+        console.log("공유 성공!");
+      } catch (err) {
+        console.error("공유 실패:", err);
+      }
+    } else {
+      alert("이 브라우저는 공유 기능을 지원하지 않습니다.");
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -29,7 +50,7 @@ export const Share = () => {
           <span>이미지 저장</span>
         </div>
         <div className={`${styles.button} ${styles.share}`}>
-          <RiShare2Line className={styles.icon} />
+          <RiShare2Line className={styles.icon} onClick={shareHandle} />
           <span>이미지 공유</span>
         </div>
       </div>
