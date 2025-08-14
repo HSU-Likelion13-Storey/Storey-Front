@@ -34,6 +34,14 @@ export const Capture = () => {
     startCamera();
   }, []);
 
+  const shareHandle = async () => {
+    await getPreview();
+  };
+
+  useEffect(() => {
+    if (preview) nav("/share", { state: { preview: preview } });
+  }, [preview]);
+
   return (
     <div className={styles.container}>
       {/* 배경 비디오 */}
@@ -68,7 +76,7 @@ export const Capture = () => {
         </div>
         <div className={styles.bottom}>
           <span className={styles.caption}>스토어리 캐릭터와 사진을 찍고, SNS에 공유해보세요!</span>
-          <div className={styles.shutter} onClick={download}></div>
+          <div className={styles.shutter} onClick={shareHandle}></div>
         </div>
       </div>
     </div>
