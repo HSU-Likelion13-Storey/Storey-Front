@@ -15,5 +15,5 @@
 }
 
 @function vh($size) {
-  @return calc($size / 1080px * 100vh);
+  @return calc($size / 932px * 100vh);
 }

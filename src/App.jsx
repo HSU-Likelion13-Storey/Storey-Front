@@ -8,6 +8,7 @@ import { SubscribePage } from "./pages/mypage/SubscribePage";
 import { DownloadePage } from "./pages/mypage/DownloadPage";
 import { CollectionPage } from "./pages/mypage/CollectionPage";
 import SignupComplete from "./components/auth/signup/common/SignupComplete.jsx";
+import B2BMain from "./pages/home/B2BHome";
 import { UserHomePage } from "./pages/user/UserHomePage";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/mypage/subscribe" element={<SubscribePage />} />
           <Route path="/mypage/download" element={<DownloadePage />} />
           <Route path="/mypage/collection" element={<CollectionPage />} />
+          <Route path="/home/b2b" element={<B2BMain />} />
           {/* user 페이지 */}
           <Route path="/home/user" element={<UserHomePage />} />
         </Route>
