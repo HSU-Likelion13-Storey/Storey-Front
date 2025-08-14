@@ -9,7 +9,7 @@
   overflow: hidden;
   .header {
     width: 100%;
-    padding: rem(68px) 0 rem(2px) rem(30px);
+    padding: vh(68px) 0 vh(2px) rem(30px);
     background-color: white;
     z-index: 1;
     img {
@@ -19,17 +19,17 @@
   .header-user {
     @include flex();
     width: 100%;
-    padding: rem(68px) 0 rem(28px) 0;
+    padding: vh(68px) 0 vh(28px) 0;
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.06);
   }
   .profile-card {
     max-height: 418px;
     width: 100%;
     background: white;
-    padding: rem(64px) 0 rem(46px) 0;
+    padding: vh(64px) 0 vh(46px) 0;
 
     .profile-content {
-      @include flex(column, $gap: rem(37px));
+      @include flex(column, $gap: vh(37px));
       span {
         color: $color-font-main;
         text-align: center;
@@ -40,11 +40,11 @@
     }
   }
   .profile-user {
-    padding: rem(35px) 0 rem(46px) 0;
+    padding: vh(35px) 0 vh(46px) 0;
   }
   .list-content {
     @include flex(column, $justify-content: flex-start);
-    padding: rem(30px) 0 0 0;
+    padding: vh(30px) 0 0 0;
     flex: 1 1 0;
     width: 100%;
     position: relative;
@@ -66,7 +66,7 @@
       }
       &.logout {
         position: absolute;
-        bottom: 130px;
+        bottom: vh(130px);
         color: #cfcfcf;
         padding: rem(18px) rem(48px);
         font-size: rem(16px);

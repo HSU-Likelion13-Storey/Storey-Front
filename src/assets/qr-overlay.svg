@@ -1,0 +1,7 @@
+<svg width="354" height="354" viewBox="0 0 354 354" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M176.891 189.964V164.036M189.899 177.044H163.972" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<foreignObject x="-14" y="-14" width="60" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(2px);height:100%;width:100%"></div></foreignObject><path data-figma-bg-blur-radius="4" d="M42 0H0V42" stroke="white" stroke-width="20"/>
+<foreignObject x="308" y="-14" width="60" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(2px);height:100%;width:100%"></div></foreignObject><path data-figma-bg-blur-radius="4" d="M312 0H354V42" stroke="white" stroke-width="20"/>
+<foreignObject x="308" y="308" width="60" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(2px);height:100%;width:100%"></div></foreignObject><path data-figma-bg-blur-radius="4" d="M354 312V354H312" stroke="white" stroke-width="20"/>
+<foreignObject x="-14" y="308" width="60" height="60"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(2px);height:100%;width:100%"></div></foreignObject><path data-figma-bg-blur-radius="4" d="M0 312V354H42" stroke="white" stroke-width="20"/>
+</svg>

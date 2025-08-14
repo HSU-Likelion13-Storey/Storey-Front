@@ -19,7 +19,7 @@ export const Footer = () => {
 
       {/* qr 페이지 이동 */}
       {role == "user" && (
-        <FooterItem path="qr">
+        <FooterItem path="scan">
           <MdOutlineQrCode className="icon" />
           <span>QR 코드 스캔</span>
         </FooterItem>

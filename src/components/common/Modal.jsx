@@ -49,8 +49,10 @@ export const Modal = ({
               {confirm}
             </button>
           </div>
-        ) : (
+        ) : img !== "" ? (
           <img src={img} className="modal-img" alt="" />
+        ) : (
+          <div className="blank"></div>
         )}
       </div>
     </div>

@@ -34,6 +34,7 @@
 
     .modal-text {
       @include flex(column, $gap: 10px);
+      text-align: center;
       .modal-title {
         color: $color-font-main;
         font-size: rem(24px);
@@ -50,7 +51,7 @@
     .modal-btn-wrapper {
       @include flex($gap: 8px);
       width: 100%;
-      margin-top: 68px;
+      margin-top: vh(68px);
       .modal-btn {
         flex: 1 1 0;
         padding: rem(16px) 0;
@@ -81,4 +82,9 @@
       height: 160px;
     }
   }
+}
+
+.blank {
+  height: 20px;
+  width: 100%;
 }
