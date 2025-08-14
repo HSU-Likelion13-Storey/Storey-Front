@@ -22,15 +22,13 @@ export const Capture = () => {
     const startCamera = async () => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: {
-            facingMode: { exact: "environment" },
-          },
+          video: { facingMode: { ideal: "environment" } },
         });
         if (videoRef.current) videoRef.current.srcObject = stream;
         if (videoBackRef.current) videoBackRef.current.srcObject = stream;
       } catch (err) {
         console.error("카메라 접근 실패", err);
-        // nav(-1);
+        nav(-1);
       }
     };
     startCamera();
