@@ -1,20 +1,22 @@
 import { useDownload } from "@/hooks/useDownload";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./Capture.module.scss";
 import { logoTest, logoText } from "@/assets";
 import { IoClose } from "react-icons/io5";
+import { Modal } from "@/components/common/Modal";
 export const Capture = () => {
+  const [errorModal, setErrorModal] = useState(false);
   const { state } = useLocation();
   const nav = useNavigate();
 
-  const { ref, download, getPreview, preview } = useDownload("test.png");
+  const { ref, getPreview, preview } = useDownload("test.png");
   const videoRef = useRef(null); // 캡쳐할 비디오
   const videoBackRef = useRef(null); // 배경 비디오
 
   // 캐릭터 상세 페이지에서 데이터 가져오기
   useEffect(() => {
-    // if (!state) nav(-1);
+    if (!state) nav(-1);
   }, [state, nav]);
 
   // 카메라 권한 + 비디오에 재생 시키기
@@ -28,18 +30,18 @@ export const Capture = () => {
         if (videoBackRef.current) videoBackRef.current.srcObject = stream;
       } catch (err) {
         console.error("카메라 접근 실패", err);
-        nav(-1);
+        setErrorModal(true);
       }
     };
     startCamera();
   }, []);
 
-  const shareHandle = async () => {
+  const shutterHandle = async () => {
     await getPreview();
   };
 
   useEffect(() => {
-    if (preview) nav("/share", { state: { preview: preview } });
+    if (preview) nav("/capture/share", { state: { preview: preview } });
   }, [preview]);
 
   return (
@@ -61,14 +63,14 @@ export const Capture = () => {
           {/* 캡쳐할 영역(비디오 포함) */}
           <div className={styles.captureArea} ref={ref}>
             <div className={styles.title}>
-              <span className={styles.headline}>참새방앗간</span>
-              <span className={styles.address}>서울 성북구 삼선교로 11길 20 1층</span>
+              <span className={styles.headline}>{state?.title}</span>
+              <span className={styles.address}>{state?.address}</span>
             </div>
             <div className={styles.card}>
               <div className={styles.message}>
-                <span>“들어왔으면, 한 잔부터 받아요. 오늘은 어땠어요?”</span>
+                <span>{state?.message}</span>
               </div>
-              <img src={logoTest} className={styles.img} alt="" />
+              <img src={state?.img} className={styles.img} alt="" />
             </div>
             <video ref={videoRef} className={styles.video} autoPlay playsInline />
           </div>
@@ -76,9 +78,20 @@ export const Capture = () => {
         </div>
         <div className={styles.bottom}>
           <span className={styles.caption}>스토어리 캐릭터와 사진을 찍고, SNS에 공유해보세요!</span>
-          <div className={styles.shutter} onClick={shareHandle}></div>
+          <div className={styles.shutter} onClick={shutterHandle}></div>
         </div>
       </div>
+      {errorModal && (
+        <Modal
+          title={"카메라를 불러오지 못했습니다"}
+          caption={"3초 뒤 이전화면으로 돌아갑니다"}
+          confirmType={false}
+          cancelFn={() => {
+            setErrorModal(false);
+            nav(-1);
+          }}
+        />
+      )}
     </div>
   );
 };
