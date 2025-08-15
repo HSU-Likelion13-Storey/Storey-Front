@@ -1,10 +1,12 @@
 import { useDownload } from "@/hooks/useDownload";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./Capture.module.scss";
 import { logoTest, logoText } from "@/assets";
 import { IoClose } from "react-icons/io5";
+import { Modal } from "@/components/common/Modal";
 export const Capture = () => {
+  const [errorModal, setErrorModal] = useState(false);
   const { state } = useLocation();
   const nav = useNavigate();
 
@@ -28,18 +30,18 @@ export const Capture = () => {
         if (videoBackRef.current) videoBackRef.current.srcObject = stream;
       } catch (err) {
         console.error("카메라 접근 실패", err);
-        nav(-1);
+        setErrorModal(true);
       }
     };
     startCamera();
   }, []);
 
-  const shareHandle = async () => {
+  const shutterHandle = async () => {
     await getPreview();
   };
 
   useEffect(() => {
-    if (preview) nav("/share", { state: { preview: preview } });
+    if (preview) nav("/capture/share", { state: { preview: preview } });
   }, [preview]);
 
   return (
@@ -76,9 +78,20 @@ export const Capture = () => {
         </div>
         <div className={styles.bottom}>
           <span className={styles.caption}>스토어리 캐릭터와 사진을 찍고, SNS에 공유해보세요!</span>
-          <div className={styles.shutter} onClick={shareHandle}></div>
+          <div className={styles.shutter} onClick={shutterHandle}></div>
         </div>
       </div>
+      {errorModal && (
+        <Modal
+          title={"카메라를 불러오지 못했습니다"}
+          caption={"3초 뒤 이전화면으로 돌아갑니다"}
+          confirmType={false}
+          cancelFn={() => {
+            setErrorModal(false);
+            // nav(-1);
+          }}
+        />
+      )}
     </div>
   );
 };
