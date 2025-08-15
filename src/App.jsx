@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import LoginPage from "./pages/auth/LoginPage";
 import B2CSignupPage from "./pages/auth/B2CSignupPage";
@@ -20,6 +20,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
+          {/* 루트 라우트 분기처리 */}
+          <Route path="/" element={<RouteSwitch role={"user"} />} />
           {/* 공통 페이지 */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup/b2c" element={<B2CSignupPage />} />
@@ -45,3 +47,12 @@ function App() {
 }
 
 export default App;
+
+// 루트 라우트 경로 변경
+export const RouteSwitch = ({ role = "" }) => {
+  if (role === "b2b") return <Navigate to="/home/b2b" replace />;
+  if (role === "user") return <Navigate to="/home/user" replace />;
+
+  // role 값이 없으면 로그인으로 이동
+  return <Navigate to="/login" replace />;
+};

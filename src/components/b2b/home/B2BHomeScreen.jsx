@@ -17,7 +17,7 @@ export default function B2BHomeScreen() {
       banner: { title: "깜짝 이벤트 올리기!", subtitle: "오늘은 햄버거 추천 어때요?" },
       character: {
         speech: "행복한 하루와 위로를 선물해드릴게요.",
-        imageSrc: { testlogo },
+        imageSrc: testlogo,
         name: "하루치",
         description: `하루치는 따뜻하고 말이 느린 아이에요, ‘버거는 패스트푸드가 아니다. 정성이 담긴 슬로우푸드다'가 좌우명이랍니다.`,
       },
