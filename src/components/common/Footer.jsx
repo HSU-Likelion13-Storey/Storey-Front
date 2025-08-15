@@ -1,16 +1,22 @@
 import { GoHomeFill } from "react-icons/go";
 import { BsFillPersonFill } from "react-icons/bs";
 import { MdOutlineQrCode } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Footer.scss";
 import { Link, useLocation } from "react-router-dom";
 
 export const Footer = () => {
-  const [role, setRole] = useState("user"); // TODO 로그인 후 저장한 사용자 정보 불러오기
+  const [role, setRole] = useState("");
+
+  // 로그인 후 저장한 사용자 정보 불러오기
+  useEffect(() => {
+    const role = localStorage.getItem("role"); // TODO 로컬말고 전역으로 관리?
+    // setRole(role);
+    setRole("user");
+  }, []);
 
   return (
     <footer className="footer">
-      {/* TODO 라우터 변경 시 path값 변경필요 */}
       {/* 홈 페이지 이동 */}
       <FooterItem path="home" role={role}>
         <GoHomeFill className="icon" />
@@ -26,7 +32,7 @@ export const Footer = () => {
       )}
 
       {/* 마이 페이지 이동 */}
-      <FooterItem path="mypage">
+      <FooterItem path="mypage" role={role}>
         <BsFillPersonFill className="icon" />
         <span>마이페이지</span>
       </FooterItem>

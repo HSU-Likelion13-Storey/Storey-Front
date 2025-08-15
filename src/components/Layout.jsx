@@ -1,6 +1,21 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
+import { Footer } from "./common/Footer";
+import { useEffect, useState } from "react";
 
 export const Layout = () => {
+  const [isFooter, setIsFooter] = useState(true);
+  const location = useLocation();
+
+  useEffect(() => {
+    const noneFooterPath =
+      location.pathname.includes("login") ||
+      location.pathname.includes("signup") ||
+      location.pathname.includes("event") ||
+      location.pathname.includes("chat") ||
+      location.pathname.includes("complate");
+    setIsFooter(!noneFooterPath);
+  }, [location]);
+
   return (
     <div
       style={{
@@ -10,6 +25,7 @@ export const Layout = () => {
         position: "relative",
       }}>
       <Outlet />
+      <Footer />
     </div>
   );
 };
