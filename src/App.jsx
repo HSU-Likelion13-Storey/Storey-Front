@@ -35,7 +35,7 @@ function App() {
           <Route path="/scan" element={<QrScanPage />} />
           <Route path="/detail/:id" element={<CharacterDetailPage />} />
           <Route path="/capture" element={<Capture />} />
-          <Route path="/share" element={<Share />} />
+          <Route path="/capture/share" element={<Share />} />
           <Route path="/mypage/user" element={<B2BMyPage />} />
           <Route path="/mypage/user/collection" element={<CollectionPage />} />
         </Route>

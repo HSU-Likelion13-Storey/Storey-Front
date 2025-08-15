@@ -12,6 +12,7 @@ export const Layout = () => {
       location.pathname.includes("signup") ||
       location.pathname.includes("event") ||
       location.pathname.includes("chat") ||
+      location.pathname.includes("capture") ||
       location.pathname.includes("complate");
     setIsFooter(!noneFooterPath);
   }, [location]);
@@ -25,7 +26,7 @@ export const Layout = () => {
         position: "relative",
       }}>
       <Outlet />
-      <Footer />
+      {isFooter && <Footer />}
     </div>
   );
 };
