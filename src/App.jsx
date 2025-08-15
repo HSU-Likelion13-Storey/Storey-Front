@@ -8,7 +8,7 @@ import { SubscribePage } from "./pages/mypage/SubscribePage";
 import { DownloadePage } from "./pages/mypage/DownloadPage";
 import { CollectionPage } from "./pages/mypage/CollectionPage";
 import SignupComplete from "./components/auth/signup/common/SignupComplete.jsx";
-import B2BMain from "./pages/home/B2BHome";
+import B2BHome from "./pages/home/B2BHomePage";
 import { UserHomePage } from "./pages/user/UserHomePage";
 import { QrScanPage } from "./pages/user/QrScanPage";
 import { CharacterDetailPage } from "./pages/user/CharacterDetailPage";
@@ -30,7 +30,7 @@ function App() {
           <Route path="/mypage/subscribe" element={<SubscribePage />} />
           <Route path="/mypage/download" element={<DownloadePage />} />
           <Route path="/mypage/collection" element={<CollectionPage />} />
-          <Route path="/home/b2b" element={<B2BMain />} />
+          <Route path="/home/b2b" element={<B2BHome />} />
           {/* user 페이지 */}
           <Route path="/mypage/collection" element={<CollectionPage />} />
           <Route path="/home/user" element={<UserHomePage />} />
