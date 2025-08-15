@@ -1,4 +1,4 @@
-import B2BHomeScreen from "@/components/home/b2b/B2BHomeScreen";
+import B2BHomeScreen from "@/components/b2b/home/B2BHomeScreen";
 import { Footer } from "@/components/common/Footer";
 
 export default function B2BHome() {

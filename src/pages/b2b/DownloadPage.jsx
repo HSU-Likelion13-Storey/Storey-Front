@@ -1,5 +1,5 @@
+import { Download } from "@/components/b2b/mypage/download/Download";
 import { Footer } from "@/components/common/Footer";
-import { Download } from "@/components/mypage/download/Download";
 
 export const DownloadePage = () => {
   return (

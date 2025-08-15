@@ -1,7 +1,7 @@
 import { Footer } from "@/components/common/Footer";
-import { MyPageScreen } from "@/components/mypage/MyPageScreen";
+import { MyPageScreen } from "@/components/b2b/mypage/MyPageScreen";
 
-export const MyPage = () => {
+export const B2BMyPage = () => {
   return (
     <>
       <MyPageScreen />

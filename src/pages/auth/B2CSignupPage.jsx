@@ -1,6 +1,6 @@
 import React from "react";
-import SignupCommonForm from "../components/auth/signup/common/SignupCommonForm";
-import { useSignupAccountForm } from "../hooks/useSignupAccountForm";
+import SignupCommonForm from "../../components/auth/signup/common/SignupCommonForm";
+import { useSignupAccountForm } from "../../hooks/useSignupAccountForm";
 import { useNavigate } from "react-router-dom";
 
 const B2CSignupPage = () => {
