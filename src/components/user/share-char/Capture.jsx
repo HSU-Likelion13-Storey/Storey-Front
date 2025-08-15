@@ -10,13 +10,13 @@ export const Capture = () => {
   const { state } = useLocation();
   const nav = useNavigate();
 
-  const { ref, download, getPreview, preview } = useDownload("test.png");
+  const { ref, getPreview, preview } = useDownload("test.png");
   const videoRef = useRef(null); // 캡쳐할 비디오
   const videoBackRef = useRef(null); // 배경 비디오
 
   // 캐릭터 상세 페이지에서 데이터 가져오기
   useEffect(() => {
-    // if (!state) nav(-1);
+    if (!state) nav(-1);
   }, [state, nav]);
 
   // 카메라 권한 + 비디오에 재생 시키기
@@ -63,14 +63,14 @@ export const Capture = () => {
           {/* 캡쳐할 영역(비디오 포함) */}
           <div className={styles.captureArea} ref={ref}>
             <div className={styles.title}>
-              <span className={styles.headline}>{state.title}</span>
-              <span className={styles.address}>{state.address}</span>
+              <span className={styles.headline}>{state?.title}</span>
+              <span className={styles.address}>{state?.address}</span>
             </div>
             <div className={styles.card}>
               <div className={styles.message}>
-                <span>{state.message}</span>
+                <span>{state?.message}</span>
               </div>
-              <img src={state.img} className={styles.img} alt="" />
+              <img src={state?.img} className={styles.img} alt="" />
             </div>
             <video ref={videoRef} className={styles.video} autoPlay playsInline />
           </div>
@@ -88,7 +88,7 @@ export const Capture = () => {
           confirmType={false}
           cancelFn={() => {
             setErrorModal(false);
-            // nav(-1);
+            nav(-1);
           }}
         />
       )}

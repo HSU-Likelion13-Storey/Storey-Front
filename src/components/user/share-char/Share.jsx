@@ -13,7 +13,7 @@ export const Share = () => {
   const nav = useNavigate();
 
   useEffect(() => {
-    if (!state || state.title == "") nav(-1);
+    if (!state || state.preview == null) nav(-1);
     else {
       const shareCheck = async () => {
         if (navigator.share) {
@@ -49,7 +49,7 @@ export const Share = () => {
         <div className={styles.title}>캐릭터 공유</div>
         <div className={styles.blank} />
       </div>
-      <img src={state.preview} ref={ref} alt="" />
+      <img src={state?.preview} ref={ref} alt="" />
       <div className={styles.buttonWrapper}>
         <div className={`${styles.button} ${styles.down}`} onClick={download}>
           <HiDownload className={styles.icon} />
