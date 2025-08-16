@@ -17,7 +17,7 @@ export default function SignupComplete() {
 
       <div className="signup-complete">
         <img className="complete-mascot" src={mascot} alt="스토어리 캐릭터" />
-        <Button type="button" onClick={goStart} className="start-btn">
+        <Button type="button" onClick={goStart} className="start-btn btn-enabled">
           스토어리 시작하기
         </Button>
       </div>
