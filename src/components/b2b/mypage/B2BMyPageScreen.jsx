@@ -4,10 +4,16 @@ import { useNavigate } from "react-router-dom";
 import "./B2BMyPageScreen.scss";
 import { MyPageListItem } from "@/components/common/mypage/MyPageListItem";
 import { Profile } from "@/components/common/mypage/Profile";
+import { Modal } from "@/components/common/Modal";
 
 export const B2BMyPageScreen = () => {
   const [isSubs, setIsSubs] = useState(true);
+  const [logoutModal, setLogoutModal] = useState(false);
   const nav = useNavigate();
+
+  const handleLogout = () => {
+    console.log("로그아웃");
+  };
 
   return (
     <div className="container">
@@ -43,8 +49,21 @@ export const B2BMyPageScreen = () => {
         <MyPageListItem text={"계정"} />
         <MyPageListItem text={"구독 목록"} onClick={() => nav("/mypage/b2b/subscribe")} />
         <MyPageListItem text={"고객센터"} />
-        <MyPageListItem text={"로그아웃"} />
+        <MyPageListItem text={"로그아웃"} onClick={() => setLogoutModal(true)} />
       </div>
+
+      {logoutModal && (
+        <Modal
+          title="정말 로그아웃 하시겠어요?"
+          caption="저희 스토어리 또 방문해주실꺼죠?"
+          cancel="안 나갈래요"
+          confirm="나갈래요"
+          cancelFn={() => {
+            setLogoutModal(false);
+          }}
+          confirmFn={handleLogout}
+        />
+      )}
     </div>
   );
 };
