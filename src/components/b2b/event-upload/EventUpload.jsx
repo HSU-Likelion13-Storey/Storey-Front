@@ -5,6 +5,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { bubble } from "@/assets";
 import { useEffect, useState } from "react";
 import { Modal } from "@/components/common/Modal";
+import api from "@/apis/Instance";
 
 const mockData = {
   placeholder: "ex) 00/00일 3일간 서비스 아이스크림 증정!",
@@ -19,21 +20,52 @@ export const EventUpload = () => {
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [isRemoveOpen, setIsRemoveOpen] = useState(false);
   const [isInfoOpen, setIsInfoOpen] = useState(false);
+  const [isEvent, setIsEvent] = useState(false);
   const nav = useNavigate();
 
   useEffect(() => {
-    // TODO 통신
-    setEventContent(mockData);
+    const getEventFetch = async () => {
+      try {
+        const res = await api.get("api/owner/store/event");
+        if (res.isSuccess) {
+          setEventContent((prev) => ({
+            ...prev,
+            placeholder: res.data.content,
+          }));
+          setIsEvent(true);
+        } else {
+          setEventContent(mockData);
+        }
+      } catch (error) {
+        setEventContent(mockData);
+        console.error(error);
+      }
+    };
+    getEventFetch();
   }, []);
 
-  const handleUpload = () => {
-    console.log("등록완료"); //TODO 통신
-    setIsUploadOpen(true);
+  const handleUpload = async () => {
+    console.log("등록완료");
+    try {
+      const res = await api.post("api/owner/store/event", {
+        content: eventContent.content,
+      });
+      if (res.isSuccess) setIsUploadOpen(true);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const handleRemove = () => {
-    console.log("삭제완료"); //TODO 통신
-    setIsRemoveOpen(true);
+  const handleRemove = async () => {
+    console.log("삭제완료");
+    try {
+      const res = await api.delete("api/owner/store/event", {
+        content: eventContent.content,
+      });
+      if (res.isSuccess) setIsRemoveOpen(true);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -49,6 +81,7 @@ export const EventUpload = () => {
           }}
         />
       </div>
+
       {/* 메인 입력창 */}
       <div className={styles.content}>
         <img src={bubble} alt="" />
@@ -67,9 +100,11 @@ export const EventUpload = () => {
           <div className={styles.counter}>{eventContent.content?.length}/50자</div>
         </div>
       </div>
+
+      {/* 버튼 */}
       <div className={styles.buttonWrapper}>
         <button
-          disabled={eventContent.content?.length == 0}
+          disabled={!isEvent && eventContent.content?.length == 0}
           className={`${styles.button} ${styles.cancel}`}
           onClick={handleRemove}>
           삭제하기
@@ -81,6 +116,8 @@ export const EventUpload = () => {
           등록하기
         </button>
       </div>
+
+      {/* 모달 처리 */}
       {isUploadOpen && (
         <Modal
           confirmType={false}
