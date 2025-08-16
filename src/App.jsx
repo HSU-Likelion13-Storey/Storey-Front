@@ -14,6 +14,7 @@ import { CharacterDetailPage } from "./pages/user/CharacterDetailPage";
 import { Capture } from "./components/user/share-char/Capture";
 import { Share } from "./components/user/share-char/Share";
 import { CollectionPage } from "./pages/user/CollectionPage";
+import { EventUploadPage } from "./pages/b2b/EventUploadPage";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/signup/complete" element={<SignupComplete />} />
           {/* 사장님 페이지 */}
           <Route path="/home/b2b" element={<B2BHome />} />
+          <Route path="/home/b2b/event" element={<EventUploadPage />} />
           <Route path="/mypage/b2b" element={<B2BMyPage />} />
           <Route path="/mypage/b2b/subscribe" element={<SubscribePage />} />
           <Route path="/mypage/b2b/download" element={<DownloadePage />} />
