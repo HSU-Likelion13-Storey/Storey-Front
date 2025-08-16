@@ -14,23 +14,24 @@ const mockData = {
 
 export const EventUpload = () => {
   const [eventContent, setEventContent] = useState({
-    content: "",
-    placeholder: "",
+    content: "", // 입력한 이벤트
+    placeholder: "", // 기존 이벤트 or 예제 이벤트
   });
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [isRemoveOpen, setIsRemoveOpen] = useState(false);
   const [isInfoOpen, setIsInfoOpen] = useState(false);
-  const [isEvent, setIsEvent] = useState(false);
+  const [isEvent, setIsEvent] = useState(false); // 이벤트가 있을 경우를 확인하는 상태. 없을 때에는 삭제기능을 불가능하게 해야함.
   const nav = useNavigate();
 
   useEffect(() => {
+    // 이전 이벤트 있으면 가져오기. 없으면 예제로 설정
     const getEventFetch = async () => {
       try {
         const res = await api.get("api/owner/store/event");
         if (res.isSuccess) {
           setEventContent((prev) => ({
             ...prev,
-            placeholder: res.data.content,
+            placeholder: res.data.content, // 기존 이벤트 내용을 placeholder로 설정
           }));
           setIsEvent(true);
         } else {
@@ -44,6 +45,7 @@ export const EventUpload = () => {
     getEventFetch();
   }, []);
 
+  // 업로드 콜백
   const handleUpload = async () => {
     console.log("등록완료");
     try {
@@ -56,6 +58,7 @@ export const EventUpload = () => {
     }
   };
 
+  // 삭제 콜백
   const handleRemove = async () => {
     console.log("삭제완료");
     try {
