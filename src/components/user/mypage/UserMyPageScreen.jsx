@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
-import { MdOutlineLogout } from "react-icons/md";
 import { logoText, profileImg } from "@/assets";
 import { useNavigate } from "react-router-dom";
-import "./UserMyPageScreen.scss";
 
 export const UserMyPageScreen = () => {
   const [role, setRole] = useState("b2b"); // TODO 테스트용 사용자 상태. 추후 보관된 사용자 정보를 불러올 예정.

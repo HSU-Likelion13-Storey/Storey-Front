@@ -1,0 +1,24 @@
+@use "@/styles/function" as *;
+@use "@/styles/variables" as *;
+
+.list-item {
+  @include flex($justify-content: space-between);
+  @include hoverEvent();
+  padding: rem(15px) rem(30px);
+  width: 100%;
+  color: #515151;
+  background: #f3f3f3;
+  font-size: rem(18px);
+  letter-spacing: -0.45px;
+  border-radius: 10px;
+
+  span {
+    font-weight: 500;
+    line-height: 24px; /* 150% */
+  }
+  .mypage-icon {
+    width: 25px;
+    height: 25px;
+    color: #878787;
+  }
+}
