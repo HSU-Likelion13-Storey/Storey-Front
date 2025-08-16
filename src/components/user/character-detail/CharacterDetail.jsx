@@ -1,10 +1,11 @@
 import styles from "./CharacterDetail.module.scss";
-import { logoTest, logoText, shadowChar } from "@/assets";
+import { logoTest, shadowChar } from "@/assets";
 import { Modal } from "@/components/common/Modal";
 import { useDownload } from "@/hooks/useDownload";
 import { useEffect, useState } from "react";
 import { FiDownload } from "react-icons/fi";
 import { HiCamera } from "react-icons/hi2";
+import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
 const mock = {
@@ -33,8 +34,8 @@ export const CharacterDetail = () => {
     <div className={styles.container}>
       {/* 헤더 */}
       <div className={styles.header}>
-        <div className={styles.blank} />
-        <img src={logoText} alt="" />
+        <IoIosArrowBack className={styles.icon} onClick={() => nav(-1)} />
+        <span className={styles.headerTitle}>내가 모은 캐릭터</span>
         <HiCamera className={styles.icon} onClick={() => nav("/capture", { state: mock })} />
       </div>
 
@@ -72,6 +73,7 @@ export const CharacterDetail = () => {
           caption="[마이 페이지 → 나의 캐릭터 도감에서 확인 가능]"
           cancelFn={() => setModalOpen(false)}
           confirmType={false}
+          autoCloseSec={2}
         />
       )}
       {downModal && (
@@ -80,6 +82,7 @@ export const CharacterDetail = () => {
           caption="저장한 이미지를 공유해보세요!"
           cancelFn={() => setDownModal(false)}
           confirmType={false}
+          autoCloseSec={1.5}
         />
       )}
     </div>

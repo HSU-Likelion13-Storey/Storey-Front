@@ -41,6 +41,7 @@ export const Download = () => {
           cancelFn={() => setIsOpenTimerModal(false)}
           img={mascotHappy}
           confirmType={false}
+          autoCloseSec={1.5}
         />
       )}
     </div>

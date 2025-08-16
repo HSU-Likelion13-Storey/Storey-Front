@@ -18,6 +18,8 @@ export const UserHome = () => {
         <img src={logoText} alt="" />
       </header>
       <MapContent />
+
+      {/* 모달 */}
       {modalState.open && (
         <div className={`home-modal ${modalState.visible && "visible"}`}>
           <div className="modal-content">
