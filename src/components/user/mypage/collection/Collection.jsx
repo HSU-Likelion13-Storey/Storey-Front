@@ -1,28 +1,41 @@
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import "./Collection.scss";
-import { testlogo } from "@/assets";
+import { logoEmpty, testlogo } from "@/assets";
+import { useEffect, useState } from "react";
 
 export const Collection = () => {
+  const [collectionData, setCollectionData] = useState([]);
   const nav = useNavigate();
 
+  useEffect(() => {
+    setCollectionData(mockData);
+  }, []);
+
   return (
-    <div className="collection">
+    <div className={`collection ${collectionData.length == 0 ? "none" : "list"}`}>
       <div className="header">
         <IoIosArrowBack className="back-icon" onClick={() => nav(-1)} />
         <div className="header-title">내가 모은 캐릭터</div>
         <div className="blank" />
       </div>
-      <div className="collection-list">
-        {mockData.map((data) => (
-          <div className="collection-list-item" key={data.id}>
-            <div className="collection-list-img">
-              <img src={data.imgUrl} alt="test" onClick={() => nav(`/detail/${data.id}`)} />
+      {collectionData.length == 0 ? (
+        <div className="collection-empty">
+          <img src={logoEmpty} alt="" />
+          <span className="collection-caption">모은 캐릭터가 없어요.</span>
+        </div>
+      ) : (
+        <div className="collection-list">
+          {collectionData.map((data) => (
+            <div className="collection-list-item" key={data.id}>
+              <div className="collection-list-img">
+                <img src={data.imgUrl} alt="test" onClick={() => nav(`/detail/${data.id}`)} />
+              </div>
+              <div className="collection-list-title">{data.title}</div>
             </div>
-            <div className="collection-list-title">{data.title}</div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
