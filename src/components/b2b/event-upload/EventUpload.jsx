@@ -49,10 +49,12 @@ export const EventUpload = () => {
   const handleUpload = async () => {
     console.log("등록완료");
     try {
-      const res = await api.post("api/owner/store/event", {
-        content: eventContent.content,
-      });
-      if (res.isSuccess) setIsUploadOpen(true);
+      // TODO api 연결 시 해제
+      // const res = await api.post("api/owner/store/event", {
+      //   content: eventContent.content,
+      // });
+      // if (res.isSuccess)
+      setIsUploadOpen(true);
     } catch (error) {
       console.error(error);
     }
@@ -62,10 +64,12 @@ export const EventUpload = () => {
   const handleRemove = async () => {
     console.log("삭제완료");
     try {
-      const res = await api.delete("api/owner/store/event", {
-        content: eventContent.content,
-      });
-      if (res.isSuccess) setIsRemoveOpen(true);
+      // TODO api 연결 시 해제
+      // const res = await api.delete("api/owner/store/event", {
+      //   content: eventContent.content,
+      // });
+      // if (res.isSuccess)
+      setIsRemoveOpen(true);
     } catch (error) {
       console.error(error);
     }
@@ -129,7 +133,7 @@ export const EventUpload = () => {
               깜짝 이벤트 등록이 <br /> 완료되었어요!
             </>
           }
-          caption="근사한 이벤트네요!"
+          caption={`${isEvent ? "더 " : ""} 근사한 이벤트네요!`}
           cancelFn={() => {
             setIsUploadOpen(false);
             nav(-1);
