@@ -21,7 +21,7 @@ const LoginScreen = () => {
         <LoginForm role={role} onError={(msg) => setModalMsg(msg)} onSuccess={() => setModalMsg("")} />
 
         <div className="login-links">
-          <Link to="/signup/b2c" className="link">
+          <Link to="/signup" className="link">
             회원 가입
           </Link>
         </div>
