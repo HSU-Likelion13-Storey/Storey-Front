@@ -151,7 +151,7 @@
     opacity: 1;
   }
   .modal-content {
-    @include flex(column, flex-end);
+    @include flex(column);
     .message-wrapper {
       @include flex(column, $gap: 9px);
       .caption {
@@ -207,5 +207,8 @@
     font-weight: 600;
     letter-spacing: -0.4px;
     border: none;
+  }
+  img {
+    margin-left: 50px;
   }
 }
