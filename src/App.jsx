@@ -16,6 +16,7 @@ import { Share } from "./components/user/share-char/Share";
 import { CollectionPage } from "./pages/user/CollectionPage";
 import { EventUploadPage } from "./pages/b2b/EventUploadPage";
 import { UserMyPage } from "./pages/user/UserMyPage";
+import { SubscribeList } from "./components/b2b/mypage/subscribe/SubscribeList";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/home/b2b/event" element={<EventUploadPage />} />
           <Route path="/mypage/b2b" element={<B2BMyPage />} />
           <Route path="/mypage/b2b/subscribe" element={<SubscribePage />} />
+          <Route path="/mypage/b2b/subscribe/list" element={<SubscribeList />} />
           <Route path="/mypage/b2b/download" element={<DownloadePage />} />
           {/* user 페이지 */}
           <Route path="/home/user" element={<UserHomePage />} />
