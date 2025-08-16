@@ -1,11 +1,12 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import LoginPage from "./pages/auth/LoginPage";
+import SignupPage from "./pages/auth/SignupPage";
 import B2CSignupPage from "./pages/auth/B2CSignupPage";
 import B2BSignupPage from "./pages/auth/B2BSignupPage";
+import SignupComplete from "./components/auth/signup/common/SignupComplete.jsx";
 import { SubscribePage } from "./pages/b2b/SubscribePage";
 import { DownloadePage } from "./pages/b2b/DownloadPage";
-import SignupComplete from "./components/auth/signup/common/SignupComplete.jsx";
 import B2BHome from "./pages/b2b/B2BHomePage";
 import { B2BMyPage } from "./pages/b2b/B2BMyPage";
 import { UserHomePage } from "./pages/user/UserHomePage";
@@ -25,6 +26,7 @@ function App() {
           <Route path="/" element={<RouteSwitch role={"user"} />} />
           {/* 공통 페이지 */}
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
           <Route path="/signup/b2c" element={<B2CSignupPage />} />
           <Route path="/signup/b2b" element={<B2BSignupPage />} />
           <Route path="/signup/complete" element={<SignupComplete />} />
