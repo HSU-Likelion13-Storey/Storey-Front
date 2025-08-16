@@ -18,6 +18,7 @@ export const EventUpload = () => {
   });
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [isRemoveOpen, setIsRemoveOpen] = useState(false);
+  const [isInfoOpen, setIsInfoOpen] = useState(false);
   const nav = useNavigate();
 
   useEffect(() => {
@@ -41,7 +42,12 @@ export const EventUpload = () => {
       <div className={styles.header}>
         <IoIosArrowBack className={styles.icon} onClick={() => nav(-1)} />
         <span className={styles.headerTitle}>이벤트 올리기</span>
-        <CgInfo className={styles.icon} onClick={() => {}} />
+        <CgInfo
+          className={styles.icon}
+          onClick={() => {
+            setIsInfoOpen(true);
+          }}
+        />
       </div>
       {/* 메인 입력창 */}
       <div className={styles.content}>
@@ -97,6 +103,26 @@ export const EventUpload = () => {
           cancelFn={() => {
             setIsRemoveOpen(false);
             nav(-1);
+          }}
+        />
+      )}
+      {isInfoOpen && (
+        <Modal
+          title="깜짝 이벤트란?"
+          caption={
+            <>
+              깜짝 할인 메뉴 또는 서비스 메뉴등을 열어
+              <br />
+              손님들을 유입시키게 유도하는 기능이에요!
+            </>
+          }
+          img={bubble}
+          confirm="네, 알겠어요!"
+          confirmFn={() => {
+            setIsInfoOpen(false);
+          }}
+          cancelFn={() => {
+            setIsInfoOpen(false);
           }}
         />
       )}
