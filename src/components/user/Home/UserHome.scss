@@ -27,19 +27,14 @@
     .marker-container {
       .marker {
         @include flex();
+        @include hoverEvent(1.1);
         position: relative;
         width: 75px;
         height: 75px;
         background: linear-gradient(180deg, #664bbf 0%, #9889cb 100%);
         border-radius: 100px;
-        filter: drop-shadow(0 2.658px 2.658px rgba(0, 0, 0, 0.08));
-        filter: brightness(1);
-        transition: filter 0.3s ease;
+        filter: brightness(1) drop-shadow(0 2.658px 2.658px rgba(0, 0, 0, 0.08));
         z-index: 3;
-        &:hover {
-          cursor: pointer;
-          filter: brightness(1.1);
-        }
         .logo-img {
           width: 59.511px;
           height: 59.511px;
@@ -63,14 +58,17 @@
         padding: 20px;
         border-radius: 20px;
         background: #fff;
-        width: 260px;
-        min-width: 260px;
+        width: 200px;
+        min-width: 200px;
         opacity: 0;
         visibility: hidden;
         transition:
           opacity 0.3s ease,
           visibility 0.3s ease;
         z-index: 100;
+
+        text-wrap: wrap;
+        text-align: center;
         &.visible {
           opacity: 1;
           visibility: visible;
@@ -109,7 +107,6 @@
           font-size: 15px;
           font-weight: 600;
           letter-spacing: -0.375px;
-          text-wrap: wrap;
         }
       }
       .blur {
@@ -154,7 +151,7 @@
     opacity: 1;
   }
   .modal-content {
-    @include flex(column);
+    @include flex(column, flex-end);
     .message-wrapper {
       @include flex(column, $gap: 9px);
       .caption {
@@ -169,11 +166,11 @@
         border-radius: 23px;
         background: #fff;
         position: relative;
+        text-align: center;
         span {
           font-size: 16px;
           font-weight: 600;
           letter-spacing: -0.4px;
-          text-align: center;
           background: linear-gradient(270deg, #4b4a4a 0%, #6d6c6c 100%);
           background-clip: text;
           -webkit-background-clip: text;
@@ -193,11 +190,9 @@
         }
       }
     }
-    img {
-      margin-left: 50px;
-    }
   }
   .modal-btn {
+    @include hoverEvent();
     @include flex();
     position: absolute;
     bottom: 28px;
@@ -212,11 +207,5 @@
     font-weight: 600;
     letter-spacing: -0.4px;
     border: none;
-    filter: brightness(1);
-    transition: filter 0.3s ease;
-    &:hover {
-      cursor: pointer;
-      filter: brightness(0.9);
-    }
   }
 }

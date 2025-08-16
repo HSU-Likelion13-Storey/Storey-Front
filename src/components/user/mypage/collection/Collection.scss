@@ -51,24 +51,24 @@
   }
   .collection-list {
     display: grid;
-    grid-template-rows: repeat(5, vh(100px));
-    grid-template-columns: repeat(3, vh(100px));
+    grid-template-rows: repeat(5, 100px);
+    grid-template-columns: repeat(3, 100px);
     row-gap: vh(44px);
-    column-gap: 21px;
+    column-gap: vw(21px);
     .collection-list-item {
       @include flex(column, $justify-content: flex-start, $gap: 10px);
       width: 100%;
       .collection-list-img {
         @include flex();
         @include hoverEvent();
-        max-width: vh(100px);
-        max-height: vh(100px);
+        max-width: 100px;
+        max-height: 100px;
         border-radius: 100px;
         background: #f2f2f2;
         img {
           flex: 1 1 auto;
-          width: vh(87px);
-          height: vh(87px);
+          width: 87px;
+          height: 87px;
           border-radius: 100px;
         }
       }
