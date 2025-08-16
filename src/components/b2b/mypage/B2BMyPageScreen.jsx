@@ -3,9 +3,9 @@ import { IoIosArrowForward } from "react-icons/io";
 import { MdOutlineLogout } from "react-icons/md";
 import { logoText, profileImg } from "@/assets";
 import { useNavigate } from "react-router-dom";
-import "./MyPageScreen.scss";
+import "./B2BMyPageScreen.scss";
 
-export const MyPageScreen = () => {
+export const B2BMyPageScreen = () => {
   const [role, setRole] = useState("b2b"); // TODO 테스트용 사용자 상태. 추후 보관된 사용자 정보를 불러올 예정.
   const nav = useNavigate();
   return (
@@ -26,18 +26,9 @@ export const MyPageScreen = () => {
 
       {/* 네비게이션, 로그아웃 */}
       <div className="list-content">
-        {role === "user" ? (
-          <ListItem text={"나의 캐릭터 도감"} onClick={() => nav("/mypage/user/collection")} />
-        ) : (
-          <>
-            <ListItem text={"구독 상태 확인하기"} onClick={() => nav("/mypage/b2b/subscribe")} />
-            <ListItem text={"QR코드 다운 받기"} onClick={() => nav("/mypage/b2b/download")} />
-          </>
-        )}
-
-        <ListItem text={"로그아웃"} logout={true}>
-          <MdOutlineLogout className="icon" />
-        </ListItem>
+        <ListItem text={"구독 상태 확인하기"} onClick={() => nav("/mypage/b2b/subscribe")} />
+        <ListItem text={"QR코드 다운 받기"} onClick={() => nav("/mypage/b2b/download")} />
+        <ListItem text={"로그아웃"} />
       </div>
     </div>
   );

@@ -15,6 +15,7 @@ import { Capture } from "./components/user/share-char/Capture";
 import { Share } from "./components/user/share-char/Share";
 import { CollectionPage } from "./pages/user/CollectionPage";
 import { EventUploadPage } from "./pages/b2b/EventUploadPage";
+import { UserMyPage } from "./pages/user/UserMyPage";
 
 function App() {
   return (
@@ -40,7 +41,7 @@ function App() {
           <Route path="/detail/:id" element={<CharacterDetailPage />} />
           <Route path="/capture" element={<Capture />} />
           <Route path="/capture/share" element={<Share />} />
-          <Route path="/mypage/user" element={<B2BMyPage />} />
+          <Route path="/mypage/user" element={<UserMyPage />} />
           <Route path="/mypage/user/collection" element={<CollectionPage />} />
         </Route>
       </Routes>
