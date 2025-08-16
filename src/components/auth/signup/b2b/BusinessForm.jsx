@@ -9,8 +9,8 @@ function Row({ children }) {
   return <div className="row">{children}</div>;
 }
 
-// 사업자번호 형식 (하이픈 없어도 허용)
-const BIZNO_RE = /^\d{3}-?\d{2}-?\d{5}$/;
+// 사업자번호 형식 (하이픈 필수)
+const BIZNO_RE = /^\d{3}-\d{2}-\d{5}$/;
 
 export default function BusinessForm({ defaultValues, onSubmit, submitting, headerOnBack }) {
   const {
