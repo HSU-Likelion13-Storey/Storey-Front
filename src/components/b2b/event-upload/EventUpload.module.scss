@@ -31,7 +31,7 @@
     .icon {
       width: 24px;
       height: 24px;
-      @include hoverEvent(0.8);
+      @include hoverEvent(0.5);
     }
   }
   .content {
