@@ -6,15 +6,20 @@ import Modal from "./Modal";
 import logo from "../../../assets/logo-text.svg";
 import "./B2BHomeScreen.scss";
 import { testlogo } from "@/assets";
+import { useNavigate } from "react-router-dom";
 
 export default function B2BHomeScreen() {
   const [data, setData] = useState(null);
   const [showGuide, setShowGuide] = useState(false);
-
+  const nav = useNavigate();
   useEffect(() => {
     // (임시) TODO: API로 교체
     setData({
-      banner: { title: "깜짝 이벤트 올리기!", subtitle: "오늘은 햄버거 추천 어때요?" },
+      banner: {
+        title: "깜짝 이벤트 올리기!",
+        subtitle: "오늘은 햄버거 추천 어때요?",
+        onClick: () => nav("/home/b2b/event"),
+      },
       character: {
         speech: "행복한 하루와 위로를 선물해드릴게요.",
         imageSrc: testlogo,
