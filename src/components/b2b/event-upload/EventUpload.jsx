@@ -138,6 +138,7 @@ export const EventUpload = () => {
             setIsUploadOpen(false);
             nav(-1);
           }}
+          autoCloseSec={1.5}
         />
       )}
       {isRemoveOpen && (
@@ -148,6 +149,7 @@ export const EventUpload = () => {
             setIsRemoveOpen(false);
             nav(-1);
           }}
+          autoCloseSec={1.5}
         />
       )}
       {isInfoOpen && (

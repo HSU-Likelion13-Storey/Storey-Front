@@ -73,6 +73,7 @@ export const CharacterDetail = () => {
           caption="[마이 페이지 → 나의 캐릭터 도감에서 확인 가능]"
           cancelFn={() => setModalOpen(false)}
           confirmType={false}
+          autoCloseSec={2}
         />
       )}
       {downModal && (
@@ -81,6 +82,7 @@ export const CharacterDetail = () => {
           caption="저장한 이미지를 공유해보세요!"
           cancelFn={() => setDownModal(false)}
           confirmType={false}
+          autoCloseSec={1.5}
         />
       )}
     </div>

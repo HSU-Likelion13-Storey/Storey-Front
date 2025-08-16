@@ -9,6 +9,7 @@ export const Modal = ({
   confirmFn = () => {},
   confirmType = true,
   img = "",
+  autoCloseSec = 3,
 }) => {
   const [isVisible, setIsVisible] = useState(false); // fade-in, out을 설정할 상태
   // 타이머 타입일 경우 3초간 띄우기
@@ -17,12 +18,12 @@ export const Modal = ({
     if (!confirmType) {
       timer = setTimeout(() => {
         clickHandle(cancelFn);
-      }, 3000);
+      }, autoCloseSec * 1000);
     }
     return () => {
       clearTimeout(timer);
     };
-  }, [confirmType, cancelFn]);
+  }, [confirmType, cancelFn, autoCloseSec]);
 
   useEffect(() => {
     setIsVisible(true);

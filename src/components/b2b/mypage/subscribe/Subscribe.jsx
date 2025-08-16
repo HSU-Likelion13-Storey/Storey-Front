@@ -110,6 +110,7 @@ export const Subscribe = () => {
           cancelFn={() => setIsOpenTimerModal(false)}
           img={mascotHappy}
           confirmType={false}
+          autoCloseSec={2}
         />
       )}
     </div>
