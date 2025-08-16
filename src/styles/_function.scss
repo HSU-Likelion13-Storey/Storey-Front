@@ -6,6 +6,15 @@
   gap: $gap;
 }
 
+@mixin hoverEvent($bright: 0.9) {
+  filter: brightness(1);
+  transition: filter 0.3s ease;
+  &:hover {
+    filter: brightness($bright);
+    cursor: pointer;
+  }
+}
+
 @function rem($size) {
   @return calc($size / 16px * 1rem);
 }
