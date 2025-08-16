@@ -97,7 +97,7 @@ export default function LoginForm({ role, onError, onSuccess }) {
         </button>
       </div>
 
-      <button type="submit" className="btn-primary" disabled={pending}>
+      <button type="submit" className="btn-primary" disabled={isSubmitting}>
         로그인
       </button>
     </form>
