@@ -1,16 +1,31 @@
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import "./Collection.scss";
-import { logoEmpty, testlogo } from "@/assets";
+import { logoEmpty, mascotBubble, testlogo } from "@/assets";
 import { useEffect, useState } from "react";
 
 export const Collection = () => {
   const [collectionData, setCollectionData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [modalState, setModalState] = useState({ open: false, visible: false });
   const nav = useNavigate();
 
   useEffect(() => {
     setCollectionData(mockData);
+    setLoading(false);
   }, []);
+
+  useEffect(() => {
+    if (!loading && collectionData.length == 0) {
+      setModalState({ open: true, visible: true });
+      setTimeout(modalHandle, 2000);
+    }
+  }, [loading, collectionData]);
+
+  const modalHandle = () => {
+    setModalState((prev) => ({ ...prev, visible: false }));
+    setTimeout(() => setModalState((prev) => ({ ...prev, open: false })), 300);
+  };
 
   return (
     <div className={`collection ${collectionData.length == 0 ? "none" : "list"}`}>
@@ -34,6 +49,25 @@ export const Collection = () => {
               <div className="collection-list-title">{data.title}</div>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* 모달 */}
+      {modalState.open && (
+        <div className={`collection-modal ${modalState.visible && "visible"}`} onClick={modalHandle}>
+          <div className="collection-modal-content">
+            <div className="collection-message-wrapper">
+              <span className="collection-caption">주위의 식당에 어떤 캐릭터가 있는지 둘러보세요!✨</span>
+              <span className="collection-message">
+                <span>
+                  아직 수집한 캐릭터가 없어요ㅠㅠ
+                  <br />
+                  얼른 가게를 방문해 캐릭터를 모아보세요!
+                </span>
+              </span>
+            </div>
+            <img src={mascotBubble} alt="" />
+          </div>
         </div>
       )}
     </div>
