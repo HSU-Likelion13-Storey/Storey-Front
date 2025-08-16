@@ -34,8 +34,13 @@
   }
 }
 
-/* row/ghost 버튼은 현재 화면에선 쓰지 않지만
-   다른 폼에서 재사용 중일 수 있어 유지 */
+.field-error {
+  margin-top: rem(6px);
+  font-size: rem(11px);
+  line-height: rem(14px);
+  color: #ea3939;
+}
+
 .row {
   display: flex;
   gap: rem(10px);
@@ -64,4 +69,37 @@
     background: #f0f0f0;
     color: #696969;
   }
+}
+
+.btn-enabled {
+  background-color: $color-primary;
+  color: #fff;
+  opacity: 1;
+  transition:
+    opacity 0.2s ease,
+    filter 0.2s ease;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      filter: brightness(0.95);
+    }
+    &:active {
+      filter: brightness(0.9);
+    }
+  }
+}
+
+.btn-disabled,
+button:disabled {
+  background-color: $color-primary;
+  color: #fff;
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-disabled:hover,
+.btn-disabled:active,
+button:disabled:hover,
+button:disabled:active {
+  filter: none;
 }

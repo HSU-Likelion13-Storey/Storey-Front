@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import LoginTabs from "./LoginTabs";
 import LoginForm from "./LoginForm";
 import "./Login.scss";
@@ -20,16 +21,15 @@ const LoginScreen = () => {
         <LoginForm role={role} onError={(msg) => setModalMsg(msg)} onSuccess={() => setModalMsg("")} />
 
         <div className="login-links">
-          {/* TODO: 회원가입 페이지 라우팅 연결 */}
-          <a href="#" className="link">
+          <Link to="/signup/b2c" className="link">
             손님 회원 가입
-          </a>
+          </Link>
           <span className="divider" aria-hidden>
             │
           </span>
-          <a href="#" className="link">
+          <Link to="/signup/b2b" className="link">
             스토어 사장님 가입
-          </a>
+          </Link>
         </div>
 
         {/* TODO: 말풍선 위치 디테일 수정 예정 */}
