@@ -8,6 +8,7 @@ import logoPig from "./pig-logo.svg";
 import qrOverlay from "./qr-overlay.svg";
 import logoTest from "./test-logo.svg";
 import shadowChar from "./character-shadow.svg";
+import bubble from "./bubble.svg";
 
 export {
   logoText,
@@ -20,4 +21,5 @@ export {
   qrOverlay,
   logoTest,
   shadowChar,
+  bubble,
 };

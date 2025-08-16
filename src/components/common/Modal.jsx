@@ -37,7 +37,7 @@ export const Modal = ({
     <div className={`confirm-modal ${isVisible ? "fade-in" : "fade-out"}`} onClick={() => clickHandle(cancelFn)}>
       <div className="modal-content">
         <div className="modal-text">
-          <div className="modal-title">{title}</div>
+          {title && <div className="modal-title">{title}</div>}
           <div className="modal-caption">{caption}</div>
         </div>
         {confirmType ? (

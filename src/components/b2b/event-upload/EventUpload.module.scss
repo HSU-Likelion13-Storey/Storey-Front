@@ -1,2 +1,117 @@
 @use "@/styles/_variables" as *;
 @use "@/styles/_function" as *;
+
+.container {
+  @include flex(column);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  padding: 30px;
+  .header {
+    @include flex($align-items: flex-end, $justify-content: space-between);
+    width: 100%;
+    height: vh(120px);
+    background: #fff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04);
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    color: #747474;
+    padding: vh(27px) 36px;
+    img {
+      width: 89px;
+    }
+    .headerTitle {
+      color: #747474;
+      font-size: rem(20px);
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+    .icon {
+      width: 24px;
+      height: 24px;
+      @include hoverEvent(0.8);
+    }
+  }
+  .content {
+    @include flex(column, $gap: vh(92px));
+    padding-bottom: vh(calc(316px - 230px));
+    width: 100%;
+    .inputField {
+      @include flex(column, flex-start, $gap: vh(9.5px));
+      position: relative;
+      width: 100%;
+
+      .caption {
+        color: #696969;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: -0.4px;
+        margin-left: 14px;
+      }
+      textarea {
+        width: 100%;
+        height: 160px;
+        padding: 20px 28px;
+        resize: none;
+        border-radius: 18px;
+        background: #f6f6f6;
+        border: none;
+        color: #696969;
+        font-size: rem(15px);
+        font-weight: 500;
+        letter-spacing: -0.15px;
+        &:focus {
+          outline: none;
+        }
+        &::placeholder {
+          color: $color-footer-gray;
+        }
+      }
+      .counter {
+        color: #878787;
+        font-size: rem(13px);
+        font-weight: 500;
+        letter-spacing: -0.13px;
+        position: absolute;
+        bottom: 21px;
+        right: 28px;
+      }
+    }
+  }
+  .buttonWrapper {
+    @include flex($gap: 14px);
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    padding: 30px;
+    .button {
+      @include hoverEvent();
+      flex: 1 1 0;
+      padding: rem(22.5px) 0;
+      border: none;
+      border-radius: 12px;
+      background: #f0f0f0;
+      letter-spacing: -0.4px;
+      text-align: center;
+      transition:
+        opacity 0.3s ease,
+        filter 0.3s ease;
+      &.cancel {
+        color: #cbcbcb;
+      }
+      &.confirm {
+        background: $color-primary;
+        color: #fff;
+      }
+      &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        &:hover {
+          filter: brightness(1);
+        }
+      }
+    }
+  }
+}
