@@ -1,0 +1,29 @@
+@use "@/styles/function" as *;
+@use "@/styles/variables" as *;
+
+.profile-card {
+  @include flex($justify-content: flex-start, $gap: vh(24px));
+  width: 100%;
+  padding: vh(14px) 0 vh(22px) 4px;
+  img {
+    width: 70px;
+    height: 70px;
+  }
+  .profile-content {
+    @include flex(column, $gap: vh(10px));
+    .profile-name {
+      color: $color-font-main;
+      font-size: rem(20px);
+      font-weight: 700;
+      line-height: 24px; /* 120% */
+      letter-spacing: -0.5px;
+    }
+    .profile-id {
+      color: #7f7d7d;
+      font-size: rem(14px);
+      font-weight: 500;
+      line-height: 16px; /* 114.286% */
+      letter-spacing: -0.35px;
+    }
+  }
+}
