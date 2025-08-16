@@ -8,39 +8,17 @@
   height: fit-content;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: vh(160px) rem(38px) rem(122px) rem(38px);
+  padding: vh(96px) rem(38px) rem(122px) rem(38px);
+  position: relative;
 
-  .header {
-    @include flex($align-items: flex-end, $justify-content: space-between, $gap: 20px);
-    width: 100%;
-    height: vh(110px);
-    background: #fff;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04);
-    z-index: 1;
-    position: absolute;
-    top: 0;
+  .back-icon {
+    @include hoverEvent(0.6);
+    width: 30px;
+    height: auto;
     color: #747474;
-    padding: vh(16px) 20px;
-    .back-icon {
-      width: 24px;
-      height: 24px;
-      transition: filter 0.3s ease;
-      &:hover {
-        cursor: pointer;
-        filter: brightness(0.9);
-      }
-    }
-    .header-title {
-      font-size: 20px;
-      font-style: normal;
-      font-weight: 600;
-      line-height: normal;
-      letter-spacing: -0.5px;
-    }
-    .blank {
-      width: 24px;
-      height: 24px;
-    }
+    position: absolute;
+    top: vh(69px);
+    right: 24px;
   }
 
   .subs-header {

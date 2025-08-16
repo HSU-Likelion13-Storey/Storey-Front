@@ -9,6 +9,7 @@ import { useState } from "react";
 import "./Subscribe.scss";
 import { Modal } from "@/components/common/Modal";
 import { useNavigate } from "react-router-dom";
+import { IoCloseOutline } from "react-icons/io5";
 
 export const Subscribe = () => {
   const [isSubscribed, setIsSubscribed] = useState(false);
@@ -18,11 +19,7 @@ export const Subscribe = () => {
 
   return (
     <div className="subscribe">
-      <div className="header">
-        <IoIosArrowBack className="back-icon" onClick={() => nav(-1)} />
-        <div className="header-title">구독 하기</div>
-        <div className="blank" />
-      </div>
+      <IoCloseOutline className="back-icon" onClick={() => nav(-1)} />
       <div className="subs-header">
         <span className="badge">프리미엄</span>
         <span className="title">마스코트 브랜딩 패스</span>
