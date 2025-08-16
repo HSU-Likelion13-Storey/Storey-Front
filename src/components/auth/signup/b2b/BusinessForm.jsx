@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import "../common/SignupCommonForm.scss";
 import SignupHeader from "../common/SignupHeader.jsx";
 import BrandHeading from "../common/BrandHeading.jsx";
@@ -8,7 +8,36 @@ function Row({ children }) {
   return <div className="row">{children}</div>;
 }
 
-export default function BusinessForm({ values, onChange, onSubmit, submitting, clear, headerOnBack }) {
+// 사업자번호 형식 (하이픈 없어도 허용)
+const BIZNO_RE = /^\d{3}-?\d{2}-?\d{5}$/;
+
+export default function BusinessForm({ values, onChange, onSubmit, submitting, headerOnBack, onFindZip }) {
+  const isAllFilled = useMemo(() => {
+    const req = [
+      values.bizName,
+      values.owner,
+      values.bizNo,
+      values.bizType,
+      values.bizCategory,
+      values.zip,
+      values.addr1,
+      values.addr2,
+    ];
+    return req.every((v) => String(v ?? "").trim().length > 0);
+  }, [values]);
+
+  // 사업자번호 유효성 검사
+  const isBizNoValid = useMemo(() => {
+    const v = String(values.bizNo ?? "").trim();
+    return v.length === 0 ? false : BIZNO_RE.test(v);
+  }, [values.bizNo]);
+
+  // 버튼 활성화 (모든 입력 형식이 맞으면)
+  const isValid = isAllFilled && isBizNoValid;
+
+  // 사업자번호 에러 표시
+  const showBizNoError = String(values.bizNo ?? "").trim().length > 0 && !isBizNoValid;
+
   return (
     <>
       <SignupHeader rightLabel="사업정보 입력" onBack={headerOnBack} />
@@ -52,13 +81,20 @@ export default function BusinessForm({ values, onChange, onSubmit, submitting, c
           </label>
           <input
             id="bizNo"
-            className="input"
+            className={`input ${showBizNoError ? "has-error" : ""}`}
             name="bizNo"
             value={values.bizNo}
             onChange={onChange}
             inputMode="numeric"
-            pattern="[0-9]{3}-[0-9]{2}-[0-9]{5}"
+            placeholder="000-00-00000"
+            aria-invalid={showBizNoError ? "true" : "false"}
+            aria-describedby="bizNo-error"
           />
+          {showBizNoError && (
+            <p id="bizNo-error" className="field-error">
+              *사업자 번호가 일치하지 않습니다.
+            </p>
+          )}
         </div>
 
         {/* 업태 */}
@@ -91,10 +127,9 @@ export default function BusinessForm({ values, onChange, onSubmit, submitting, c
               value={values.zip}
               onChange={onChange}
               inputMode="numeric"
-              pattern="[0-9]{5}"
               autoComplete="postal-code"
             />
-            <Button type="button" variant="ghost">
+            <Button type="button" variant="ghost" onClick={onFindZip}>
               우편번호 찾기
             </Button>
           </Row>
@@ -126,8 +161,11 @@ export default function BusinessForm({ values, onChange, onSubmit, submitting, c
           />
         </div>
 
-        <Button type="submit" disabled={submitting} className="w-full">
-          가입하기
+        <Button
+          type="submit"
+          disabled={!isValid || submitting}
+          className={`w-full ${isValid ? "btn-enabled" : "btn-disabled"}`}>
+          다음으로
         </Button>
       </form>
     </>
