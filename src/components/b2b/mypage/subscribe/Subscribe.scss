@@ -1,13 +1,25 @@
-@use "../../../../styles/function" as *;
-@use "../../../../styles/variables" as *;
+@use "@/styles/function" as *;
+@use "@/styles/variables" as *;
 
 .subscribe {
-  @include flex(column, $gap: rem(20px));
+  @include flex(column, $gap: vh(20px));
   background: linear-gradient(180deg, #fefefe 0%, #f8f6ff 100%), #fff;
   width: 100%;
   height: fit-content;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: vh(96px) rem(38px) rem(122px) rem(38px);
+  position: relative;
+
+  .back-icon {
+    @include hoverEvent(0.6);
+    width: 30px;
+    height: auto;
+    color: #747474;
+    position: absolute;
+    top: vh(69px);
+    right: 24px;
+  }
 
   .subs-header {
     @include flex(column, $gap: rem(18px));

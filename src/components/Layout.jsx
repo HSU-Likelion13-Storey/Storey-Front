@@ -1,21 +1,10 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { Footer } from "./common/Footer";
-import { useEffect, useState } from "react";
 
 export const Layout = () => {
-  const [isFooter, setIsFooter] = useState(true);
   const location = useLocation();
-
-  useEffect(() => {
-    const noneFooterPath =
-      location.pathname.includes("login") ||
-      location.pathname.includes("signup") ||
-      location.pathname.includes("event") ||
-      location.pathname.includes("chat") ||
-      location.pathname.includes("capture") ||
-      location.pathname.includes("complate");
-    setIsFooter(!noneFooterPath);
-  }, [location]);
+  const noneFooterPaths = ["login", "signup", "event", "chat", "capture", "complate"];
+  const showFooter = !noneFooterPaths.some((path) => location.pathname.includes(path));
 
   return (
     <div
@@ -26,7 +15,7 @@ export const Layout = () => {
         position: "relative",
       }}>
       <Outlet />
-      {isFooter && <Footer />}
+      {showFooter && <Footer />}
     </div>
   );
 };

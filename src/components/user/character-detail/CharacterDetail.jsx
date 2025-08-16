@@ -69,7 +69,13 @@ export const CharacterDetail = () => {
       </div>
       {modalOpen && (
         <Modal
-          title={`나의 캐릭터 도감에 저장이 되었습니다!`}
+          title={
+            <>
+              나의 캐릭터 도감에
+              <br />
+              저장이 되었습니다!
+            </>
+          }
           caption="[마이 페이지 → 나의 캐릭터 도감에서 확인 가능]"
           cancelFn={() => setModalOpen(false)}
           confirmType={false}

@@ -1,9 +1,9 @@
-import { MyPageScreen } from "@/components/b2b/mypage/MyPageScreen";
+import { UserMyPageScreen } from "@/components/user/mypage/UserMyPageScreen";
 
 export const UserMyPage = () => {
   return (
     <>
-      <MyPageScreen />
+      <UserMyPageScreen />
     </>
   );
 };
