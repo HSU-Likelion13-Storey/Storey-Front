@@ -41,14 +41,19 @@ export const Modal = ({
           <div className="modal-caption">{caption}</div>
         </div>
         {confirmType ? (
-          <div className="modal-btn-wrapper">
-            <button className="modal-btn cancel" onClick={() => clickHandle(cancelFn)}>
-              {cancel}
-            </button>
-            <button className="modal-btn confirm" onClick={() => clickHandle(confirmFn)}>
-              {confirm}
-            </button>
-          </div>
+          <>
+            {img && <img src={img} className="side-img" alt="" />}
+            <div className="modal-btn-wrapper">
+              {cancel && (
+                <button className="modal-btn cancel" onClick={() => clickHandle(cancelFn)}>
+                  {cancel}
+                </button>
+              )}
+              <button className="modal-btn confirm" onClick={() => clickHandle(confirmFn)}>
+                {confirm}
+              </button>
+            </div>
+          </>
         ) : img !== "" ? (
           <img src={img} className="modal-img" alt="" />
         ) : (
