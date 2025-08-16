@@ -1,0 +1,166 @@
+@use "../../../../styles/function" as *;
+@use "../../../../styles/variables" as *;
+
+.subscribe {
+  @include flex(column, $gap: rem(20px));
+  background: linear-gradient(180deg, #fefefe 0%, #f8f6ff 100%), #fff;
+  width: 100%;
+  height: fit-content;
+  overflow-y: auto;
+  padding: vh(96px) rem(38px) rem(122px) rem(38px);
+
+  .subs-header {
+    @include flex(column, $gap: rem(18px));
+    .badge {
+      border-radius: 45.155px;
+      background: linear-gradient(90deg, #6b67da 0%, #9579f0 100%);
+      padding: 7.526px 17.196px 6.474px 15.804px;
+      color: white;
+      font-size: rem(12.041px);
+      font-weight: 600;
+      letter-spacing: -0.301px;
+    }
+    .title {
+      font-size: rem(28px);
+      font-weight: 700;
+      letter-spacing: -0.7px;
+      background: linear-gradient(90deg, #2f323f 0%, #402cb0 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .plan-state {
+      color: #696969;
+      font-family: Pretendard;
+      font-size: rem(18px);
+      font-weight: 600;
+      letter-spacing: -0.45px;
+      margin-top: rem(4px);
+    }
+  }
+  .plan-list {
+    @include flex(column, flex-start, $gap: rem(42px));
+    width: 100%;
+    padding: vh(41.5px) 38px;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow:
+      -4px 0 4px 0 rgba(0, 0, 0, 0.02),
+      4px 0 4px 0 rgba(0, 0, 0, 0.02),
+      0 -4px 4px 0 rgba(0, 0, 0, 0.02),
+      0 4px 4px 0 rgba(0, 0, 0, 0.02);
+  }
+  .fee-content {
+    @include flex(column);
+    width: 100%;
+    padding: vh(8px) rem(11px);
+    border-radius: 18px;
+    background: linear-gradient(100deg, #f3f0ff 23.48%, #eeeaff 81.93%);
+    .fee-row {
+      @include flex($justify-content: flex-start, $gap: 12px);
+      padding: rem(12px) rem(19px);
+      width: 100%;
+      &:last-child {
+        border-top: 2px solid #e4e2ee;
+      }
+      .fee {
+        color: #696969;
+        font-size: rem(14px);
+        font-weight: 600;
+        letter-spacing: -0.35px;
+      }
+      .fee-icon {
+        color: #696969;
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+  .btn-wrapper {
+    @include flex(column, flex-start, $gap: rem(10px));
+    width: 100%;
+    margin-bottom: rem(15px);
+    .subs-btn {
+      @include flex();
+      width: 100%;
+      padding: rem(20px);
+      border-radius: 14px;
+      background: linear-gradient(90deg, #8166da 0%, #a088ed 100%);
+      border: none;
+      color: white;
+      font-size: rem(16px);
+      font-weight: 600;
+      transition:
+        filter 0.3s ease,
+        background 0.3s ease,
+        padding 0.3s ease;
+      &:hover {
+        cursor: pointer;
+        filter: brightness(0.9);
+      }
+      &.unsubs {
+        color: #696969;
+        font-size: rem(14px);
+        @include flex($justify-content: space-between);
+        padding: rem(15px) rem(22px);
+        background: rgba(241, 241, 241, 1);
+        &:hover {
+          filter: brightness(0.9);
+        }
+      }
+    }
+    .btn-caption {
+      color: #878787;
+      font-size: rem(12px);
+      font-weight: 500;
+      letter-spacing: -0.3px;
+      margin-left: rem(12px);
+    }
+  }
+  .expired-content {
+    @include flex(column, flex-start, $gap: rem(16px));
+    width: 100%;
+    border-radius: 18px;
+    background: #e8e8e8;
+    color: #878787;
+    letter-spacing: -0.3px;
+    padding: rem(20px);
+    .expired-headline {
+      font-size: rem(13px);
+      font-weight: 600;
+    }
+    ul {
+      @include flex(column, $gap: rem(10px));
+      li {
+        margin-left: rem(17px);
+        width: 95%;
+        font-size: rem(12px);
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.plan-item {
+  @include flex($gap: rem(20px));
+  .icon {
+    color: rgba(116, 92, 193, 1);
+    width: 30px;
+    height: 30px;
+  }
+  .plan-item-text {
+    @include flex(column, flex-start, $gap: rem(3px));
+    .plan-headline {
+      color: $color-font-main;
+      font-size: rem(18px);
+      font-weight: 600;
+      letter-spacing: -0.45px;
+    }
+    .plan-caption {
+      color: #8c8c8c;
+      font-size: rem(15px);
+      font-weight: 500;
+      letter-spacing: -0.375px;
+    }
+  }
+}

@@ -25,6 +25,7 @@ const B2BSignupPage = () => {
     const { name, value } = e.target;
     setBiz((v) => ({ ...v, [name]: value }));
   };
+
   const clearBiz = (name) => setBiz((v) => ({ ...v, [name]: "" }));
 
   // 1단계: 계정 정보 입력 후 2단계로 이동

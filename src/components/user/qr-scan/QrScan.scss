@@ -1,0 +1,41 @@
+@use "../../../styles/function" as *;
+@use "../../../styles/variables" as *;
+
+.qr-scan {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: rgba(0, 0, 0, 0.2);
+  .qr-overlay {
+    @include flex(column, $gap: vh(50px));
+    position: absolute;
+    opacity: 80%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0 30px;
+    .overlay-img {
+      width: 100%;
+    }
+    .qr-header {
+      @include flex($justify-content: space-between);
+      position: absolute;
+      top: vh(80px);
+      left: 0;
+      width: 100%;
+      padding: 0 30px;
+      .icon {
+        color: white;
+        width: 40px;
+        height: 40px;
+      }
+    }
+    .qr-caption {
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.4px;
+    }
+  }
+}

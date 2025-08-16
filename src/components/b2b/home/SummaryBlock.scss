@@ -1,0 +1,56 @@
+@use "@/styles/_variables" as *;
+@use "@/styles/_function" as *;
+
+.summary {
+  margin-top: rem(29px);
+  margin-bottom: rem(77px);
+
+  .summary-title {
+    font-size: rem(16px);
+    font-weight: 700;
+    color: #696969;
+    margin: 0 0 rem(10px) rem(14px);
+  }
+
+  .summary-box {
+    background: #f6f6f6;
+    border-radius: rem(18px);
+    padding: rem(20px) rem(28px);
+  }
+
+  .summary-content {
+    font-size: rem(15px);
+    line-height: rem(24px);
+    color: #7e7e7e;
+  }
+
+  .summary-edit {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: rem(10px);
+  }
+
+  .button-edit {
+    display: inline-flex;
+    align-items: center;
+    margin-right: rem(16px);
+    background: none;
+    border: none;
+    font-size: rem(14px);
+    font-weight: 600;
+    color: #878787;
+    cursor: pointer;
+    text-decoration: underline;
+
+    &:hover {
+      color: #696969;
+    }
+    &:active {
+      transform: translateY(1px);
+    }
+
+    .button-edit-icon {
+      font-size: rem(20px);
+    }
+  }
+}
