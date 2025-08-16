@@ -15,6 +15,7 @@ export default function SignupCommonForm({ onSubmit, submitting, submitLabel = "
   } = useForm({
     mode: "onChange",
     defaultValues: {
+      nickname: "",
       username: "",
       password: "",
       passwordConfirm: "",
@@ -31,6 +32,25 @@ export default function SignupCommonForm({ onSubmit, submitting, submitLabel = "
       <BrandHeading title={"회원님의 정보를\n입력해주세요"} />
 
       <form className="signup-form" onSubmit={handleSubmit(onValid)}>
+        {/* 닉네임 */}
+        <div className="form-field">
+          <label className="form-label" htmlFor="nickname">
+            닉네임
+          </label>
+          <input
+            id="nickname"
+            className={`input ${errors.nickname ? "has-error" : ""}`}
+            placeholder="10자 이내"
+            autoComplete="nickname"
+            maxLength={10}
+            {...register("nickname", {
+              required: true,
+              maxLength: { value: 10, message: "*10자 이내로 작성해주세요." },
+            })}
+          />
+          {errors.nickname && <p className="field-error">{errors.nickname.message || "*10자 이내로 작성해주세요."}</p>}
+        </div>
+
         {/* 아이디 */}
         <div className="form-field">
           <label className="form-label" htmlFor="username">

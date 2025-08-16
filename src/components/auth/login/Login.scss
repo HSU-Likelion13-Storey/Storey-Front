@@ -127,7 +127,7 @@
 }
 
 .login-links {
-  margin-top: rem(20px);
+  margin-top: rem(32px);
   @include flex(row, center, center, rem(40px));
 
   .link {
@@ -138,37 +138,5 @@
   }
   .divider {
     color: #dddddd;
-  }
-}
-
-.login-helper-chip {
-  position: relative;
-  margin: rem(10px) auto 0;
-  width: max-content;
-  background: linear-gradient(90deg, #dcd2f4, #ede7fa);
-  color: #4f4376;
-  padding: rem(7px) rem(12px);
-  border-radius: 20px;
-  font-size: rem(10px);
-
-  // 말풍선 꼬리
-  &::before {
-    content: "";
-    position: absolute;
-    top: -6px;
-    border-width: 0 6px 6px 6px;
-    border-style: solid;
-  }
-
-  // 손님(왼쪽 꼬리)
-  &.left::before {
-    left: rem(28px);
-    border-color: transparent transparent #dcd2f4 transparent;
-  }
-
-  // 사장님(오른쪽 꼬리)
-  &.right::before {
-    right: rem(28px);
-    border-color: transparent transparent #ede7fa transparent;
   }
 }

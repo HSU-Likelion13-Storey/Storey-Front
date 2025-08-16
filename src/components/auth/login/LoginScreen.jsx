@@ -21,20 +21,9 @@ const LoginScreen = () => {
         <LoginForm role={role} onError={(msg) => setModalMsg(msg)} onSuccess={() => setModalMsg("")} />
 
         <div className="login-links">
-          <Link to="/signup/b2c" className="link">
-            손님 회원 가입
+          <Link to="/signup" className="link">
+            회원 가입
           </Link>
-          <span className="divider" aria-hidden>
-            │
-          </span>
-          <Link to="/signup/b2b" className="link">
-            스토어 사장님 가입
-          </Link>
-        </div>
-
-        {/* TODO: 말풍선 위치 디테일 수정 예정 */}
-        <div className={`login-helper-chip ${role === "guest" ? "left" : "right"}`}>
-          지금 가입하고 빠르게 소식을 접해보세요!
         </div>
       </div>
 

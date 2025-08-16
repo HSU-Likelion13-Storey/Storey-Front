@@ -23,10 +23,14 @@
 .input {
   width: 100%;
   padding: rem(18px) rem(20px) rem(18px) rem(17px);
-  border: rem(1px) solid #dddddd;
+  border: rem(1px) solid #cfcfcf;
   border-radius: rem(12px);
   font-size: rem(14px);
   font-weight: 500;
+
+  &::placeholder {
+    color: #cfcfcf;
+  }
 
   &:focus {
     outline: none;
