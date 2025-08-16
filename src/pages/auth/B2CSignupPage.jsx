@@ -19,7 +19,7 @@ const B2CSignupPage = () => {
 
   return (
     <div>
-      <SignupCommonForm onSubmit={submit} submitting={submitting} submitLabel="가입하기" />
+      <SignupCommonForm onSubmit={submit} submitting={submitting} />
     </div>
   );
 };
