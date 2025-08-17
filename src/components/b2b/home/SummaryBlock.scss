@@ -24,6 +24,18 @@
     color: #7e7e7e;
   }
 
+  .summary-textarea {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: rem(15px);
+    line-height: rem(24px);
+    color: #7e7e7e;
+    resize: none;
+    white-space: pre-line;
+  }
+
   .summary-edit {
     display: flex;
     justify-content: flex-end;

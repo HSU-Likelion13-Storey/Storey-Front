@@ -7,6 +7,8 @@ import B2BSignupPage from "./pages/auth/B2BSignupPage";
 import SignupComplete from "./components/auth/signup/common/SignupComplete.jsx";
 import { SubscribePage } from "./pages/b2b/SubscribePage";
 import { DownloadePage } from "./pages/b2b/DownloadPage";
+import B2BHomePage from "./pages/b2b/B2BHomePage";
+import B2BHomePrePage from "./pages/b2b/B2BHomePrePage";
 import { B2BMyPage } from "./pages/b2b/B2BMyPage";
 import { UserHomePage } from "./pages/user/UserHomePage";
 import { QrScanPage } from "./pages/user/QrScanPage";
@@ -22,7 +24,6 @@ import { useEffect, useState } from "react";
 import api from "./apis/Instance";
 import { UserProtectedRoute } from "./routes/UserProtectedRoute";
 import { B2BProtectedRoute } from "./routes/B2BProtectedRoute";
-import B2BHomePage from "./pages/b2b/B2BHomePage";
 
 function App() {
   const [isAuthLoading, setAuthLoading] = useState(true); // 토큰 재발급 중일 경우 로딩 처리
@@ -70,6 +71,7 @@ function App() {
           {/* 사장님 페이지 */}
           <Route element={<B2BProtectedRoute />}>
             <Route path="/home/owner" element={<B2BHomePage />} />
+            <Route path="/home/owner/pre" element={<B2BHomePrePage />} />
             <Route path="/home/owner/event" element={<EventUploadPage />} />
             <Route path="/mypage/owner" element={<B2BMyPage />} />
             <Route path="/mypage/owner/subscribe" element={<SubscribePage />} />
