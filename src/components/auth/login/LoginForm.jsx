@@ -44,9 +44,9 @@ export default function LoginForm({ role, onError, onSuccess }) {
     try {
       // TODO: 로그인 API 연동
       console.log(`로그인 시도 (${role})`, { id: idLower, password });
-      // onSuccess?.();
-      login({ role: role }); // 전역 상태에 role값 저장
-      nav(`/home/${role}`); // 홈으로 이동
+      onSuccess?.();
+      login({ role: role }); // 전역 상태에 role값 저장. 성공할 때 호출하면 됨.
+      nav(`/home/${role}`); // 홈으로 이동. 성공할 때 호출하면 됨.
     } catch (e) {
       onError?.(CREDENTIALS_ERROR);
       reset({ id: "", password: "" });
