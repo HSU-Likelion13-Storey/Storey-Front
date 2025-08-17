@@ -16,7 +16,7 @@ export default function CharacterBlock({ speech, imageSrc, name, description }) 
         <p className="block-desc">{description}</p>
 
         <div className="block-edit">
-          <button type="button" className="button-edit" onClick={() => nav("/home/b2b/edit")}>
+          <button type="button" className="button-edit" onClick={() => nav("/home/owner/edit")}>
             <RiPencilFill className="button-edit-icon" aria-hidden />
             <span className="button-edit-text">수정하기</span>
           </button>

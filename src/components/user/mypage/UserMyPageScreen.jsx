@@ -5,14 +5,26 @@ import { MyPageListItem } from "@/components/common/mypage/MyPageListItem";
 import { Profile } from "@/components/common/mypage/Profile";
 import "./UserMyPageScreen.scss";
 import { Modal } from "@/components/common/Modal";
+import api from "@/apis/Instance";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export const UserMyPageScreen = () => {
   const [collection, setCollection] = useState([]);
   const [logoutModal, setLogoutModal] = useState(false);
   const nav = useNavigate();
+  const { logout } = useAuthStore();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     console.log("로그아웃");
+    try {
+      const res = await api.post("/api/auth/logout");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      logout();
+    }
   };
 
   return (
