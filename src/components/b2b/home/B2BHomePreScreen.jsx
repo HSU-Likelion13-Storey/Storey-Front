@@ -1,23 +1,14 @@
-import React, { useEffect, useState } from "react";
+// src/components/b2b/home/B2BHomePreScreen.jsx
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import Banner from "./Banner";
 import EmptyStateCard from "./EmptyStateCard";
-import PreGuideModal from "./PreGuideModal";
 import logo from "../../../assets/logo-text.svg";
 import questionIcon from "../../../assets/questionIcon.svg";
 import "./B2BHomePreScreen.scss";
 
 export default function B2BHomePreScreen() {
   const nav = useNavigate();
-  const [showGuide, setShowGuide] = useState(false);
-
-  useEffect(() => {
-    const seen = localStorage.getItem("b2b_guide_pre_v1") === "1";
-    if (!seen) setShowGuide(true);
-  }, []);
-
-  const handleCloseGuide = () => setShowGuide(false);
-  const handleNeverGuide = () => localStorage.setItem("b2b_guide_pre_v1", "1");
 
   const bannerData = {
     title: "깜짝 이벤트 올리기!",
@@ -39,12 +30,10 @@ export default function B2BHomePreScreen() {
         <section className="summary">
           <p className="summary-title">가게 요약 서사</p>
           <div className="summary-box empty">
-            <img className="summary-placeholder" src={questionIcon} alt="물음표" />{" "}
+            <img className="summary-placeholder" src={questionIcon} alt="물음표" />
           </div>
         </section>
       </main>
-
-      <PreGuideModal open={showGuide} onClose={handleCloseGuide} onNever={handleNeverGuide} />
     </>
   );
 }
