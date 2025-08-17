@@ -12,7 +12,7 @@ export default function SummaryBlock({ title, content }) {
         <p className="summary-content">{content}</p>
       </div>
       <div className="summary-edit">
-        <button type="button" className="button-edit" onClick={() => nav("/home/b2b/edit")}>
+        <button type="button" className="button-edit" onClick={() => nav("/home/owner/edit")}>
           <RiPencilFill className="button-edit-icon" aria-hidden />
           <span className="button-edit-text">수정하기</span>
         </button>

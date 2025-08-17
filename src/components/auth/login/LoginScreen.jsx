@@ -8,7 +8,7 @@ import Modal from "../Modal";
 import "../Modal.scss";
 
 const LoginScreen = () => {
-  const [role, setRole] = useState("guest"); // 로그인 유형 상태 (손님/스토어 사장님)
+  const [role, setRole] = useState("user"); // 로그인 유형 상태 (손님/스토어 사장님)
   const [modalMsg, setModalMsg] = useState(""); // 모달 메시지 상태
 
   return (

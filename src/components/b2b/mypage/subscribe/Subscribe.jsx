@@ -19,7 +19,7 @@ export const Subscribe = () => {
 
   return (
     <div className="subscribe">
-      <IoCloseOutline className="back-icon" onClick={() => nav("/mypage/b2b", { replace: true })} />
+      <IoCloseOutline className="back-icon" onClick={() => nav("/mypage/owner", { replace: true })} />
       <div className="subs-header">
         <span className="badge">프리미엄</span>
         <span className="title">마스코트 브랜딩 패스</span>

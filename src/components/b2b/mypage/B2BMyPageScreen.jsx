@@ -12,8 +12,8 @@ export const B2BMyPageScreen = () => {
   const nav = useNavigate();
 
   const handleSubscribe = () => {
-    if (isSubs) nav("/mypage/b2b/subscribe");
-    else nav("/mypage/b2b/subscribe/list");
+    if (isSubs) nav("/mypage/owner/subscribe");
+    else nav("/mypage/owner/subscribe/list");
   };
 
   const handleLogout = () => {
@@ -50,7 +50,7 @@ export const B2BMyPageScreen = () => {
 
       {/* 네비게이션, 로그아웃 */}
       <div className="list-content">
-        <MyPageListItem text={"QR코드 다운 받기"} onClick={() => nav("/mypage/b2b/download")} />
+        <MyPageListItem text={"QR코드 다운 받기"} onClick={() => nav("/mypage/owner/download")} />
         <MyPageListItem text={"계정"} />
         <MyPageListItem text={"구독 목록"} onClick={handleSubscribe} />
         <MyPageListItem text={"고객센터"} />
