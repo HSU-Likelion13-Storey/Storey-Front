@@ -1,0 +1,34 @@
+@use "@/styles/_variables" as *;
+@use "@/styles/_function" as *;
+
+.summary {
+  margin-top: rem(29px);
+  margin-bottom: rem(77px);
+
+  .summary-title {
+    font-size: rem(16px);
+    font-weight: 700;
+    color: #696969;
+    margin: 0 0 rem(10px) rem(14px);
+  }
+
+  .summary-box.empty {
+    background: #f6f6f6;
+    border-radius: rem(18px);
+    min-height: rem(100px);
+    display: grid;
+    place-items: center;
+
+    .summary-placeholder {
+      width: rem(28px);
+      height: auto;
+      opacity: 0.3;
+      user-select: none;
+
+      background: linear-gradient(274deg, #cbcbcb 47.74%, #b6b6b6 48.94%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+}
