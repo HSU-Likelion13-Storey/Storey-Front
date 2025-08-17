@@ -6,6 +6,8 @@
   width: 100%;
   height: 100%;
   padding-top: vh(226px);
+  position: absolute;
+  z-index: 100000;
   background: linear-gradient(180deg, #664bbf 0%, #856cd7 100%);
   opacity: 0;
   transition: opacity 0.5s ease;
