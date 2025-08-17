@@ -55,6 +55,19 @@
     }
   }
 
+  .block-bubble.editable {
+    textarea {
+      width: 100%;
+      border: none;
+      resize: none;
+      outline: none;
+      font: inherit;
+      color: #6d6c6c;
+      background: transparent;
+      text-align: center;
+    }
+  }
+
   .block-img {
     width: rem(168px);
     height: auto;
@@ -72,6 +85,18 @@
     color: #3c3c3c;
   }
 
+  .block-name-input {
+    margin-top: rem(32px);
+    border: none;
+    outline: none;
+    background: transparent;
+    text-align: center;
+    font-size: rem(28px);
+    font-weight: 700;
+    letter-spacing: -0.6px;
+    color: #3c3c3c;
+  }
+
   .block-desc {
     margin: rem(20px) auto;
     max-width: rem(260px);
@@ -86,33 +111,23 @@
     }
   }
 
-  /* 하단 수정하기 (텍스트 링크) */
-  .block-edit {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: rem(38px);
-  }
-
-  .button-edit {
-    display: inline-flex;
-    align-items: center;
-    background: none;
+  .block-desc-input {
+    margin: rem(20px) auto;
+    max-width: rem(260px);
+    width: 100%;
     border: none;
-    font-size: rem(14px);
-    font-weight: 600;
-    color: #878787;
-    cursor: pointer;
-    text-decoration: underline;
+    outline: none;
+    background: transparent;
+    padding: 0;
+    resize: none;
 
-    &:hover {
-      color: #696969;
-    }
-    &:active {
-      transform: translateY(1px);
-    }
+    font-size: rem(16px);
+    line-height: rem(24px);
+    color: #7e7e7e;
+    text-align: center;
 
-    .button-edit-icon {
-      font-size: rem(20px);
+    &::placeholder {
+      color: #b5b5b5;
     }
   }
 }

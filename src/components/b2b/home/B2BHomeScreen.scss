@@ -17,3 +17,41 @@
 .b2b-home {
   padding: 0 rem(29px) rem(88px);
 }
+
+.page-edit-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: rem(14px);
+  margin-bottom: rem(28px);
+}
+
+.button {
+  @include hoverEvent();
+  flex: 1;
+  padding: rem(18px);
+  border: none;
+  border-radius: rem(12px);
+  font-weight: 600;
+  font-size: rem(16px);
+  cursor: pointer;
+  transition: filter 0.2s ease;
+
+  &.cancel {
+    color: #cbcbcb;
+    background: #f0f0f0;
+  }
+
+  &.confirm {
+    background: $color-primary;
+    color: #fff;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    &:hover {
+      filter: none;
+    }
+  }
+}
