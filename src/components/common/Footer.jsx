@@ -1,19 +1,12 @@
 import { GoHomeFill } from "react-icons/go";
 import { BsFillPersonFill } from "react-icons/bs";
 import { MdOutlineQrCode } from "react-icons/md";
-import { useEffect, useState } from "react";
 import "./Footer.scss";
 import { Link, useLocation } from "react-router-dom";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export const Footer = () => {
-  const [role, setRole] = useState("");
-
-  // 로그인 후 저장한 사용자 정보 불러오기
-  useEffect(() => {
-    const role = localStorage.getItem("role"); // TODO 로컬말고 전역으로 관리?
-    // setRole(role);
-    setRole("user");
-  }, []);
+  const { role } = useAuthStore();
 
   return (
     <footer className="footer">

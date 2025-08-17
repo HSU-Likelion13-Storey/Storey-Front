@@ -2,16 +2,16 @@ import React from "react";
 
 const LoginTabs = ({ role, onChange }) => {
   // 로그인 유형 선택 탭 컴포넌트
-  const isGuest = role === "guest";
+  const isUser = role === "user";
   const isOwner = role === "owner";
 
   return (
     <div className="login-tabs" role="tablist" aria-label="로그인 유형 선택">
       <button
         role="tab"
-        aria-selected={isGuest}
-        className={`tab ${isGuest ? "active" : ""}`}
-        onClick={() => onChange("guest")}
+        aria-selected={isUser}
+        className={`tab ${isUser ? "active" : ""}`}
+        onClick={() => onChange("user")}
         type="button">
         손님
       </button>

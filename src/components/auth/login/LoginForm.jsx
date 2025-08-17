@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { HiMiniEyeSlash } from "react-icons/hi2";
 import { ID_RE, PW_RE, normalizeId } from "../authRules.js";
+import { useAuthStore } from "@/store/useAuthStore.js";
+import { useNavigate } from "react-router-dom";
 
 const CREDENTIALS_ERROR = "아이디 또는 비밀번호가 올바르지 않습니다.";
 const GUEST_ACCOUNT_ERROR = "손님으로 가입된 계정입니다.";
@@ -9,7 +11,7 @@ const OWNER_ACCOUNT_ERROR = "스토어 사장님으로 가입된 계정입니다
 
 export default function LoginForm({ role, onError, onSuccess }) {
   const [showPw, setShowPw] = useState(false);
-
+  const { login } = useAuthStore(); // role, isLoggedIn 전역 상태를 저장할 로그인 함수 가져오기
   const {
     register,
     handleSubmit,
@@ -20,18 +22,19 @@ export default function LoginForm({ role, onError, onSuccess }) {
     mode: "onSubmit",
     defaultValues: { id: "", password: "" },
   });
+  const nav = useNavigate();
 
   const onValid = async ({ id, password }) => {
     const idLower = normalizeId(id);
 
     // 임시: 역할에 따라 계정 유형 확인
-    if (role === "owner" && idLower.startsWith("guest")) {
+    if (role === "owner" && idLower.startsWith("user")) {
       onError?.(GUEST_ACCOUNT_ERROR);
       reset({ id: "", password: "" });
       setFocus("id");
       return;
     }
-    if (role === "guest" && idLower.startsWith("owner")) {
+    if (role === "user" && idLower.startsWith("owner")) {
       onError?.(OWNER_ACCOUNT_ERROR);
       reset({ id: "", password: "" });
       setFocus("id");
@@ -42,6 +45,8 @@ export default function LoginForm({ role, onError, onSuccess }) {
       // TODO: 로그인 API 연동
       console.log(`로그인 시도 (${role})`, { id: idLower, password });
       onSuccess?.();
+      login({ role: role }); // 전역 상태에 role값 저장. 성공할 때 호출하면 됨.
+      nav(`/home/${role}`); // 홈으로 이동. 성공할 때 호출하면 됨.
     } catch (e) {
       onError?.(CREDENTIALS_ERROR);
       reset({ id: "", password: "" });

@@ -11,8 +11,8 @@ export default function SignupSelect() {
   const [type, setType] = useState(null);
 
   const goNext = () => {
-    if (type === "b2c") nav("/signup/b2c");
-    if (type === "b2b") nav("/signup/b2b");
+    if (type === "user") nav("/signup/user");
+    if (type === "owner") nav("/signup/owner");
   };
 
   return (
@@ -23,17 +23,17 @@ export default function SignupSelect() {
       <div className="signup-select">
         <button
           type="button"
-          className={`select-card ${type === "b2c" ? "active" : ""}`}
-          onClick={() => setType("b2c")}
-          aria-pressed={type === "b2c"}>
+          className={`select-card ${type === "user" ? "active" : ""}`}
+          onClick={() => setType("user")}
+          aria-pressed={type === "user"}>
           손님
         </button>
 
         <button
           type="button"
-          className={`select-card ${type === "b2b" ? "active" : ""}`}
-          onClick={() => setType("b2b")}
-          aria-pressed={type === "b2b"}>
+          className={`select-card ${type === "owner" ? "active" : ""}`}
+          onClick={() => setType("owner")}
+          aria-pressed={type === "owner"}>
           스토어 사장님
         </button>
 

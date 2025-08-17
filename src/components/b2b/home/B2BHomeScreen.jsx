@@ -22,7 +22,7 @@ export default function B2BHomeScreen() {
       banner: {
         title: "깜짝 이벤트 올리기!",
         subtitle: "오늘은 햄버거 추천 어때요?",
-        onClick: () => nav("/home/b2b/event"),
+        onClick: () => nav("/home/owner/event"),
       },
       character: {
         speech: "행복한 하루와 위로를 선물해드릴게요.",

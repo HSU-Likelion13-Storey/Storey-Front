@@ -18,7 +18,7 @@ export const SubscribeList = () => {
           <img src={logoEmpty} alt="" />
           <span className={styles.caption}>구독 목록이 없어요.</span>
         </div>
-        <div className={styles.planButton} onClick={() => nav("/mypage/b2b/subscribe")}>
+        <div className={styles.planButton} onClick={() => nav("/mypage/owner/subscribe")}>
           프리미엄 보기
         </div>
       </div>
