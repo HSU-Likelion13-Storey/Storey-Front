@@ -11,6 +11,7 @@ import shadowChar from "./character-shadow.svg";
 import bubble from "./bubble.svg";
 import logoEmpty from "./empty-logo.svg";
 import mascotBubble from "./mascot-bubble.svg";
+import mascotBubbleSplash from "./mascot-bubble-splash.svg";
 
 export {
   logoText,
@@ -26,4 +27,5 @@ export {
   bubble,
   logoEmpty,
   mascotBubble,
+  mascotBubbleSplash,
 };
