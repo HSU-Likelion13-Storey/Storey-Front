@@ -31,7 +31,8 @@ api.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry) {
+
+    if (error.response && error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
         const refreshToken = localStorage.getItem("refresh_token");
@@ -47,7 +48,7 @@ api.interceptors.response.use(
         localStorage.setItem("refresh_token", newRefreshToken);
 
         // 원본 요청의 헤더를 새 토큰으로 업데이트
-        originalRequest.headers["authorization"] = `Bearer ${newAccessToken}`;
+        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
 
         // 수정된 원본 요청으로 API 호출을 재시도
         return axios(originalRequest);
