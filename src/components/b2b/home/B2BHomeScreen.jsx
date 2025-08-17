@@ -42,6 +42,14 @@ export default function B2BHomeScreen() {
     if (!hidden) setShowGuide(true);
   }, [nav]);
 
+  const isChanged =
+    !!data &&
+    !!draft &&
+    (draft.character.speech !== data.character.speech ||
+      draft.character.name !== data.character.name ||
+      draft.character.description !== data.character.description ||
+      draft.summary.content !== data.summary.content);
+
   if (!data || !draft) return null;
 
   const handleConfirmModal = () => setShowGuide(false);
@@ -70,7 +78,7 @@ export default function B2BHomeScreen() {
         <img src={logo} alt="스토어리 로고" />
       </header>
 
-      <main className="b2b-home">
+      <main className={`b2b-home ${isEditing && !isChanged ? "editing-idle" : ""}`}>
         <Banner {...data.banner} />
 
         <CharacterBlock
@@ -97,7 +105,12 @@ export default function B2BHomeScreen() {
             <button type="button" className="button cancel" onClick={cancelEdit}>
               취소
             </button>
-            <button type="button" className="button confirm" onClick={saveEdit}>
+            <button
+              type="button"
+              className="button confirm"
+              onClick={saveEdit}
+              disabled={!isChanged}
+              aria-disabled={!isChanged}>
               수정하기
             </button>
           </div>
