@@ -1,4 +1,4 @@
-import { mascotBubble } from "@/assets";
+import { mascotBubbleSplash } from "@/assets";
 import styles from "./Splash.module.scss";
 import { useState } from "react";
 
@@ -9,7 +9,7 @@ export const Splash = ({ closeFn }) => {
     <div className={`${styles.container} ${visible && styles.visible}`}>
       <div className={styles.content}>
         <div className={styles.img}>
-          <img src={mascotBubble} />
+          <img src={mascotBubbleSplash} />
         </div>
         <div className={styles.title}>
           <h1>스토어리</h1>
