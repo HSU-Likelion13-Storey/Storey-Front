@@ -5,19 +5,31 @@ import "./B2BMyPageScreen.scss";
 import { MyPageListItem } from "@/components/common/mypage/MyPageListItem";
 import { Profile } from "@/components/common/mypage/Profile";
 import { Modal } from "@/components/common/Modal";
+import api from "@/apis/Instance";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export const B2BMyPageScreen = () => {
   const [isSubs, setIsSubs] = useState(false);
   const [logoutModal, setLogoutModal] = useState(false);
   const nav = useNavigate();
+  const { logout } = useAuthStore();
 
-  const handleSubscribe = () => {
-    if (isSubs) nav("/mypage/owner/subscribe");
+  const handleSubscribe = (isBanner) => {
+    if (isSubs || isBanner) nav("/mypage/owner/subscribe");
     else nav("/mypage/owner/subscribe/list");
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     console.log("로그아웃");
+    try {
+      const res = await api.post("/api/auth/logout");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      logout();
+    }
   };
 
   return (
@@ -36,7 +48,7 @@ export const B2BMyPageScreen = () => {
           <div className="plan-banner-content">
             <span className="plan-banner-headline">마스코트 브랜딩 패스 구독하면,</span>
             <span className="plan-banner-caption">캐릭터와 관련된 기능이 무제한!</span>
-            <div className="plan-banner-button" onClick={handleSubscribe}>
+            <div className="plan-banner-button" onClick={() => handleSubscribe(true)}>
               혜택 자세히 보기
             </div>
           </div>
@@ -52,7 +64,7 @@ export const B2BMyPageScreen = () => {
       <div className="list-content">
         <MyPageListItem text={"QR코드 다운 받기"} onClick={() => nav("/mypage/owner/download")} />
         <MyPageListItem text={"계정"} />
-        <MyPageListItem text={"구독 목록"} onClick={handleSubscribe} />
+        <MyPageListItem text={"구독 목록"} onClick={() => handleSubscribe(false)} />
         <MyPageListItem text={"고객센터"} />
         <MyPageListItem text={"로그아웃"} onClick={() => setLogoutModal(true)} />
       </div>
