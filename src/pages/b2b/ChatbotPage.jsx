@@ -1,9 +1,9 @@
 import { ChatbotScreen } from "@/components/b2b/chatbot/ChatbotScreen";
 
-export const ChatbotPage = () => {
+export default function ChatbotPage() {
   return (
     <>
       <ChatbotScreen />
     </>
   );
-};
+}
