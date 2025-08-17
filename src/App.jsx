@@ -7,7 +7,8 @@ import B2BSignupPage from "./pages/auth/B2BSignupPage";
 import SignupComplete from "./components/auth/signup/common/SignupComplete.jsx";
 import { SubscribePage } from "./pages/b2b/SubscribePage";
 import { DownloadePage } from "./pages/b2b/DownloadPage";
-import B2BHome from "./pages/b2b/B2BHomePage";
+import B2BHomePage from "./pages/b2b/B2BHomePage";
+import B2BHomePrePage from "./pages/b2b/B2BHomePrePage";
 import { B2BMyPage } from "./pages/b2b/B2BMyPage";
 import { UserHomePage } from "./pages/user/UserHomePage";
 import { QrScanPage } from "./pages/user/QrScanPage";
@@ -69,7 +70,8 @@ function App() {
           <Route path="/signup/complete" element={<SignupComplete />} />
           {/* 사장님 페이지 */}
           <Route element={<B2BProtectedRoute />}>
-            <Route path="/home/owner" element={<B2BHome />} />
+            <Route path="/home/owner" element={<B2BHomePage />} />
+            <Route path="/home/owner/pre" element={<B2BHomePrePage />} />
             <Route path="/home/owner/event" element={<EventUploadPage />} />
             <Route path="/mypage/owner" element={<B2BMyPage />} />
             <Route path="/mypage/owner/subscribe" element={<SubscribePage />} />
