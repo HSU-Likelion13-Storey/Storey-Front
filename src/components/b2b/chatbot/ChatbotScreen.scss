@@ -173,11 +173,16 @@
     border: none;
     background: transparent;
     cursor: pointer;
+    color: #2a2a2a;
 
     .send-icon {
       width: rem(24px);
       height: rem(24px);
+    }
+
+    &:disabled {
       color: #939393;
+      cursor: not-allowed;
     }
   }
 }

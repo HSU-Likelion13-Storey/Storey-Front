@@ -145,7 +145,7 @@ export function ChatbotScreen({ onDone }) {
 
       <form className="chat-input" onSubmit={handleSend}>
         <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="메시지를 입력해주세요" />
-        <button type="submit" className="send-btn">
+        <button type="submit" className="send-btn" disabled={!input.trim()}>
           <FaArrowUpLong className="send-icon" />
         </button>
       </form>
