@@ -41,7 +41,7 @@ function App() {
     }
 
     api
-      .post("api/auth/refresh", { refreshToken })
+      .post("auth/refresh", { refreshToken })
       .then((res) => {
         console.log(res);
 
@@ -53,6 +53,7 @@ function App() {
 
         if (currentRole !== role) {
           useAuthStore.getState().login({ role }); // 상태 갱신
+          console.log(role);
         }
       })
       .catch(() => logout())
