@@ -5,19 +5,32 @@ import { FaArrowUpLong } from "react-icons/fa6";
 import CharacterBlock from "../home/CharacterBlock";
 import { getUserStep, fetchBotReply, createCharacterOnServer } from "./chat.service";
 import { mapBotChunksToMsgs } from "./mapper";
+import profile from "@/assets/profile.svg";
 import "./ChatbotScreen.scss";
+
+const uid = () => Math.random().toString(36).slice(2);
+
+const INTRO_MSGS = () => [
+  { id: uid(), role: "bot", type: "profile", name: "밍구", avatar: profile },
+  { id: uid(), role: "bot", type: "text", text: "안녕하세요. 저는 밍구라고해요 😊" },
+  {
+    id: uid(),
+    role: "bot",
+    type: "text",
+    text: "사장님의 가게 이야기를\n귀여운 캐릭터로 만들어 손님이 찾아와\n캐릭터를 수집하게 도와드려요.😚",
+  },
+  {
+    id: uid(),
+    role: "bot",
+    type: "text",
+    text: "몇 가지 질문만 답해 주시면\n바로 캐릭터를 만들어 드릴게요!\n가게 이름의 뜻은 무엇인가요?",
+  },
+];
 
 export function ChatbotScreen({ onDone }) {
   const nav = useNavigate();
 
-  const [messages, setMessages] = useState([
-    {
-      id: uid(),
-      role: "bot",
-      type: "text",
-      text: "안녕하세요. 저는 밍구라고해요 😊\n사장님 가게 이야기로 캐릭터를 만들어볼게요!\n먼저 가게 이름의 뜻은 무엇인가요?",
-    },
-  ]);
+  const [messages, setMessages] = useState(INTRO_MSGS());
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
 
@@ -64,12 +77,21 @@ export function ChatbotScreen({ onDone }) {
         push({ role: "bot", type: "text", text: "오류가 발생했어요. 잠시 후 다시 시도해 주세요." });
       }
     } else {
-      // 다시 만들기
-      setMessages([{ id: uid(), role: "bot", type: "text", text: "가게 이름의 뜻은 무엇인가요?" }]);
+      setMessages(INTRO_MSGS());
     }
   }
 
   function renderMessage(m) {
+    if (m.type === "profile") {
+      return (
+        <div key={m.id} className="bot-profile">
+          <img className="bot-avatar" src={m.avatar} alt={`${m.name} 프로필`} />
+          <div className="bot-meta">
+            <div className="bot-name">{m.name}</div>
+          </div>
+        </div>
+      );
+    }
     if (m.type === "text") {
       return (
         <div key={m.id} className={`bubble ${m.role}`}>
@@ -131,5 +153,4 @@ export function ChatbotScreen({ onDone }) {
   );
 }
 
-const uid = () => Math.random().toString(36).slice(2);
 export default ChatbotScreen;

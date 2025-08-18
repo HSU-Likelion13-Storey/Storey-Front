@@ -58,6 +58,28 @@
   gap: rem(6px);
 }
 
+.bot-profile {
+  display: flex;
+  align-items: center;
+  gap: rem(10px);
+  margin: rem(8px) 0 rem(4px);
+
+  .bot-avatar {
+    width: rem(40px);
+    height: rem(40px);
+    border-radius: 50%;
+    object-fit: cover;
+    background: #f3f3f3;
+  }
+
+  .bot-name {
+    font-size: rem(16px);
+    font-weight: 600;
+    color: #000000;
+    line-height: rem(24px);
+  }
+}
+
 .bubble {
   max-width: 80%;
   padding: rem(12px) rem(18px);
@@ -83,10 +105,7 @@
   }
 }
 
-.bubble.bot + .bubble.user {
-  margin-top: 30px;
-}
-
+.bubble.bot + .bubble.user,
 .bubble.user + .bubble.bot {
   margin-top: 30px;
 }
