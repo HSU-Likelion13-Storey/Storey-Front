@@ -5,34 +5,23 @@ import { BsListCheck } from "react-icons/bs";
 import { PiWalletLight } from "react-icons/pi";
 import { LuCalendar } from "react-icons/lu";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./Subscribe.scss";
 import { Modal } from "@/components/common/Modal";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IoCloseOutline } from "react-icons/io5";
 import { useSubscription } from "@/hooks/useSubscription";
+import useTimerModal from "@/hooks/useTimerModal";
 
 export const Subscribe = () => {
   const { isSubscribed, endDate, formattedDate, handleSubsCancel, handleOnSubs } = useSubscription();
+  const { isOpenTimerModal, timerModalData, setTimerModalData } = useTimerModal();
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [isOpenTimerModal, setIsOpenTimerModal] = useState(false);
-  // 타이머모달 데이터. 변경될 때마다 타이머 모달이 열리도록 설정
-  const [timerModalData, setTimerModalData] = useState({
-    state: false,
-    title: "구독 완료!",
-    caption: "더 오래 함께 할 수 있게 되어 영광이에요!",
-    cancelFn: () => setIsOpenTimerModal(false),
-    img: mascotHappy,
-    confirmType: false,
-    autoCloseSec: 2,
-  });
+
   const location = useLocation();
   const nav = useNavigate();
 
-  useEffect(() => {
-    if (timerModalData.state) setIsOpenTimerModal(true);
-  }, [timerModalData]);
-
+  // 한달 무료체험 or 구독하기 버튼 클릭 핸들러
   const HandleSubs = async () => {
     const res = await handleOnSubs(isSubscribed);
 
@@ -57,6 +46,7 @@ export const Subscribe = () => {
     }
   };
 
+  // 구독 해지 버튼 클릭 핸들러
   const onHandleSubsCancel = async () => {
     setIsOpenModal(false);
     const success = await handleSubsCancel();
