@@ -27,10 +27,14 @@ export function useB2BEvent() {
           placeholder: res.data.data.content, // 기존 이벤트 내용을 placeholder로 설정
         }));
         setIsEvent(true);
-      } else setEventContent(mockData);
+      } else {
+        setEventContent(mockData);
+      }
     } catch (error) {
       setEventContent(mockData);
-      console.error(error);
+      if (error.response.data.code === "STORE_NOT_FOUND_404") {
+        handleModalNotFoundStore();
+      }
     }
   };
 
@@ -84,6 +88,21 @@ export function useB2BEvent() {
       state: true,
       title: "",
       caption: <span style={{ color: "#2A2A2A" }}>깜짝 이벤트가 삭제되었습니다.</span>,
+      cancelFn: () => {
+        setIsOpenTimerModal(false);
+        nav("/home/owner", { replace: true });
+      },
+      autoCloseSec: 1.5,
+    }));
+  };
+
+  // 등록되지 않은 가게 오류 모달 호출
+  const handleModalNotFoundStore = () => {
+    setTimerModalData((prev) => ({
+      ...prev,
+      state: true,
+      title: "가게가 등록되지 않았어요.",
+      caption: <span style={{ color: "#2A2A2A" }}>가게를 등록한 뒤 이벤트를 추가해보세요!</span>,
       cancelFn: () => {
         setIsOpenTimerModal(false);
         nav("/home/owner", { replace: true });
