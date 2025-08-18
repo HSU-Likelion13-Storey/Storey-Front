@@ -10,11 +10,10 @@ import "./Subscribe.scss";
 import { Modal } from "@/components/common/Modal";
 import { useNavigate } from "react-router-dom";
 import { IoCloseOutline } from "react-icons/io5";
-import api from "@/apis/Instance";
+import { useSubscription } from "@/hooks/useSubscription";
 
 export const Subscribe = () => {
-  const [isSubscribed, setIsSubscribed] = useState("TRIAL_AVAILABLE");
-  const [endDate, setEndDate] = useState("");
+  const { isSubscribed, endDate, formattedDate, handleSubsCancel, handleOnSubs } = useSubscription();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isOpenTimerModal, setIsOpenTimerModal] = useState(false);
   // 타이머모달 데이터. 변경될 때마다 타이머 모달이 열리도록 설정
@@ -31,87 +30,45 @@ export const Subscribe = () => {
   const nav = useNavigate();
 
   useEffect(() => {
-    getSusbscription();
-  }, []);
-
-  useEffect(() => {
     if (timerModalData.state) setIsOpenTimerModal(true);
   }, [timerModalData]);
 
-  const getSusbscription = async () => {
-    try {
-      const res = await api.get("owner/subscription");
-      console.log(res.data.data.status);
+  const HandleSubs = async () => {
+    const res = await handleOnSubs(isSubscribed);
 
-      if (res.data.isSuccess) {
-        setIsSubscribed(res.data.data.status);
-        const date = formattedDate(res.data.data.endDate);
-        setEndDate(date);
-      }
-    } catch (error) {
-      console.error("실패", error);
-      setIsSubscribed("CANCELED");
-    }
-  };
-
-  const handleSubsCancel = async () => {
-    setIsOpenModal(false);
-    try {
-      const res = await api.put("owner/subscription/cancel");
-      if (res.data.isSuccess) {
-        console.log(res.data.data);
-
+    if (res) {
+      if (res !== "무료 체험 시작이 성공적으로 완료되었습니다.") {
         setTimerModalData((prev) => ({
           ...prev,
           state: true,
-          title: "",
-          caption: <span style={{ color: "#2A2A2A" }}>구독 해지가 완료 되었습니다.</span>,
-          img: "",
+          title: "구독 완료!",
+          caption: "더 오래 함께 할 수 있게 되어 영광이에요!",
+          img: mascotHappy,
         }));
-        getSusbscription();
+      } else {
+        setTimerModalData((prev) => ({
+          ...prev,
+          state: true,
+          title: "한 달 체험 등록 완료!",
+          caption: "저희 서비스를 이용해주셔서 감사해요!",
+          img: mascotHappy,
+        }));
       }
-    } catch (error) {
-      console.error(error);
     }
   };
 
-  const handleOnSubs = async () => {
-    try {
-      let res;
-      if (isSubscribed == "TRIAL_AVAILABLE") res = await api.post("owner/subscription/trial");
-      else if (isSubscribed == "CANCEL" || isSubscribed == "CANCELED_REQUESTED")
-        res = await api.post("owner/subscription/renew", { orderId: "" });
-
-      console.log(res);
-      if (res.data.isSuccess) {
-        console.log(res.data.data);
-        getSusbscription();
-        if (res.data.data !== "무료 체험 시작이 성공적으로 완료되었습니다.")
-          setTimerModalData((prev) => ({
-            ...prev,
-            state: true,
-            title: "구독 완료!",
-            caption: "더 오래 함께 할 수 있게 되어 영광이에요!",
-          }));
-        else
-          setTimerModalData((prev) => ({
-            ...prev,
-            state: true,
-            title: "한 달 체험 등록 완료!",
-            caption: "저희 서비스를 이용해주셔서 감사해요!",
-          }));
-      }
-    } catch (error) {
-      console.error(error);
+  const onHandleSubsCancel = async () => {
+    setIsOpenModal(false);
+    const success = await handleSubsCancel();
+    if (success) {
+      setTimerModalData((prev) => ({
+        ...prev,
+        state: true,
+        title: "",
+        caption: <span style={{ color: "#2A2A2A" }}>구독 해지가 완료 되었습니다.</span>,
+        img: "",
+      }));
     }
-  };
-
-  const formattedDate = (raw) => {
-    const date = new Date(raw);
-    return date.toLocaleString("ko-KR", {
-      month: "long",
-      day: "numeric",
-    });
   };
 
   return (
@@ -155,7 +112,7 @@ export const Subscribe = () => {
       <div className="btn-wrapper">
         <button
           className={`subs-btn ${isSubscribed == "ACTIVE" ? "unsubs" : "subs"}`}
-          onClick={isSubscribed == "ACTIVE" ? () => setIsOpenModal(true) : handleOnSubs}>
+          onClick={isSubscribed == "ACTIVE" ? () => setIsOpenModal(true) : HandleSubs}>
           {/* 한달 무료 체험 여부 */}
           {isSubscribed == "ACTIVE" ? (
             <>
@@ -193,8 +150,7 @@ export const Subscribe = () => {
           confirm="해지하기"
           cancelFn={() => setIsOpenModal(false)}
           confirmFn={() => {
-            setIsSubscribed(false);
-            handleSubsCancel();
+            onHandleSubsCancel();
             setIsOpenModal(false);
           }}
         />
