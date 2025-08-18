@@ -8,28 +8,25 @@ const B2CSignupPage = () => {
   const [submitting, setSubmitting] = useState(false);
 
   const submit = async ({ username, password, nickname }) => {
-    try {
-      setSubmitting(true);
+    if (submitting) return;
+    setSubmitting(true);
 
-      const result = await signupApi({
-        loginId: username,
-        password,
-        nickName: nickname,
-        role: "user",
-      });
+    const result = await signupApi({
+      loginId: username,
+      password,
+      nickName: nickname,
+      role: "user",
+    });
 
-      if (!result?.ok) {
-        console.log("사용자 회원가입 실패:", result?.message ?? result?.code);
-        return;
-      }
+    setSubmitting(false);
 
-      console.log("사용자 회원가입 성공");
-      nav("/signup/complete", { replace: true });
-    } catch (e) {
-      console.log("사용자 회원가입 요청 오류:", e);
-    } finally {
-      setSubmitting(false);
+    if (!result) {
+      console.log("사용자 회원가입 실패");
+      return;
     }
+
+    console.log("사용자 회원가입 성공:", result);
+    nav("/signup/complete", { replace: true });
   };
 
   return (

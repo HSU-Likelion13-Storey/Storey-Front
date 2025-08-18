@@ -10,7 +10,7 @@ const B2BSignupPage = () => {
   const [submitting, setSubmitting] = useState(false);
   const nav = useNavigate();
 
-  // 1단계: 계정 정보 입력 후 2단계로 이동
+  // 1단계: 계정 정보 입력
   const handleAccountSubmit = ({ username, password, nickname }) => {
     setAccountData({ username, password, nickname });
     setStep(2);
@@ -18,35 +18,30 @@ const B2BSignupPage = () => {
 
   // 2단계: 사업자 정보 입력 후 가입 완료 (API 연동 예정)
   const handleBusinessSubmit = async () => {
-    try {
-      setSubmitting(true);
+    if (submitting || !accountData) return;
+    setSubmitting(true);
 
-      const result = await signupApi({
-        loginId: accountData.username,
-        password: accountData.password,
-        nickName: accountData.nickname,
-        role: "owner",
-      });
+    const result = await signupApi({
+      loginId: accountData.username,
+      password: accountData.password,
+      nickName: accountData.nickname,
+      role: "owner",
+    });
 
-      if (!result.ok) {
-        console.log("사장님 회원가입 실패:", result.message ?? result.code);
-        return;
-      }
+    setSubmitting(false);
 
-      console.log("사장님 회원가입 완료. 다음 단계에서 가게 등록 API 연결 예정");
-      // TODO: owner/store API 연동
-      //  nav("/signup/complete");
-    } catch (e) {
-      console.log("사장님 회원가입 처리 오류:", e);
-    } finally {
-      setSubmitting(false);
+    if (!result) {
+      console.log("사장님 회원가입 실패");
+      return;
     }
+
+    console.log("사장님 회원가입 성공:", result);
+    // TODO: 사업자 정보 연동 후 완료 페이지 이동
   };
 
   return (
     <div>
       {step === 1 && <SignupCommonForm onSubmit={handleAccountSubmit} submitting={submitting} submitLabel="다음으로" />}
-
       {step === 2 && (
         <BusinessForm headerOnBack={() => setStep(1)} onSubmit={handleBusinessSubmit} submitting={submitting} />
       )}

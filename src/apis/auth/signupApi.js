@@ -8,19 +8,19 @@ const signupApi = async ({ loginId, password, nickName, role }) => {
 
     if ((httpStatus === 201 || httpStatus === 200) && isSuccess) {
       console.log("회원가입 성공");
-      return { ok: true, id: data?.id ?? data?.userId ?? null };
+      return data?.id ?? data?.userId ?? true;
     }
 
     if (httpStatus === 409) {
       console.log("아이디 중복");
-      return { ok: false, code: 409, message };
+      return null;
     }
 
     console.log("회원가입 실패:", message);
-    return { ok: false, code: httpStatus, message };
+    return null;
   } catch (e) {
     console.log("회원가입 요청 오류:", e);
-    return { ok: false, code: 500, message: "요청 오류" };
+    return null;
   }
 };
 
