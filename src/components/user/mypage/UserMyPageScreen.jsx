@@ -17,7 +17,7 @@ export const UserMyPageScreen = () => {
   const handleLogout = async () => {
     console.log("로그아웃");
     try {
-      const res = await api.post("/api/auth/logout");
+      const res = await api.post("auth/logout");
     } catch (error) {
       console.error(error);
     } finally {

@@ -15,11 +15,11 @@ export const QrScan = () => {
   };
 
   const handleScan = (data) => {
-    // if (data) {
-    //   if (isUrl(data.data)) {
-    //     window.open(data.data);
-    //   }
-    // }
+    if (data) {
+      if (isUrl(data.data)) {
+        window.open(data.data);
+      }
+    }
   };
 
   useEffect(() => {
