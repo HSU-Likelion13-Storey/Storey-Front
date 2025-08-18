@@ -24,6 +24,8 @@ import { useEffect, useState } from "react";
 import api from "./apis/Instance";
 import { UserProtectedRoute } from "./routes/UserProtectedRoute";
 import { B2BProtectedRoute } from "./routes/B2BProtectedRoute";
+import ChatbotPage from "./pages/b2b/ChatbotPage";
+import CharacterComplete from "./components/b2b/chatbot/CharacterComplete";
 
 function App() {
   const [isAuthLoading, setAuthLoading] = useState(true); // 토큰 재발급 중일 경우 로딩 처리
@@ -83,6 +85,8 @@ function App() {
             <Route path="/mypage/owner/subscribe" element={<SubscribePage />} />
             <Route path="/mypage/owner/subscribe/list" element={<SubscribeList />} />
             <Route path="/mypage/owner/download" element={<DownloadePage />} />
+            <Route path="/chatbot" element={<ChatbotPage />} />
+            <Route path="/chatbot/complete" element={<CharacterComplete />} />
           </Route>
           {/* user 페이지 */}
           <Route element={<UserProtectedRoute />}>
