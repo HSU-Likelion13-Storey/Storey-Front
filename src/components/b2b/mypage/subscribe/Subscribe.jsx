@@ -14,6 +14,7 @@ import api from "@/apis/Instance";
 
 export const Subscribe = () => {
   const [isSubscribed, setIsSubscribed] = useState("TRIAL_AVAILABLE");
+  const [endDate, setEndDate] = useState("");
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isOpenTimerModal, setIsOpenTimerModal] = useState(false);
   // 타이머모달 데이터. 변경될 때마다 타이머 모달이 열리도록 설정
@@ -42,7 +43,11 @@ export const Subscribe = () => {
       const res = await api.get("owner/subscription");
       console.log(res.data.data.status);
 
-      if (res.data.isSuccess) setIsSubscribed(res.data.data.status);
+      if (res.data.isSuccess) {
+        setIsSubscribed(res.data.data.status);
+        const date = formattedDate(res.data.data.endDate);
+        setEndDate(date);
+      }
     } catch (error) {
       console.error("실패", error);
       setIsSubscribed("CANCELED");
@@ -80,7 +85,8 @@ export const Subscribe = () => {
       console.log(res);
       if (res.data.isSuccess) {
         console.log(res.data.data);
-        if (typeof res.data.data == "string")
+        getSusbscription();
+        if (res.data.data !== "무료 체험 시작이 성공적으로 완료되었습니다.")
           setTimerModalData((prev) => ({
             ...prev,
             state: true,
@@ -94,11 +100,18 @@ export const Subscribe = () => {
             title: "한 달 체험 등록 완료!",
             caption: "저희 서비스를 이용해주셔서 감사해요!",
           }));
-        setIsSubscribed("ACTIVE");
       }
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const formattedDate = (raw) => {
+    const date = new Date(raw);
+    return date.toLocaleString("ko-KR", {
+      month: "long",
+      day: "numeric",
+    });
   };
 
   return (
@@ -154,9 +167,9 @@ export const Subscribe = () => {
           )}
         </button>
         <div className="btn-caption">
-          {isSubscribed
-            ? `지금 취소해도 9월 20일까지 혜택을 계속 이용할 수 있습니다.`
-            : "지금 구독하시면 9월 20일 갱신이에요. "}
+          {isSubscribed == "ACTIVE"
+            ? `지금 취소해도 ${endDate}까지 혜택을 계속 이용할 수 있습니다.`
+            : `지금 구독하시면 ${formattedDate(new Date().setMonth(new Date().getMonth() + 1))} 갱신이에요. `}
         </div>
       </div>
 
