@@ -5,25 +5,90 @@ import { BsListCheck } from "react-icons/bs";
 import { PiWalletLight } from "react-icons/pi";
 import { LuCalendar } from "react-icons/lu";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Subscribe.scss";
 import { Modal } from "@/components/common/Modal";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { IoCloseOutline } from "react-icons/io5";
+import { useSubscription } from "@/hooks/useSubscription";
 
 export const Subscribe = () => {
-  const [isSubscribed, setIsSubscribed] = useState(false);
+  const { isSubscribed, endDate, formattedDate, handleSubsCancel, handleOnSubs } = useSubscription();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isOpenTimerModal, setIsOpenTimerModal] = useState(false);
+  // 타이머모달 데이터. 변경될 때마다 타이머 모달이 열리도록 설정
+  const [timerModalData, setTimerModalData] = useState({
+    state: false,
+    title: "구독 완료!",
+    caption: "더 오래 함께 할 수 있게 되어 영광이에요!",
+    cancelFn: () => setIsOpenTimerModal(false),
+    img: mascotHappy,
+    confirmType: false,
+    autoCloseSec: 2,
+  });
+  const location = useLocation();
   const nav = useNavigate();
+
+  useEffect(() => {
+    if (timerModalData.state) setIsOpenTimerModal(true);
+  }, [timerModalData]);
+
+  const HandleSubs = async () => {
+    const res = await handleOnSubs(isSubscribed);
+
+    if (res) {
+      if (res !== "무료 체험 시작이 성공적으로 완료되었습니다.") {
+        setTimerModalData((prev) => ({
+          ...prev,
+          state: true,
+          title: "구독 완료!",
+          caption: "더 오래 함께 할 수 있게 되어 영광이에요!",
+          img: mascotHappy,
+        }));
+      } else {
+        setTimerModalData((prev) => ({
+          ...prev,
+          state: true,
+          title: "한 달 체험 등록 완료!",
+          caption: "저희 서비스를 이용해주셔서 감사해요!",
+          img: mascotHappy,
+        }));
+      }
+    }
+  };
+
+  const onHandleSubsCancel = async () => {
+    setIsOpenModal(false);
+    const success = await handleSubsCancel();
+    if (success) {
+      setTimerModalData((prev) => ({
+        ...prev,
+        state: true,
+        title: "",
+        caption: <span style={{ color: "#2A2A2A" }}>구독 해지가 완료 되었습니다.</span>,
+        img: "",
+      }));
+    }
+  };
 
   return (
     <div className="subscribe">
-      <IoCloseOutline className="back-icon" onClick={() => nav("/mypage/owner", { replace: true })} />
+      {location.state ? (
+        <>
+          <div className="header-top-blank" />
+          <div className="header">
+            <IoIosArrowBack className="header-back-icon" onClick={() => nav(-1)} />
+            <div className="header-title">구독 하기</div>
+            <div className="header-blank" />
+          </div>
+        </>
+      ) : (
+        <IoCloseOutline className="back-icon" onClick={() => nav("/mypage/owner", { replace: true })} />
+      )}
       <div className="subs-header">
         <span className="badge">프리미엄</span>
         <span className="title">마스코트 브랜딩 패스</span>
-        <div className="plan-state">{isSubscribed ? `구독 이용 중` : `이런 혜택, 또 없어요!`}</div>
+        <div className="plan-state">{isSubscribed == "ACTIVE" ? `구독 이용 중` : `이런 혜택, 또 없어요!`}</div>
       </div>
 
       {/* 구독 혜택 정리 */}
@@ -46,39 +111,33 @@ export const Subscribe = () => {
       <div className="fee-content">
         <div className="fee-row">
           <PiWalletLight className="fee-icon" />
-          <div className="fee">월 {`29,900`}원</div>
+          <div className="fee">월 29,900원</div>
         </div>
         <div className="fee-row">
           <LuCalendar className="fee-icon" />
-          <div className="fee">{isSubscribed ? `${`9월 20일`}에 갱신 예정` : "결제한 일수로부터 한달 주기"}</div>
+          <div className="fee">결제한 일수로부터 한달 주기</div>
         </div>
       </div>
 
       {/* 버튼 */}
       <div className="btn-wrapper">
         <button
-          className={`subs-btn ${isSubscribed ? "unsubs" : "subs"}`}
-          onClick={
-            isSubscribed
-              ? () => setIsOpenModal(true)
-              : () => {
-                  setIsOpenTimerModal(true);
-                  setIsSubscribed(true);
-                }
-          }>
-          {isSubscribed ? (
+          className={`subs-btn ${isSubscribed == "ACTIVE" ? "unsubs" : "subs"}`}
+          onClick={isSubscribed == "ACTIVE" ? () => setIsOpenModal(true) : HandleSubs}>
+          {/* 한달 무료 체험 여부 */}
+          {isSubscribed == "ACTIVE" ? (
             <>
               구독 해지 하기
               <IoIosArrowForward className="expried-icon" />
             </>
           ) : (
-            "구독 하기"
+            `${isSubscribed == "TRIAL_AVAILABLE" ? "한달 무료 체험하기" : "구독 하기"}`
           )}
         </button>
         <div className="btn-caption">
-          {isSubscribed
-            ? `지금 취소해도 9월 20일까지 혜택을 계속 이용할 수 있습니다.`
-            : "지금 구독하시면 9월 20일 갱신이에요. "}
+          {isSubscribed == "ACTIVE"
+            ? `지금 취소해도 ${endDate}까지 혜택을 계속 이용할 수 있습니다.`
+            : `지금 구독하시면 ${formattedDate(new Date().setMonth(new Date().getMonth() + 1))} 갱신이에요. `}
         </div>
       </div>
 
@@ -87,7 +146,7 @@ export const Subscribe = () => {
         <div className="expired-headline">구독 기간 만료 시 제약 사항</div>
         <ul>
           <li>스토어리 지도 노출: 지도에서 해당 가게 캐릭터가 표시되지 않음 (탐험 불가)</li>
-          <li>캐릭터 사용:: 생성되 캐릭터 상업적/ 디자인적 사용 불가 (저작권은 스토어리에 있음)</li>
+          <li>캐릭터 사용: 생성되 캐릭터 상업적/ 디자인적 사용 불가 (저작권은 스토어리에 있음)</li>
           <li>QR코드 작동: 오프라인코드 비활성화 → 캐릭터 해금 및 서사 열람 불가</li>
           <li>도감 연동: 사용자의 도감에 새로운 방문 기록 저장불가 (기존 기록은 유지)</li>
         </ul>
@@ -97,26 +156,17 @@ export const Subscribe = () => {
       {isOpenModal && (
         <Modal
           title="정말 구독을 해지 하시겠어요?"
-          caption="다음에 또 보는거죠?"
+          caption="그동안 이용했던 혜택들이 종료돼요!"
           cancel="하지않기"
           confirm="해지하기"
           cancelFn={() => setIsOpenModal(false)}
           confirmFn={() => {
-            setIsSubscribed(false);
+            onHandleSubsCancel();
             setIsOpenModal(false);
           }}
         />
       )}
-      {isOpenTimerModal && (
-        <Modal
-          title="구독 완료!"
-          caption="더 오래 함께 할 수 있게 되어 영광이에요!"
-          cancelFn={() => setIsOpenTimerModal(false)}
-          img={mascotHappy}
-          confirmType={false}
-          autoCloseSec={2}
-        />
-      )}
+      {isOpenTimerModal && <Modal {...timerModalData} />}
     </div>
   );
 };

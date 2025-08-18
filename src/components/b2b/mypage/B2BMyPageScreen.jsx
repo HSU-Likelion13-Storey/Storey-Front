@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { logoText, profileImg } from "@/assets";
 import { useNavigate } from "react-router-dom";
 import "./B2BMyPageScreen.scss";
@@ -15,14 +15,15 @@ export const B2BMyPageScreen = () => {
   const { logout } = useAuthStore();
 
   const handleSubscribe = (isBanner) => {
-    if (isSubs || isBanner) nav("/mypage/owner/subscribe");
+    if (isBanner) nav("/mypage/owner/subscribe");
+    else if (isSubs) nav("/mypage/owner/subscribe", { state: true });
     else nav("/mypage/owner/subscribe/list");
   };
 
   const handleLogout = async () => {
     console.log("로그아웃");
     try {
-      const res = await api.post("/api/auth/logout");
+      const res = await api.post("auth/logout");
     } catch (error) {
       console.error(error);
     } finally {
@@ -31,6 +32,19 @@ export const B2BMyPageScreen = () => {
       logout();
     }
   };
+
+  useEffect(() => {
+    const getFetch = async () => {
+      try {
+        const res = await api.get("owner/subscription");
+        if (res.data.isSuccess && res.data.data.status == "ACTIVE") setIsSubs(true);
+      } catch (error) {
+        console.error("실패", error);
+        setIsSubs(false);
+      }
+    };
+    getFetch();
+  }, []);
 
   return (
     <div className="container">

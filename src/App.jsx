@@ -30,7 +30,9 @@ function App() {
   const { logout, role } = useAuthStore();
 
   useEffect(() => {
-    const refreshToken = localStorage.getItem("refresh_token");
+    const rawToken = localStorage.getItem("refresh_token");
+    const refreshToken = rawToken && rawToken !== "undefined" && rawToken !== "null" ? rawToken : null;
+
     if (!refreshToken) {
       logout();
       setAuthLoading(false);
@@ -39,15 +41,19 @@ function App() {
     }
 
     api
-      .post("/auth/refresh", { refreshToken })
+      .post("auth/refresh", { refreshToken })
       .then((res) => {
-        const { accessToken, role } = res.data;
+        console.log(res);
+
+        const { accessToken, refreshToken } = res.data.data;
         localStorage.setItem("access_token", accessToken);
+        localStorage.setItem("refresh_token", refreshToken);
 
         const currentRole = useAuthStore.getState().role;
 
         if (currentRole !== role) {
           useAuthStore.getState().login({ role }); // 상태 갱신
+          console.log(role);
         }
       })
       .catch(() => logout())
