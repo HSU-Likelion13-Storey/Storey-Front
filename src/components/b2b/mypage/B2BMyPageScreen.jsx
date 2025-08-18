@@ -15,7 +15,8 @@ export const B2BMyPageScreen = () => {
   const { logout } = useAuthStore();
 
   const handleSubscribe = (isBanner) => {
-    if (isSubs || isBanner) nav("/mypage/owner/subscribe");
+    if (isBanner) nav("/mypage/owner/subscribe");
+    else if (isSubs) nav("/mypage/owner/subscribe", { state: true });
     else nav("/mypage/owner/subscribe/list");
   };
 

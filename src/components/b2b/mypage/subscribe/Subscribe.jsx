@@ -4,11 +4,11 @@ import { MdOutlineQrCode } from "react-icons/md";
 import { BsListCheck } from "react-icons/bs";
 import { PiWalletLight } from "react-icons/pi";
 import { LuCalendar } from "react-icons/lu";
-import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useEffect, useState } from "react";
 import "./Subscribe.scss";
 import { Modal } from "@/components/common/Modal";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { IoCloseOutline } from "react-icons/io5";
 import { useSubscription } from "@/hooks/useSubscription";
 
@@ -26,7 +26,7 @@ export const Subscribe = () => {
     confirmType: false,
     autoCloseSec: 2,
   });
-
+  const location = useLocation();
   const nav = useNavigate();
 
   useEffect(() => {
@@ -73,7 +73,18 @@ export const Subscribe = () => {
 
   return (
     <div className="subscribe">
-      <IoCloseOutline className="back-icon" onClick={() => nav("/mypage/owner", { replace: true })} />
+      {location.state ? (
+        <>
+          <div className="header-top-blank" />
+          <div className="header">
+            <IoIosArrowBack className="header-back-icon" onClick={() => nav(-1)} />
+            <div className="header-title">구독 하기</div>
+            <div className="header-blank" />
+          </div>
+        </>
+      ) : (
+        <IoCloseOutline className="back-icon" onClick={() => nav("/mypage/owner", { replace: true })} />
+      )}
       <div className="subs-header">
         <span className="badge">프리미엄</span>
         <span className="title">마스코트 브랜딩 패스</span>
