@@ -3,6 +3,7 @@ import "./Modal.scss";
 
 // 사용할 컴포넌트에서 모달 상태를 관리하고, props로 모달을 닫을 함수를 연결해줘야 함(cancelFn으로)
 export const Modal = ({
+  state = true,
   title, // 모달 제목
   caption, // 모달 설명
   cancel = "", // 취소 버튼 이름, 없으면 확인 버튼만 있도록 설정
