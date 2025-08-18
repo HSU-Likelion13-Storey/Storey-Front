@@ -88,7 +88,11 @@ export const Subscribe = () => {
       <div className="subs-header">
         <span className="badge">프리미엄</span>
         <span className="title">마스코트 브랜딩 패스</span>
-        <div className="plan-state">{isSubscribed == "ACTIVE" ? `구독 이용 중` : `이런 혜택, 또 없어요!`}</div>
+        <div className="plan-state">
+          {isSubscribed == "ACTIVE"
+            ? `다음 결제 예정일은 ${new Date().getFullYear()}년 ${endDate} 입니다.`
+            : `이런 혜택, 또 없어요!`}
+        </div>
       </div>
 
       {/* 구독 혜택 정리 */}
