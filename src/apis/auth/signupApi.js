@@ -6,7 +6,7 @@ const signupApi = async ({ loginId, password, nickName, role }) => {
     const res = await api.post("auth/signup", { loginId, password, nickName, role });
     const { httpStatus, isSuccess, data, message } = res.data || {};
 
-    if ((httpStatus === 201 || httpStatus === 200) && isSuccess) {
+    if (httpStatus === 201 && isSuccess) {
       console.log("회원가입 성공");
       return data?.id ?? data?.userId ?? true;
     }
