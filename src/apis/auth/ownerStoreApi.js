@@ -1,3 +1,4 @@
+// 가게 정보 등록 API(POST)
 import api from "../Instance";
 
 const ownerStoreApi = async (payload) => {
