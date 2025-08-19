@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "../common/SignupCommonForm.scss";
 import SignupHeader from "../common/SignupHeader.jsx";
@@ -12,11 +12,19 @@ function Row({ children }) {
 // 사업자번호 형식 (하이픈 필수)
 const BIZNO_RE = /^\d{3}-\d{2}-\d{5}$/;
 
-export default function BusinessForm({ defaultValues, onSubmit, submitting, headerOnBack }) {
+export default function BusinessForm({
+  defaultValues,
+  onSubmit,
+  submitting,
+  headerOnBack,
+  bizNoServerError, // 서버 에러 메시지 추가
+}) {
   const {
     register,
     handleSubmit,
     watch,
+    setError,
+    clearErrors,
     formState: { errors, isValid, isSubmitting },
   } = useForm({
     mode: "onChange",
@@ -36,6 +44,12 @@ export default function BusinessForm({ defaultValues, onSubmit, submitting, head
   const onValid = async (data) => {
     await onSubmit?.(data);
   };
+
+  useEffect(() => {
+    if (bizNoServerError) {
+      setError("bizNo", { type: "server", message: bizNoServerError });
+    }
+  }, [bizNoServerError, setError]);
 
   const bizNoValue = watch("bizNo") ?? "";
   const showBizNoError = bizNoValue.trim().length > 0 && !!errors.bizNo;
@@ -82,6 +96,9 @@ export default function BusinessForm({ defaultValues, onSubmit, submitting, head
             {...register("bizNo", {
               required: true,
               validate: (v) => BIZNO_RE.test((v ?? "").trim()) || "*사업자 번호가 일치하지 않습니다.",
+              onChange: () => {
+                if (errors.bizNo?.type === "server") clearErrors("bizNo");
+              },
             })}
           />
           {showBizNoError && (
