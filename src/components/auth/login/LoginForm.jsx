@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import loginApi from "@/apis/auth/loginApi";
 
 const CREDENTIALS_ERROR = "아이디 또는 비밀번호가 올바르지 않습니다.";
+const GUEST_ACCOUNT_ERROR = "손님으로 가입된 계정입니다.";
+const OWNER_ACCOUNT_ERROR = "스토어 사장님으로 가입된 계정입니다.";
 
 export default function LoginForm({ role, onError, onSuccess }) {
   const [showPw, setShowPw] = useState(false);
@@ -23,31 +25,37 @@ export default function LoginForm({ role, onError, onSuccess }) {
   });
   const nav = useNavigate();
 
-  const onValid = async ({ id, password }) => {
-    const loginId = normalizeId(id);
-
-    const tokens = await loginApi({ role, loginId, password });
-    if (!tokens) {
-      onError?.(CREDENTIALS_ERROR);
-      reset({ id: "", password: "" });
-      setFocus("id");
-      return;
-    }
-
-    localStorage.setItem("access_token", tokens.accessToken);
-    localStorage.setItem("refresh_token", tokens.refreshToken);
-
-    login({ role });
-
-    onSuccess?.();
-    nav(`/home/${role}`);
-  };
-
-  const onInvalid = () => {
-    onError?.(CREDENTIALS_ERROR);
+  const fail = (msg) => {
+    onError?.(msg);
     reset({ id: "", password: "" });
     setFocus("id");
   };
+
+  const onValid = async ({ id, password }) => {
+    const loginId = normalizeId(id);
+
+    const result = await loginApi({ role, loginId, password });
+
+    // 역할 불일치
+    if (result?.mismatch) {
+      const msg = result.mismatch === "owner" ? OWNER_ACCOUNT_ERROR : GUEST_ACCOUNT_ERROR;
+      return fail(msg);
+    }
+
+    // 성공
+    if (result?.tokens) {
+      localStorage.setItem("access_token", result.tokens.accessToken);
+      localStorage.setItem("refresh_token", result.tokens.refreshToken);
+      login({ role });
+      onSuccess?.();
+      return nav(`/home/${role}`);
+    }
+
+    // 그 외 실패
+    return fail(CREDENTIALS_ERROR);
+  };
+
+  const onInvalid = () => fail(CREDENTIALS_ERROR);
 
   return (
     <form className="login-form" onSubmit={handleSubmit(onValid, onInvalid)} noValidate>
