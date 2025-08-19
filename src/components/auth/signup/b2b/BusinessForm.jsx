@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import "../common/SignupCommonForm.scss";
 import SignupHeader from "../common/SignupHeader.jsx";
 import BrandHeading from "../common/BrandHeading.jsx";
 import Button from "../common/Button.jsx";
+import AddressSearchModal from "./AddressSearchModal.jsx";
 
 function Row({ children }) {
   return <div className="row">{children}</div>;
@@ -25,6 +26,8 @@ export default function BusinessForm({
     watch,
     setError,
     clearErrors,
+    setValue,
+    setFocus,
     formState: { errors, isValid, isSubmitting },
   } = useForm({
     mode: "onChange",
@@ -41,6 +44,8 @@ export default function BusinessForm({
     },
   });
 
+  const [addrModalOpen, setAddrModalOpen] = useState(false);
+
   const onValid = async (data) => {
     await onSubmit?.(data);
   };
@@ -53,6 +58,13 @@ export default function BusinessForm({
 
   const bizNoValue = watch("bizNo") ?? "";
   const showBizNoError = bizNoValue.trim().length > 0 && !!errors.bizNo;
+
+  const handleAddrSelect = ({ zonecode, address }) => {
+    setValue("zip", zonecode, { shouldValidate: true, shouldTouch: true });
+    setValue("addr1", address, { shouldValidate: true, shouldTouch: true });
+    clearErrors(["zip", "addr1"]);
+    setTimeout(() => setFocus("addr2"), 0);
+  };
 
   return (
     <>
@@ -136,15 +148,16 @@ export default function BusinessForm({
               placeholder="우편번호"
               inputMode="numeric"
               autoComplete="postal-code"
+              readOnly
               {...register("zip", { required: true })}
             />
-            {/* TODO: 카카오 주소 API 연결 (우편번호 찾기) */}
-            <Button type="button" variant="ghost">
+            <Button type="button" variant="ghost" onClick={() => setAddrModalOpen(true)}>
               우편번호 찾기
             </Button>
           </Row>
         </div>
 
+        {/* 주소 */}
         <div className="form-field">
           <input
             id="addr1"
@@ -152,10 +165,12 @@ export default function BusinessForm({
             placeholder="주소"
             autoComplete="street-address"
             aria-label="주소"
+            readOnly
             {...register("addr1", { required: true })}
           />
         </div>
 
+        {/* 상세주소 */}
         <div className="form-field">
           <input
             id="addr2"
@@ -174,6 +189,8 @@ export default function BusinessForm({
           다음으로
         </Button>
       </form>
+
+      <AddressSearchModal open={addrModalOpen} onClose={() => setAddrModalOpen(false)} onSelect={handleAddrSelect} />
     </>
   );
 }
