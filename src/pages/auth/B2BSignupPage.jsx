@@ -10,51 +10,63 @@ import { useAuthStore } from "@/store/useAuthStore";
 const B2BSignupPage = () => {
   const [step, setStep] = useState(1);
   const [accountData, setAccountData] = useState(null);
+  const [idServerError, setIdServerError] = useState("");
   const [bizNoServerError, setBizNoServerError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+
   const nav = useNavigate();
   const { login } = useAuthStore();
 
-  // 1단계: 계정 정보 입력
-  const handleAccountSubmit = ({ username, password, nickname }) => {
-    setAccountData({ username, password, nickname });
-    setBizNoServerError("");
-    setStep(2);
-  };
-
-  // 2단계: 사업자 정보 입력 후 가입 완료
-  const handleBusinessSubmit = async (biz) => {
-    if (submitting || !accountData) return;
+  // 1단계: 회원정보 입력 → 여기서 회원가입 + 자동로그인까지 처리
+  const handleAccountSubmit = async ({ username, password, nickname }) => {
+    if (submitting) return;
     setSubmitting(true);
-    setBizNoServerError("");
+    setIdServerError("");
 
     // (1) 회원가입
     const created = await signupApi({
-      loginId: accountData.username,
-      password: accountData.password,
-      nickName: accountData.nickname,
+      loginId: username,
+      password,
+      nickName: nickname,
       role: "owner",
     });
+
     if (!created) {
       setSubmitting(false);
+      setIdServerError("이미 사용 중인 아이디입니다.");
       return;
     }
 
-    // (2) 자동 로그인 → 토큰 저장
+    // (2) 자동 로그인 (토큰 발급)
     const tokens = await loginApi({
       role: "owner",
-      loginId: accountData.username,
-      password: accountData.password,
+      loginId: username,
+      password,
     });
-    if (!tokens) {
+
+    if (!tokens?.tokens) {
       setSubmitting(false);
+      console.error("자동 로그인 실패");
       return;
     }
-    localStorage.setItem("access_token", tokens.accessToken);
-    localStorage.setItem("refresh_token", tokens.refreshToken);
-    login({ role: "owner" }); // 전역 상태 갱신(선택)
 
-    // (3) 가게 등록 (Authorization 자동 첨부)
+    // (3) 토큰 저장 & 전역 상태 갱신
+    localStorage.setItem("access_token", tokens.tokens.accessToken);
+    localStorage.setItem("refresh_token", tokens.tokens.refreshToken);
+    login({ role: "owner" });
+
+    // (4) 성공하면 다음 단계로 이동
+    setAccountData({ username, password, nickname });
+    setStep(2);
+    setSubmitting(false);
+  };
+
+  // 2단계: 사업자 정보 등록
+  const handleBusinessSubmit = async (biz) => {
+    if (submitting) return;
+    setSubmitting(true);
+    setBizNoServerError("");
+
     const saved = await ownerStoreApi({
       storeName: biz.bizName,
       representativeName: biz.owner,
@@ -69,7 +81,9 @@ const B2BSignupPage = () => {
     setSubmitting(false);
 
     if (!saved?.ok) {
-      if (saved?.code === 400 && saved?.message) setBizNoServerError(saved.message);
+      if (saved?.code === 400 && saved?.message) {
+        setBizNoServerError(saved.message);
+      }
       return;
     }
 
@@ -78,7 +92,15 @@ const B2BSignupPage = () => {
 
   return (
     <div>
-      {step === 1 && <SignupCommonForm onSubmit={handleAccountSubmit} submitting={submitting} submitLabel="다음으로" />}
+      {step === 1 && (
+        <SignupCommonForm
+          onSubmit={handleAccountSubmit}
+          submitting={submitting}
+          submitLabel="다음으로"
+          idServerError={idServerError}
+          onChangeId={() => setIdServerError("")}
+        />
+      )}
       {step === 2 && (
         <BusinessForm
           headerOnBack={() => setStep(1)}
