@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import "../common/SignupCommonForm.scss";
 import SignupHeader from "../common/SignupHeader.jsx";
 import BrandHeading from "../common/BrandHeading.jsx";
 import Button from "../common/Button.jsx";
+import AddressSearchModal from "./AddressSearchModal.jsx";
 
 function Row({ children }) {
   return <div className="row">{children}</div>;
@@ -12,11 +13,21 @@ function Row({ children }) {
 // 사업자번호 형식 (하이픈 필수)
 const BIZNO_RE = /^\d{3}-\d{2}-\d{5}$/;
 
-export default function BusinessForm({ defaultValues, onSubmit, submitting, headerOnBack }) {
+export default function BusinessForm({
+  defaultValues,
+  onSubmit,
+  submitting,
+  headerOnBack,
+  bizNoServerError, // 서버 에러 메시지 추가
+}) {
   const {
     register,
     handleSubmit,
     watch,
+    setError,
+    clearErrors,
+    setValue,
+    setFocus,
     formState: { errors, isValid, isSubmitting },
   } = useForm({
     mode: "onChange",
@@ -33,12 +44,27 @@ export default function BusinessForm({ defaultValues, onSubmit, submitting, head
     },
   });
 
+  const [addrModalOpen, setAddrModalOpen] = useState(false);
+
   const onValid = async (data) => {
     await onSubmit?.(data);
   };
 
+  useEffect(() => {
+    if (bizNoServerError) {
+      setError("bizNo", { type: "server", message: bizNoServerError });
+    }
+  }, [bizNoServerError, setError]);
+
   const bizNoValue = watch("bizNo") ?? "";
   const showBizNoError = bizNoValue.trim().length > 0 && !!errors.bizNo;
+
+  const handleAddrSelect = ({ zonecode, address }) => {
+    setValue("zip", zonecode, { shouldValidate: true, shouldTouch: true });
+    setValue("addr1", address, { shouldValidate: true, shouldTouch: true });
+    clearErrors(["zip", "addr1"]);
+    setTimeout(() => setFocus("addr2"), 0);
+  };
 
   return (
     <>
@@ -82,6 +108,9 @@ export default function BusinessForm({ defaultValues, onSubmit, submitting, head
             {...register("bizNo", {
               required: true,
               validate: (v) => BIZNO_RE.test((v ?? "").trim()) || "*사업자 번호가 일치하지 않습니다.",
+              onChange: () => {
+                if (errors.bizNo?.type === "server") clearErrors("bizNo");
+              },
             })}
           />
           {showBizNoError && (
@@ -119,15 +148,16 @@ export default function BusinessForm({ defaultValues, onSubmit, submitting, head
               placeholder="우편번호"
               inputMode="numeric"
               autoComplete="postal-code"
+              readOnly
               {...register("zip", { required: true })}
             />
-            {/* TODO: 카카오 주소 API 연결 (우편번호 찾기) */}
-            <Button type="button" variant="ghost">
+            <Button type="button" variant="ghost" onClick={() => setAddrModalOpen(true)}>
               우편번호 찾기
             </Button>
           </Row>
         </div>
 
+        {/* 주소 */}
         <div className="form-field">
           <input
             id="addr1"
@@ -135,10 +165,12 @@ export default function BusinessForm({ defaultValues, onSubmit, submitting, head
             placeholder="주소"
             autoComplete="street-address"
             aria-label="주소"
+            readOnly
             {...register("addr1", { required: true })}
           />
         </div>
 
+        {/* 상세주소 */}
         <div className="form-field">
           <input
             id="addr2"
@@ -157,6 +189,8 @@ export default function BusinessForm({ defaultValues, onSubmit, submitting, head
           다음으로
         </Button>
       </form>
+
+      <AddressSearchModal open={addrModalOpen} onClose={() => setAddrModalOpen(false)} onSelect={handleAddrSelect} />
     </>
   );
 }

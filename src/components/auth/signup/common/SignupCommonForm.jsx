@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "./SignupCommonForm.scss";
 import SignupHeader from "./SignupHeader.jsx";
@@ -6,11 +6,19 @@ import BrandHeading from "./BrandHeading.jsx";
 import Button from "./Button.jsx";
 import { ID_RE, PW_RE, ID_MSG, PW_MSG, normalizeId } from "../../authRules.js";
 
-export default function SignupCommonForm({ onSubmit, submitting, submitLabel = "다음으로" }) {
+export default function SignupCommonForm({
+  onSubmit,
+  submitting,
+  submitLabel = "다음으로",
+  idServerError, // 서버 에러 (중복 아이디)
+  onChangeId, // 아이디 입력 변경 시 콜백
+}) {
   const {
     register,
     handleSubmit,
     watch,
+    setError,
+    clearErrors,
     formState: { errors, isValid, isSubmitting },
   } = useForm({
     mode: "onChange",
@@ -25,6 +33,13 @@ export default function SignupCommonForm({ onSubmit, submitting, submitLabel = "
   const onValid = async (data) => {
     await onSubmit?.(data);
   };
+
+  // 서버 에러 처리 (아이디 중복)
+  useEffect(() => {
+    if (idServerError) {
+      setError("username", { type: "server", message: idServerError });
+    }
+  }, [idServerError, setError]);
 
   return (
     <>
@@ -66,6 +81,10 @@ export default function SignupCommonForm({ onSubmit, submitting, submitLabel = "
               required: true,
               setValueAs: normalizeId,
               pattern: { value: ID_RE, message: ID_MSG },
+              onChange: () => {
+                if (errors.username?.type === "server") clearErrors("username");
+                onChangeId?.();
+              },
             })}
           />
           {errors.username && <p className="field-error">{errors.username.message}</p>}
