@@ -1,14 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 import { Map, MarkerClusterer, useKakaoLoader } from "react-kakao-maps-sdk";
-import { logoPig } from "@/assets";
 import { CustomMarker } from "./CustomMarker";
+import api from "@/apis/Instance";
 
 export const MapContent = () => {
   const [zoomable, setZoomable] = useState(true); // 확대/축소 기능 제어
   const [draggable, setDraggable] = useState(true); // 드래그 제어
   const [activeMarker, setActiveMarker] = useState(null); // 클릭된 마커 id/인덱스
-  const [isClickMark, setIsClickMark] = useState(false);
-  const [position, setPosition] = useState({ lat: 37.588877588035935, lng: 127.00944853922176 });
+  const [currentPosition, setCurrentPosition] = useState({ lat: 37.588877588035935, lng: 127.00944853922176 }); // 현재 위치 설정할 포지션
+  const [markerData, setMarkerData] = useState([
+    {
+      storeId: 0,
+      storeName: "",
+      addressMain: "",
+      latitude: null,
+      longitude: null,
+      eventContent: "",
+      isUnlocked: false,
+      characterImageUrl: "",
+      subscriptionStatus: "",
+    },
+  ]);
   const mapRef = useRef();
 
   // 최신 SDK를 사용하기 위해 script방법이 아닌 방법으로 로더를 호출하는 방법으로 설정
@@ -22,7 +34,6 @@ export const MapContent = () => {
     setZoomable(true);
     setDraggable(true);
     setActiveMarker(null); // 클릭 해제
-    setIsClickMark(false);
   };
 
   // 마커 클릭 시
@@ -30,7 +41,6 @@ export const MapContent = () => {
     setZoomable(false);
     setDraggable(false);
     setActiveMarker(index);
-    setIsClickMark(true);
   };
 
   // 클러스터 지도 레벨 조절 함수
@@ -43,6 +53,20 @@ export const MapContent = () => {
     map.setLevel(level, { anchor: cluster.getCenter() });
   };
 
+  // 지도 정보 가져오기
+  useEffect(() => {
+    const getMarkerData = async () => {
+      try {
+        const res = await api.get("user/stores/map");
+        if (res.data.isSuccess) setMarkerData(res.data.data);
+        console.log(res.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getMarkerData();
+  }, []);
+
   // TODO 현재 내 위치 가져오기. 일단 사장 등록한 곳으로 보여주기
   // useEffect(() => {
   //   if (!navigator.geolocation) {
@@ -52,7 +76,7 @@ export const MapContent = () => {
 
   //   navigator.geolocation.getCurrentPosition(
   //     (pos) => {
-  //       setPosition({
+  //       setCurrentPosition({
   //         lat: pos.coords.latitude,
   //         lng: pos.coords.longitude,
   //       });
@@ -72,7 +96,7 @@ export const MapContent = () => {
     <div className="map-content">
       {/* 지도. 카카오맵 라이브러리 사용 */}
       <Map
-        center={position}
+        center={currentPosition}
         style={{ width: "100%", height: "100%" }}
         zoomable={zoomable}
         draggable={draggable}
@@ -84,16 +108,19 @@ export const MapContent = () => {
           minLevel={2} // 클러스터 할 최소 지도 레벨
           disableClickZoom={true} // 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
           onClusterclick={onClusterclick}>
-          {mockData.map((data, index) => (
-            <CustomMarker
-              data={data}
-              key={index}
-              isActive={activeMarker === index}
-              onMarkerClick={() => markerClickHandle(index)}
-              blurHandle={blurHandle}
-              isClickMark={isClickMark}
-            />
-          ))}
+          {markerData.map((data) => {
+            if (data.subscriptionStatus === "ACTIVE" || data.subscriptionStatus === "CANCELED_REQUESTED")
+              return (
+                <CustomMarker
+                  key={data.storeId}
+                  data={data}
+                  positionMock={mockData[data.storeId].position} // TODO 백에서 더미데이터 들어간 후 삭제 해야함.
+                  isActive={activeMarker === data.storeId}
+                  onMarkerClick={() => markerClickHandle(data.storeId)}
+                  blurHandle={blurHandle}
+                />
+              );
+          })}
         </MarkerClusterer>
       </Map>
     </div>
@@ -103,44 +130,15 @@ export const MapContent = () => {
 const mockData = [
   {
     position: { lat: 37.588877588035935, lng: 127.00944853922176 },
-    name: "한성돼",
-    event: "오늘만 특가 30% 할인!",
-    address: "서울 종로구 혜화로 1길 10",
-    image: logoPig,
   },
   {
     position: { lat: 37.58826040585965, lng: 127.00947676696018 },
-    name: "팽팽닭발",
-    event: "매운맛 챌린지 진행 중!",
-    address: "서울 종로구 동숭길 23",
-    image: logoPig,
   },
+  {
+    position: { lat: 37.588877588035935, lng: 127.00944853922176 },
+  },
+
   {
     position: { lat: 37.58827850958126, lng: 127.0083671833711 },
-    name: "옛고을",
-    event: "2인 세트 주문 시 음료 무료",
-    address: "서울 종로구 대학로 5길 15",
-    image: logoPig,
-  },
-  {
-    position: { lat: 37.588395642220384, lng: 127.00831624603093 },
-    name: "비하인드",
-    event: "신메뉴 출시 기념 1+1",
-    address: "서울 종로구 명륜3가 45",
-    image: logoPig,
-  },
-  {
-    position: { lat: 37.58856447315827, lng: 127.0096947607156 },
-    name: "뱃고동 낙지쭈꾸미",
-    event: "점심 특선 20% 할인",
-    address: "서울 종로구 혜화동 72-1",
-    image: logoPig,
-  },
-  {
-    position: { lat: 37.5886883431943, lng: 127.00989291820476 },
-    name: "참새방앗간",
-    event: "디저트 주문 시 커피 무료",
-    address: "서울 종로구 동숭동 199-3",
-    image: logoPig,
   },
 ];
