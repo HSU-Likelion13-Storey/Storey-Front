@@ -21,7 +21,7 @@ export function useB2BEvent() {
   const getEventFetch = async () => {
     try {
       const res = await api.get("owner/event");
-      if (res.data.isSuccess) {
+      if (res.data.data && res.data.isSuccess) {
         setEventContent((prev) => ({
           ...prev,
           placeholder: res.data.data.content, // 기존 이벤트 내용을 placeholder로 설정

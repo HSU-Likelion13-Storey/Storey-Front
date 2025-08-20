@@ -32,13 +32,13 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response && error.response.status === 401 && !originalRequest._retry) {
+    if (error.response && error.response.httpStatus === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
         const refreshToken = localStorage.getItem("refresh_token");
 
         // 새 액세스 토큰을 요청하는 로직을 실행
-        const res = await api.post(`/api/auth/refresh`, { refreshToken });
+        const res = await api.post(`auth/refresh`, { refreshToken });
         // 응답 헤더에서 새로 발급된 액세스 토큰을 가져옴
         const newAccessToken = res.data.accessToken;
         const newRefreshToken = res.data.refreshToken;
@@ -54,8 +54,8 @@ api.interceptors.response.use(
         return axios(originalRequest);
       } catch (refreshError) {
         // 리프레쉬 토큰이 만료될 경우, 로그아웃 처리
-        // if (refreshError.response?.data.code === "AUTH004")
-        alert("로그인 세션이 만료되었습니다.\n다시 로그인 하시길 바랍니다.");
+        if (refreshError.response?.data.code === "REFRESH_TOKEN_EXPIRED_401")
+          alert("로그인 세션이 만료되었습니다.\n다시 로그인 하시길 바랍니다.");
         return Promise.reject(refreshError);
       }
     }
