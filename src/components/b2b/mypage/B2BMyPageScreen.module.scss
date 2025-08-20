@@ -5,8 +5,8 @@
   width: 100%;
   height: 100%;
   @include flex(column, $justify-content: flex-start, $gap: vh(16px));
-  overflow: hidden;
-  padding: 0 30px;
+  overflow-x: hidden;
+  padding: 0 30px 120px 30px;
   .header {
     width: 100%;
     padding: vh(68px) 0 vh(2px) 0;
@@ -21,8 +21,9 @@
   .plan-banner {
     @include flex(column);
     width: 100%;
+    min-height: 150px;
     position: relative;
-    padding: vh(26px) 25px vh(17px) 25px;
+    padding: 26px 25px 17px 25px;
     border-radius: 17px;
     background: rgba($color-primary, 0.8);
     overflow: hidden;
