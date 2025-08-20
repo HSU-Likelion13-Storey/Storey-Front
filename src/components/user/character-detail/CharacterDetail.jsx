@@ -36,7 +36,7 @@ export const CharacterDetail = () => {
       <div className={styles.header}>
         <IoIosArrowBack className={styles.icon} onClick={() => nav(-1)} />
         <span className={styles.headerTitle}>내가 모은 캐릭터</span>
-        <HiCamera className={styles.icon} onClick={() => nav("/capture", { state: mock })} />
+        <HiCamera className={styles.iconCamera} onClick={() => nav("/capture", { state: mock })} />
       </div>
 
       {/* 메인 콘텐츠(제목, 카드, 다운로드) */}

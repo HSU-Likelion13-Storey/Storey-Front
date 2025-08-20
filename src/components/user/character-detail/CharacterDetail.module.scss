@@ -34,6 +34,12 @@
       height: 24px;
       @include hoverEvent(0.8);
     }
+    .iconCamera {
+      color: #cfcfcf;
+      width: 24px;
+      height: 24px;
+      @include hoverEvent(0.8);
+    }
   }
 
   .content {
