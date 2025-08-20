@@ -13,6 +13,21 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate", // 새 버전 생기면 자동 업데이트
+      devOptions: {
+        enabled: false, // 개발 중에는 SW 끔
+      },
+      workbox: {
+        // 이미지나 정적 파일은 네트워크 우선으로 캐싱
+        runtimeCaching: [
+          {
+            urlPattern: /\.(?:png|jpg|jpeg|svg|gif)$/,
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "images-cache",
+            },
+          },
+        ],
+      },
       includeAssets: [
         "favicons/favicon.ico",
         "favicons/apple-touch-icon.png",
