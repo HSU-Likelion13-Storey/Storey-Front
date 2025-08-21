@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { FiDownload } from "react-icons/fi";
 import { HiCamera } from "react-icons/hi2";
 import { IoIosArrowBack } from "react-icons/io";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 const mock = {
   characterId: 1,
@@ -34,11 +34,14 @@ export const CharacterDetail = () => {
     addressMain: "",
     addressDetail: "",
   });
-  const [modalOpen, setModalOpen] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
   const { ref, download, setDownModal, downModal } = useDownload("test.png");
   const nav = useNavigate();
   const { id } = useParams();
+  const [searchParams] = useSearchParams(); // qr 코드 데이터를 URL 쿼리 param으로 받아오기 위한 훅
+  const code = searchParams.get("code");
 
+  // 상세정보 가져오기 API
   useEffect(() => {
     const getDetailData = async () => {
       try {
@@ -51,6 +54,23 @@ export const CharacterDetail = () => {
     // setDetail(mock);
     getDetailData();
   }, [id]);
+
+  // 잠겨 있는 가게일 경우 code확인 후 해제한 뒤 모달 보여주기
+  useEffect(() => {
+    if (code) {
+      const postUnlockFetch = async () => {
+        try {
+          const res = await api.post("/user/stores/unlock", { qrCode: code });
+          console.log(res.data);
+
+          if (res.data.isSuccess) setModalOpen(true);
+        } catch (error) {
+          return;
+        }
+      };
+      postUnlockFetch();
+    }
+  }, [code]);
 
   return (
     <div className={styles.container}>
@@ -74,6 +94,7 @@ export const CharacterDetail = () => {
             <span>{detail.tagline}</span>
           </div>
           <div className={styles.character}>
+            {/* TODO crossOrigin="anonymous" 추가 고려. CDN 설정 후 처리 예정 */}
             <img src={detail.imageUrl} className={styles.char} alt="" />
             <img src={shadowChar} className={styles.charShadow} alt="" />
           </div>
