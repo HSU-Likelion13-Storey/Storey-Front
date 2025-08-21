@@ -3,16 +3,34 @@ import { useNavigate } from "react-router-dom";
 import "./Collection.scss";
 import { logoEmpty, mascotBubble, testlogo } from "@/assets";
 import { useEffect, useState } from "react";
+import api from "@/apis/Instance";
 
 export const Collection = () => {
-  const [collectionData, setCollectionData] = useState([]);
+  const [collectionData, setCollectionData] = useState([
+    {
+      characterId: null,
+      storeId: null,
+      storeName: "",
+      characterImageUrl: "",
+    },
+  ]);
   const [loading, setLoading] = useState(true);
   const [modalState, setModalState] = useState({ open: false, visible: false });
   const nav = useNavigate();
 
   useEffect(() => {
+    const getCollectionData = async () => {
+      try {
+        const res = await api.get("user/collection");
+        if (res.data.isSuccess) setCollectionData(res.data.data.collectedCharacters);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
     setCollectionData(mockData);
-    setLoading(false);
+    // getCollectionData();
   }, []);
 
   useEffect(() => {
@@ -42,11 +60,11 @@ export const Collection = () => {
       ) : (
         <div className="collection-list">
           {collectionData.map((data) => (
-            <div className="collection-list-item" key={data.id}>
+            <div className="collection-list-item" key={data.storeId}>
               <div className="collection-list-img">
-                <img src={data.imgUrl} alt="test" onClick={() => nav(`/detail/${data.id}`)} />
+                <img src={data.characterImageUrl} alt="test" onClick={() => nav(`/detail/${1}`)} />
               </div>
-              <div className="collection-list-title">{data.title}</div>
+              <div className="collection-list-title">{data.storeName}</div>
             </div>
           ))}
         </div>
@@ -76,68 +94,23 @@ export const Collection = () => {
 
 const mockData = [
   {
-    id: 1,
-    imgUrl: testlogo,
-    title: "한성돼",
+    storeId: 1,
+    characterImageUrl: testlogo,
+    storeName: "한성돼",
   },
   {
-    id: 2,
-    imgUrl: testlogo,
-    title: "한성돼asdadsdd",
+    storeId: 2,
+    characterImageUrl: testlogo,
+    storeName: "한성돼asdadsdd",
   },
   {
-    id: 3,
-    imgUrl: testlogo,
-    title: "한성돼",
+    storeId: 3,
+    characterImageUrl: testlogo,
+    storeName: "한성돼",
   },
   {
-    id: 4,
-    imgUrl: testlogo,
-    title: "한성돼",
-  },
-  {
-    id: 5,
-    imgUrl: testlogo,
-    title: "한성돼",
-  },
-  {
-    id: 6,
-    imgUrl: testlogo,
-    title: "한성돼",
-  },
-  {
-    id: 7,
-    imgUrl: testlogo,
-    title: "한성돼",
-  },
-  {
-    id: 8,
-    imgUrl: testlogo,
-    title: "한성돼",
-  },
-  {
-    id: 9,
-    imgUrl: testlogo,
-    title: "한성돼",
-  },
-  {
-    id: 10,
-    imgUrl: testlogo,
-    title: "한성돼",
-  },
-  {
-    id: 11,
-    imgUrl: testlogo,
-    title: "한성돼",
-  },
-  {
-    id: 12,
-    imgUrl: testlogo,
-    title: "한성돼",
-  },
-  {
-    id: 13,
-    imgUrl: testlogo,
-    title: "한성돼",
+    storeId: 4,
+    characterImageUrl: testlogo,
+    storeName: "한성돼",
   },
 ];
