@@ -1,6 +1,6 @@
 import api from "@/apis/Instance";
 import styles from "./CharacterDetail.module.scss";
-import { logoTest, shadowChar } from "@/assets";
+import { shadowChar } from "@/assets";
 import { Modal } from "@/components/common/Modal";
 import { useDownload } from "@/hooks/useDownload";
 import { useEffect, useState } from "react";
@@ -8,19 +8,6 @@ import { FiDownload } from "react-icons/fi";
 import { HiCamera } from "react-icons/hi2";
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-
-const mock = {
-  characterId: 1,
-  storeName: "참새방앗간",
-  addressMain: "서울 성북구 삼선교로 11길 20",
-  addressDetail: "1층",
-  tagline: "“들어왔으면, 한 잔부터 받아요. 오늘은 어땠어요?”",
-  imageUrl: logoTest,
-  name: "짹이",
-  description: "수다쟁이 & 다정다감하고, ‘하루쯤은 떠들고 웃고 맛있는 걸 마셔야지.’가 좌우명이다.",
-  narrativeSummary:
-    " “하루 한 끼, 진심으로 위로받는 식사”를 만들기 위해 퇴사 후 작은 가게를 연 사장님의 이야기가 담겨 있는 캐릭터로 하루 30개 한정의 수제버거, 그리고 ‘고추마요 쉬림프버거’에 담긴 정성이 이 가게의 심장이다.",
-};
 
 export const CharacterDetail = () => {
   const [detail, setDetail] = useState({
@@ -45,13 +32,12 @@ export const CharacterDetail = () => {
   useEffect(() => {
     const getDetailData = async () => {
       try {
-        const res = await api.get(`user/characters/${id}`);
+        const res = await api.get(`characters/${id}`);
         if (res.data.isSuccess) setDetail(res.data.data);
       } catch (error) {
         console.error(error);
       }
     };
-    // setDetail(mock);
     getDetailData();
   }, [id]);
 
