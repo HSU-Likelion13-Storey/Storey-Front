@@ -114,7 +114,6 @@ export const MapContent = () => {
                 <CustomMarker
                   key={data.storeId}
                   data={data}
-                  positionMock={mockData[data.storeId].position} // TODO 백에서 더미데이터 들어간 후 삭제 해야함.
                   isActive={activeMarker === data.storeId}
                   onMarkerClick={() => markerClickHandle(data.storeId)}
                   blurHandle={blurHandle}
@@ -126,19 +125,3 @@ export const MapContent = () => {
     </div>
   );
 };
-
-const mockData = [
-  {
-    position: { lat: 37.588877588035935, lng: 127.00944853922176 },
-  },
-  {
-    position: { lat: 37.58826040585965, lng: 127.00947676696018 },
-  },
-  {
-    position: { lat: 37.588877588035935, lng: 127.00944853922176 },
-  },
-
-  {
-    position: { lat: 37.58827850958126, lng: 127.0083671833711 },
-  },
-];

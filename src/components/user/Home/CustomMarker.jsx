@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { IoIosLock } from "react-icons/io";
 import { CustomOverlayMap } from "react-kakao-maps-sdk";
 
-export const CustomMarker = ({ data, positionMock, isActive, onMarkerClick, blurHandle }) => {
+export const CustomMarker = ({ data, isActive, onMarkerClick, blurHandle }) => {
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
+
   useEffect(() => {
-    // setPosition({ lat: data.latitude, lon: data.longitude }); //TDOO 백엔 더미데이터 들어가면 주석제거
-    setPosition(positionMock);
-  }, [positionMock, data]);
+    setPosition({ lat: data.latitude, lng: data.longitude });
+  }, [data]);
+
   return (
     <CustomOverlayMap position={position} zIndex={!isActive ? 1 : 100}>
       <div className="marker-container">
