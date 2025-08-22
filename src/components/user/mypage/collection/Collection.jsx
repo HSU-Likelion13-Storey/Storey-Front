@@ -1,7 +1,7 @@
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import "./Collection.scss";
-import { logoEmpty, mascotBubble, testlogo } from "@/assets";
+import { logoEmpty, mascotBubble } from "@/assets";
 import { useEffect, useState } from "react";
 import api from "@/apis/Instance";
 
@@ -29,8 +29,8 @@ export const Collection = () => {
         setLoading(false);
       }
     };
-    setCollectionData(mockData);
-    // getCollectionData();
+    // setCollectionData(mockData);
+    getCollectionData();
   }, []);
 
   useEffect(() => {
@@ -91,26 +91,3 @@ export const Collection = () => {
     </div>
   );
 };
-
-const mockData = [
-  {
-    storeId: 1,
-    characterImageUrl: testlogo,
-    storeName: "한성돼",
-  },
-  {
-    storeId: 2,
-    characterImageUrl: testlogo,
-    storeName: "한성돼asdadsdd",
-  },
-  {
-    storeId: 3,
-    characterImageUrl: testlogo,
-    storeName: "한성돼",
-  },
-  {
-    storeId: 4,
-    characterImageUrl: testlogo,
-    storeName: "한성돼",
-  },
-];
