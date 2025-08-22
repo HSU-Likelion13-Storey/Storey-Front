@@ -8,6 +8,7 @@ import { FiDownload } from "react-icons/fi";
 import { HiCamera } from "react-icons/hi2";
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import useTimerModal from "@/hooks/useTimerModal";
 
 export const CharacterDetail = () => {
   const [detail, setDetail] = useState({
@@ -21,8 +22,9 @@ export const CharacterDetail = () => {
     addressMain: "",
     addressDetail: "",
   });
-  const [modalOpen, setModalOpen] = useState(false);
   const { ref, download, setDownModal, downModal } = useDownload("test.png");
+  const { isOpenTimerModal, setIsOpenTimerModal, timerModalData, setTimerModalData } = useTimerModal();
+
   const nav = useNavigate();
   const { id } = useParams();
   const [searchParams] = useSearchParams(); // qr 코드 데이터를 URL 쿼리 param으로 받아오기 위한 훅
@@ -36,6 +38,16 @@ export const CharacterDetail = () => {
         if (res.data.isSuccess) setDetail(res.data.data);
       } catch (error) {
         console.error(error);
+        setTimerModalData((prev) => ({
+          ...prev,
+          state: true,
+          title: "캐릭터를 불러오지 못했어요.",
+          caption: "다시 시도해주세요!",
+          cancelFn: () => {
+            setIsOpenTimerModal(false);
+            nav(-1, { replace: true });
+          },
+        }));
       }
     };
     getDetailData();
@@ -47,9 +59,21 @@ export const CharacterDetail = () => {
       const postUnlockFetch = async () => {
         try {
           const res = await api.post("/user/stores/unlock", { qrCode: code });
-          console.log(res.data);
-
-          if (res.data.isSuccess) setModalOpen(true);
+          if (res.data.isSuccess) {
+            setTimerModalData((prev) => ({
+              ...prev,
+              state: true,
+              title: (
+                <>
+                  나의 캐릭터 도감에
+                  <br />
+                  저장이 되었습니다!
+                </>
+              ),
+              caption: "[마이 페이지 → 나의 캐릭터 도감에서 확인 가능]",
+              autoCloseSec: 2,
+            }));
+          }
         } catch (error) {
           return;
         }
@@ -98,21 +122,7 @@ export const CharacterDetail = () => {
         <span className={styles.summaryTitle}>가게 요약 서사</span>
         <div className={styles.summaryText}>{detail.narrativeSummary}</div>
       </div>
-      {modalOpen && (
-        <Modal
-          title={
-            <>
-              나의 캐릭터 도감에
-              <br />
-              저장이 되었습니다!
-            </>
-          }
-          caption="[마이 페이지 → 나의 캐릭터 도감에서 확인 가능]"
-          cancelFn={() => setModalOpen(false)}
-          confirmType={false}
-          autoCloseSec={2}
-        />
-      )}
+      {isOpenTimerModal && <Modal {...timerModalData} />}
       {downModal && (
         <Modal
           title={`이미지가 저장되었습니다!`}
