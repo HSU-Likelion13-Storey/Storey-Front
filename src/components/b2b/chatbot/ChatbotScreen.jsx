@@ -4,7 +4,6 @@ import { IoIosArrowBack } from "react-icons/io";
 import { FaArrowUpLong } from "react-icons/fa6";
 import CharacterBlock from "../home/CharacterBlock";
 import { getUserStep, fetchBotReply } from "./chat.service";
-import { confirmOwnerCharacter } from "@/apis/chatbot/ownerCharacterApi";
 import { mapBotChunksToMsgs } from "./mapper";
 import profile from "@/assets/profile.svg";
 import LoadingModal from "./LoadingModal.jsx";
@@ -95,19 +94,13 @@ export function ChatbotScreen({ onDone }) {
       return;
     }
 
-    // 등록 버튼 클릭 시 확정
+    // 등록 버튼 클릭 시 확정 (API 호출 X, 바로 완료 페이지 이동)
     if (/등록/.test(label)) {
-      setLoading(true);
-      try {
-        await confirmOwnerCharacter();
-        onDone ? onDone() : nav("/chatbot/complete");
-      } finally {
-        setLoading(false);
-      }
+      onDone ? onDone() : nav("/chatbot/complete");
       return;
     }
 
-    // 다시 만들기 버튼 클릭 시 초기화
+    // 다시 만들기 버튼 클릭 시 초기화 (TODO: API 연동 예정)
     setSelectedMood(null);
     setMessages(INTRO_MSGS());
   }
