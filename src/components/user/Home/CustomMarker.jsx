@@ -13,7 +13,7 @@ export const CustomMarker = ({ data, isActive, onMarkerClick, blurHandle }) => {
     <CustomOverlayMap position={position} zIndex={!isActive ? 1 : 100}>
       <div className="marker-container">
         {/* 마커 */}
-        <div className={`marker`} onClick={onMarkerClick}>
+        <div className={`marker`} onClick={data.isUnlocked == true ? onMarkerClick : () => {}}>
           <img src={data.characterImageUrl} className={`logo-img ${data.isUnlocked && "dark"}`} alt="" />
           {data.isUnlocked && <IoIosLock className="icon" />}
         </div>
