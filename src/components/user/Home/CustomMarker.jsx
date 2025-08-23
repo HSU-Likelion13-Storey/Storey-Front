@@ -14,8 +14,8 @@ export const CustomMarker = ({ data, isActive, onMarkerClick, blurHandle }) => {
       <div className="marker-container">
         {/* 마커 */}
         <div className={`marker`} onClick={data.isUnlocked == true ? onMarkerClick : () => {}}>
-          <img src={data.characterImageUrl} className={`logo-img ${data.isUnlocked && "dark"}`} alt="" />
-          {data.isUnlocked && <IoIosLock className="icon" />}
+          <img src={data.characterImageUrl} className={`logo-img ${!data.isUnlocked && "dark"}`} alt="" />
+          {!data.isUnlocked && <IoIosLock className="icon" />}
         </div>
         {/* 오버레이 */}
         <div className={`overlay ${isActive && "visible"}`}>
