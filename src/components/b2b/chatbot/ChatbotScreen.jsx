@@ -124,13 +124,13 @@ export function ChatbotScreen({ onDone }) {
         </div>
       );
     }
-    if (m.type === "text")
+    if (m.type === "text") {
       return (
         <div key={m.id} className={`bubble ${m.role}`}>
           {m.text}
         </div>
       );
-
+    }
     if (m.type === "choices") {
       return (
         <div key={m.id} className="choices">
