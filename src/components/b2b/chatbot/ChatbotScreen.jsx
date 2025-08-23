@@ -4,6 +4,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { FaArrowUpLong } from "react-icons/fa6";
 import CharacterBlock from "../home/CharacterBlock";
 import { getUserStep, fetchBotReply } from "./chat.service";
+import { regenerateOwnerCharacter } from "@/apis/chatbot/ownerCharacterApi";
 import { mapBotChunksToMsgs } from "./mapper";
 import profile from "@/assets/profile.svg";
 import LoadingModal from "./LoadingModal.jsx";
@@ -100,7 +101,38 @@ export function ChatbotScreen({ onDone }) {
       return;
     }
 
-    // 다시 만들기 버튼 클릭 시 초기화 (TODO: API 연동 예정)
+    // 다시 만들래요 버튼 클릭 시 캐릭터 재생성 API 호출
+    if (/다시/.test(label)) {
+      setLoading(true);
+      try {
+        const res = await regenerateOwnerCharacter();
+        if (res?.isSuccess) {
+          push(
+            { role: "bot", type: "text", text: "새로운 캐릭터가 생성되었어요! 🎉" },
+            {
+              role: "bot",
+              type: "card",
+              imageSrc: res.data.imageUrl,
+              name: res.data.name,
+              speech: res.data.tagline,
+              description: res.data.description,
+            },
+            { role: "bot", type: "text", text: `한줄 요약: ${res.data.narrativeSummary}` },
+            { role: "bot", type: "choices", options: ["다시 만들래요", "등록할게요!"] },
+          );
+        } else {
+          push({ role: "bot", type: "text", text: "캐릭터 재생성에 실패했어요. 다시 시도해주세요." });
+        }
+      } catch (e) {
+        console.error(e);
+        push({ role: "bot", type: "text", text: "에러가 발생했어요. 잠시 후 다시 시도해주세요." });
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
+    // 그 외 → 초기화
     setSelectedMood(null);
     setMessages(INTRO_MSGS());
   }
