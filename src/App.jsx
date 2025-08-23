@@ -83,6 +83,8 @@ function App() {
             <Route path="/home/owner/event" element={<EventUploadPage />} />
             <Route path="/mypage/owner" element={<B2BMyPage />} />
             <Route path="/mypage/owner/subscribe" element={<SubscribePage />} />
+            <Route path="/mypage/owner/subscribe/success" element={<SubscribePage />} />
+            <Route path="/mypage/owner/subscribe/fail" element={<SubscribePage />} />
             <Route path="/mypage/owner/subscribe/list" element={<SubscribeList />} />
             <Route path="/mypage/owner/download" element={<DownloadePage />} />
             <Route path="/chatbot" element={<ChatbotPage />} />

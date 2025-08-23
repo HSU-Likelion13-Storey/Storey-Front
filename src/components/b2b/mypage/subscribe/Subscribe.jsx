@@ -5,36 +5,31 @@ import { BsListCheck } from "react-icons/bs";
 import { PiWalletLight } from "react-icons/pi";
 import { LuCalendar } from "react-icons/lu";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Subscribe.scss";
 import { Modal } from "@/components/common/Modal";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { IoCloseOutline } from "react-icons/io5";
 import { useSubscription } from "@/hooks/useSubscription";
 import useTimerModal from "@/hooks/useTimerModal";
 
 export const Subscribe = () => {
-  const { isSubscribed, endDate, formattedDate, handleSubsCancel, handleOnSubs } = useSubscription();
+  const { isSubscribed, endDate, formattedDate, handleSubsCancel, handleOnSubs, handleReNewSubs } = useSubscription();
   const { isOpenTimerModal, timerModalData, setTimerModalData } = useTimerModal();
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const location = useLocation();
   const nav = useNavigate();
 
-  // 한달 무료체험 or 구독하기 버튼 클릭 핸들러
+  const [searchParams] = useSearchParams(); // qr 코드 데이터를 URL 쿼리 param으로 받아오기 위한 훅
+  const code = searchParams.get("code");
+
+  // 한달 무료체험 클릭 핸들러
   const HandleSubs = async () => {
     const res = await handleOnSubs(isSubscribed);
 
     if (res) {
-      if (res !== "무료 체험 시작이 성공적으로 완료되었습니다.") {
-        setTimerModalData((prev) => ({
-          ...prev,
-          state: true,
-          title: "구독 완료!",
-          caption: "더 오래 함께 할 수 있게 되어 영광이에요!",
-          img: mascotHappy,
-        }));
-      } else {
+      if (res === "무료 체험 시작이 성공적으로 완료되었습니다.") {
         setTimerModalData((prev) => ({
           ...prev,
           state: true,
@@ -60,6 +55,36 @@ export const Subscribe = () => {
       }));
     }
   };
+
+  useEffect(() => {
+    if (window.location.href.includes("/success")) {
+      if (handleReNewSubs(searchParams.get("orderId"), searchParams.get("paymentKey"), searchParams.get("amount"))) {
+        setTimerModalData((prev) => ({
+          ...prev,
+          state: true,
+          title: "구독 완료!",
+          caption: "더 오래 함께 할 수 있게 되어 영광이에요!",
+          img: mascotHappy,
+        }));
+      } else {
+        setTimerModalData((prev) => ({
+          ...prev,
+          state: true,
+          title: "결제가 실패되었습니다.",
+          caption: "다시 시도해주세요!",
+          img: "",
+        }));
+      }
+    } else if (window.location.href.includes("/fail")) {
+      setTimerModalData((prev) => ({
+        ...prev,
+        state: true,
+        title: "결제가 실패되었습니다.",
+        caption: "다시 시도해주세요!",
+        img: "",
+      }));
+    }
+  }, []);
 
   return (
     <div className="subscribe">
