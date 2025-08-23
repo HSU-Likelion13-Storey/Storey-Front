@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import { FaArrowUpLong } from "react-icons/fa6";
 import CharacterBlock from "../home/CharacterBlock";
-import { getUserStep, fetchBotReply, confirmCharacterOnServer } from "./chat.service";
+import { getUserStep, fetchBotReply } from "./chat.service";
+import { confirmOwnerCharacter } from "@/apis/chatbot/ownerCharacterApi";
 import { mapBotChunksToMsgs } from "./mapper";
 import profile from "@/assets/profile.svg";
 import LoadingModal from "./LoadingModal.jsx";
@@ -28,9 +29,7 @@ const INTRO_MSGS = () => [
 export function ChatbotScreen({ onDone }) {
   const nav = useNavigate();
 
-  // 업종은 로컬 스토리지에서 읽기(회원가입 2단계에서 저장한 값)
   const [businessType] = useState(() => localStorage.getItem("business_type") || "기타");
-
   const [messages, setMessages] = useState(INTRO_MSGS());
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
@@ -100,7 +99,7 @@ export function ChatbotScreen({ onDone }) {
     if (/등록/.test(label)) {
       setLoading(true);
       try {
-        await confirmCharacterOnServer().catch(() => {});
+        await confirmOwnerCharacter();
         onDone ? onDone() : nav("/chatbot/complete");
       } finally {
         setLoading(false);
