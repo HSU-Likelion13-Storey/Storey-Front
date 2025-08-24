@@ -62,7 +62,7 @@ export const Collection = () => {
           {collectionData.map((data) => (
             <div className="collection-list-item" key={data.storeId}>
               <div className="collection-list-img">
-                <img src={data.characterImageUrl} alt="test" onClick={() => nav(`/detail/${1}`)} />
+                <img src={data.characterImageUrl} alt="test" onClick={() => nav(`/detail/${data.characterId}`)} />
               </div>
               <div className="collection-list-title">{data.storeName}</div>
             </div>
