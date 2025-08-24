@@ -41,6 +41,7 @@
     left: rem(20px);
     width: rem(24px);
     height: rem(24px);
+    z-index: 1;
     cursor: pointer;
     @include hoverEvent(0.5);
   }
