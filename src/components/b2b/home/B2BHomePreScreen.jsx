@@ -25,7 +25,7 @@ export default function B2BHomePreScreen() {
       <main className="b2b-home">
         <Banner {...bannerData} />
 
-        <EmptyStateCard onBtnClick={() => nav("/home/b2b/chatbot")} />
+        <EmptyStateCard onBtnClick={() => nav("/chatbot")} />
 
         <section className="summary">
           <p className="summary-title">가게 요약 서사</p>

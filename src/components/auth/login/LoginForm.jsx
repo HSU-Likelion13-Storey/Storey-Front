@@ -5,6 +5,7 @@ import { ID_RE, PW_RE, normalizeId } from "../authRules.js";
 import { useAuthStore } from "@/store/useAuthStore.js";
 import { useNavigate } from "react-router-dom";
 import loginApi from "@/apis/auth/loginApi";
+import { getMyCharacter } from "@/apis/character/characterApi";
 
 const CREDENTIALS_ERROR = "아이디 또는 비밀번호가 올바르지 않습니다.";
 const GUEST_ACCOUNT_ERROR = "손님으로 가입된 계정입니다.";
@@ -12,7 +13,7 @@ const OWNER_ACCOUNT_ERROR = "스토어 사장님으로 가입된 계정입니다
 
 export default function LoginForm({ role, onError, onSuccess }) {
   const [showPw, setShowPw] = useState(false);
-  const { login } = useAuthStore();
+  const { login, setCharacterId } = useAuthStore();
   const {
     register,
     handleSubmit,
@@ -42,12 +43,30 @@ export default function LoginForm({ role, onError, onSuccess }) {
       return fail(msg);
     }
 
-    // 성공
+    // 로그인 성공
     if (result?.tokens) {
       localStorage.setItem("access_token", result.tokens.accessToken);
       localStorage.setItem("refresh_token", result.tokens.refreshToken);
       login({ role });
       onSuccess?.();
+
+      // 사장님 로그인일 때: 내 캐릭터 조회 후 분기
+      if (role === "owner") {
+        try {
+          const char = await getMyCharacter();
+          if (char?.hasCharacter) {
+            setCharacterId(char.characterId);
+            return nav("/home/owner");
+          } else {
+            return nav("/home/owner/pre");
+          }
+        } catch (e) {
+          console.error("내 캐릭터 조회 실패:", e);
+          return nav("/home/owner/pre");
+        }
+      }
+
+      // 손님 로그인일 때
       return nav(`/home/${role}`);
     }
 
