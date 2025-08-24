@@ -107,17 +107,18 @@ export function ChatbotScreen({ onDone }) {
       try {
         const res = await regenerateOwnerCharacter();
         if (res?.isSuccess) {
+          const char = res.data;
           push(
             { role: "bot", type: "text", text: "새로운 캐릭터가 생성되었어요! 🎉" },
             {
               role: "bot",
               type: "card",
-              imageSrc: res.data.imageUrl,
-              name: res.data.name,
-              speech: res.data.tagline,
-              description: res.data.description,
+              imageSrc: char.imageUrl,
+              name: char.name,
+              speech: char.tagline,
+              description: char.description,
             },
-            { role: "bot", type: "text", text: `한줄 요약: ${res.data.narrativeSummary}` },
+            { role: "bot", type: "text", text: `한줄 요약: ${char.narrativeSummary}` },
             { role: "bot", type: "choices", options: ["다시 만들래요", "등록할게요!"] },
           );
         } else {
