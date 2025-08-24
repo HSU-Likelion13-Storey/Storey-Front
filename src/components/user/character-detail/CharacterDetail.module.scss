@@ -45,6 +45,7 @@
   .content {
     @include flex(column, $gap: 17px);
     padding-bottom: 54px;
+    text-align: center;
     .title {
       @include flex(column, $gap: 6px);
       .headline {
@@ -72,7 +73,8 @@
         background: white;
         padding: vh(19.1px) 10px;
         border-radius: 23.291px;
-        width: 100%;
+        min-width: 150px;
+        margin-bottom: 10px;
         span {
           text-align: center;
           font-size: 1rem;
@@ -97,6 +99,9 @@
         position: relative;
         @include flex();
         .char {
+          width: 200px;
+          height: auto;
+          border-radius: 30px;
         }
         .charShadow {
           position: absolute;

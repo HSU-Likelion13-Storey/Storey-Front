@@ -6,16 +6,31 @@ import { useNavigate } from "react-router-dom";
 import { Modal } from "@/components/common/Modal";
 import { mascotHappy } from "@/assets";
 import { useDownload } from "@/hooks/useDownload";
+import { QRCodeCanvas } from "qrcode.react";
+import { useEffect, useState } from "react";
+import api from "@/apis/Instance";
 
 export const Download = () => {
   const { ref, download, downModal, setDownModal } = useDownload("test.png");
-
+  const [QrData, setQrData] = useState({
+    characterId: 1,
+    qrCode: "",
+  });
   const nav = useNavigate();
 
   const downloadHandle = () => {
     download();
     setDownModal(true);
   };
+
+  // QR 데이터 API 가져오기(캐릭터번호, 해금을 위한 식별 QR코드 데이터)
+  useEffect(() => {
+    const getQrData = async () => {
+      const res = await api.get("owner/store/qr");
+      if (res.data.isSuccess) setQrData(res.data.data);
+    };
+    getQrData();
+  }, []);
 
   return (
     <div className="download">
@@ -31,9 +46,12 @@ export const Download = () => {
           사용자들이 캐릭터 도감을 수집하게 해주세요!
         </span>
 
-        {/* TODO QR 이미지 추가 로직 구현 */}
-        {/* <img src={} alt="qr" ref={ref} /> */}
-        <MdOutlineQrCode2 className="qr-icon" ref={ref} />
+        <QRCodeCanvas
+          value={`https://storey-6jeon.vercel.app/detail/${QrData.characterId}?code=${QrData.qrCode}`}
+          className="qr-icon"
+          ref={ref}
+          size={300}
+        />
         <FiDownload className="down-icon" onClick={downloadHandle} />
       </div>
       {downModal && (

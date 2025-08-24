@@ -63,14 +63,16 @@ export const Capture = () => {
           {/* 캡쳐할 영역(비디오 포함) */}
           <div className={styles.captureArea} ref={ref}>
             <div className={styles.title}>
-              <span className={styles.headline}>{state?.title}</span>
-              <span className={styles.address}>{state?.address}</span>
+              <span className={styles.headline}>{state?.storeName}</span>
+              <span className={styles.address}>
+                {state?.addressMain} {state?.addressDetail}
+              </span>
             </div>
             <div className={styles.card}>
               <div className={styles.message}>
-                <span>{state?.message}</span>
+                <span>{state?.tagline}</span>
               </div>
-              <img src={state?.img} className={styles.img} alt="" />
+              <img src={state?.imageUrl} className={styles.img} alt="" />
             </div>
             <video ref={videoRef} className={styles.video} autoPlay playsInline />
           </div>

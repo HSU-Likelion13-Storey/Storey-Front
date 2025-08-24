@@ -10,7 +10,7 @@
     height: 70px;
   }
   .profile-content {
-    @include flex(column, $gap: vh(10px));
+    @include flex(column, flex-start, $gap: vh(10px));
     .profile-name {
       color: $color-font-main;
       font-size: rem(20px);

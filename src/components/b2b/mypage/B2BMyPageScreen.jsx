@@ -11,6 +11,10 @@ import { useAuthStore } from "@/store/useAuthStore";
 export const B2BMyPageScreen = () => {
   const [isSubs, setIsSubs] = useState(false);
   const [logoutModal, setLogoutModal] = useState(false);
+  const [profile, setProfile] = useState({
+    nickName: "김구밍",
+    loginId: "lion1234",
+  });
   const nav = useNavigate();
   const { logout } = useAuthStore();
 
@@ -34,7 +38,7 @@ export const B2BMyPageScreen = () => {
   };
 
   useEffect(() => {
-    const getFetch = async () => {
+    const getSubscription = async () => {
       try {
         const res = await api.get("owner/subscription");
         if (res.data.isSuccess && res.data.data.status == "ACTIVE") setIsSubs(true);
@@ -43,7 +47,16 @@ export const B2BMyPageScreen = () => {
         setIsSubs(false);
       }
     };
-    getFetch();
+    const getProfile = async () => {
+      try {
+        const res = await api.get("owner/mypage");
+        if (res.data.isSuccess) setProfile(res.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getProfile();
+    getSubscription();
   }, []);
 
   return (
@@ -54,7 +67,7 @@ export const B2BMyPageScreen = () => {
       </header>
 
       {/* 프로필 카드 */}
-      <Profile img={profileImg} name={"김구밍"} id={"Lion1234"} />
+      <Profile img={profileImg} name={profile.nickName} id={profile.loginId} />
 
       {/* 구독 배너 */}
       {!isSubs ? (
