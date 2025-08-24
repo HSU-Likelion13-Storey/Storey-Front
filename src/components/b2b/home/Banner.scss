@@ -14,7 +14,7 @@
 
   background: linear-gradient(94deg, #8b75d3 3.49%, #6c4fcc 110.23%);
   @include flex(center, center, space-between);
-
+  @include hoverEvent();
   .banner__left {
     @include flex(center, flex-start);
     gap: rem(24px);

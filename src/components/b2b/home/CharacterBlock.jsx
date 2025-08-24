@@ -45,6 +45,7 @@ export default function CharacterBlock({
             value={description}
             onChange={(e) => onChangeDescription?.(e.target.value)}
             rows={3}
+            maxLength={70}
           />
         ) : (
           <p className="block-desc">{description}</p>

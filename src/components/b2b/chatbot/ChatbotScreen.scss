@@ -87,6 +87,8 @@
   font-size: rem(14px);
   line-height: rem(22px);
   white-space: pre-line;
+  word-break: break-word;
+  overflow-wrap: break-word;
 
   &.bot {
     align-self: flex-start;
