@@ -6,6 +6,7 @@ export const useAuthStore = create(
     (set) => ({
       isLoggedIn: false,
       role: null,
+      characterId: null,
 
       login: (data) =>
         set({
@@ -13,10 +14,13 @@ export const useAuthStore = create(
           role: data.role,
         }),
 
+      setCharacterId: (id) => set({ characterId: id }),
+
       logout: () =>
         set({
           isLoggedIn: false,
           role: null,
+          characterId: null,
         }),
     }),
     {
