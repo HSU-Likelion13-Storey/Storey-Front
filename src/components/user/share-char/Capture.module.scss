@@ -35,13 +35,13 @@
     .overlayHeader {
       @include flex($justify-content: space-between);
       width: 100%;
-      padding: vh(80px) 30px vh(5px) 30px;
+      padding: vh(75px) 27px vh(5px) 27px;
       z-index: 3;
       .icon {
         @include hoverEvent();
         color: white;
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
       }
     }
 
@@ -95,6 +95,7 @@
             width: auto; // 캡쳐 시 눌리는 오류 수정
             height: vh(174px);
             z-index: 3;
+            border-radius: 30px;
           }
           .message {
             @include flex();

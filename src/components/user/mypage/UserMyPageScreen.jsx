@@ -67,8 +67,6 @@ export const UserMyPageScreen = () => {
 
       {/* 네비게이션, 로그아웃 */}
       <div className="list-content">
-        <MyPageListItem text={"계정"} />
-        <MyPageListItem text={"고객센터"} />
         <MyPageListItem text={"로그아웃"} onClick={() => setLogoutModal(true)} />
       </div>
       {logoutModal && (
