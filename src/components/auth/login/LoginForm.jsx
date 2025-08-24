@@ -82,7 +82,7 @@ export default function LoginForm({ role, onError, onSuccess }) {
       <div className="form-row">
         <input
           className="input"
-          placeholder="아이디 입력"
+          placeholder="아이디"
           autoComplete="username"
           inputMode="text"
           spellCheck={false}
@@ -100,7 +100,7 @@ export default function LoginForm({ role, onError, onSuccess }) {
         <input
           className="input"
           type={showPw ? "text" : "password"}
-          placeholder="비밀번호 입력 (영문, 숫자 포함 8~20자 이내)"
+          placeholder="비밀번호 (영문, 숫자 포함 8~20자 이내)"
           autoComplete="current-password"
           maxLength={20}
           {...register("password", {
