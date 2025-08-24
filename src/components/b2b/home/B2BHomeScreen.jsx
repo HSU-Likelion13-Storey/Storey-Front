@@ -6,8 +6,7 @@ import Modal from "./Modal";
 import logo from "../../../assets/logo-text.svg";
 import "./B2BHomeScreen.scss";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "@/store/useAuthStore";
-import { getCharacter, updateCharacter } from "@/apis/character/characterApi";
+import { getMyCharacter, updateCharacter } from "@/apis/character/characterApi";
 
 export default function B2BHomeScreen() {
   const [data, setData] = useState(null);
@@ -15,16 +14,14 @@ export default function B2BHomeScreen() {
   const [showGuide, setShowGuide] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
-  const { characterId } = useAuthStore(); // store에서 characterId 가져오기
   const nav = useNavigate();
 
   // 캐릭터 조회
   useEffect(() => {
     const fetchCharacter = async () => {
-      if (!characterId) return;
       try {
-        const char = await getCharacter(characterId);
-        if (char) {
+        const char = await getMyCharacter();
+        if (char?.hasCharacter) {
           const initial = {
             banner: {
               title: "깜짝 이벤트 올리기!",
@@ -53,7 +50,7 @@ export default function B2BHomeScreen() {
 
     const hidden = localStorage.getItem("hideB2BHomeGuide") === "1";
     if (!hidden) setShowGuide(true);
-  }, [characterId, nav]);
+  }, [nav]);
 
   const isChanged =
     !!data &&
@@ -86,7 +83,7 @@ export default function B2BHomeScreen() {
         tagline: draft.character.speech,
         narrativeSummary: draft.summary.content,
       };
-      const updated = await updateCharacter(characterId, payload);
+      const updated = await updateCharacter(payload);
 
       console.log("업데이트 응답:", updated);
 
