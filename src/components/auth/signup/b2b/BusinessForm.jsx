@@ -108,10 +108,48 @@ export default function BusinessForm({
             {...register("bizNo", {
               required: true,
               validate: (v) => BIZNO_RE.test((v ?? "").trim()) || "*사업자 번호가 일치하지 않습니다.",
-              onChange: () => {
+              onChange: (e) => {
+                let digits = e.target.value.replace(/\D/g, ""); // 숫자만 추출
+                if (digits.length > 10) digits = digits.slice(0, 10); // 10자리 제한
+
+                let formatted = digits;
+
+                if (digits.length >= 3 && digits.length < 5) {
+                  formatted = digits.slice(0, 3) + "-";
+                  if (digits.length > 3) {
+                    formatted += digits.slice(3);
+                  }
+                }
+
+                if (digits.length >= 5) {
+                  formatted = digits.slice(0, 3) + "-" + digits.slice(3, 5) + "-";
+                  if (digits.length > 5) {
+                    formatted += digits.slice(5);
+                  }
+                }
+
+                setValue("bizNo", formatted, {
+                  shouldValidate: true,
+                  shouldTouch: true,
+                });
+
                 if (errors.bizNo?.type === "server") clearErrors("bizNo");
               },
             })}
+            onKeyDown={(e) => {
+              if (e.key === "Backspace") {
+                const current = e.currentTarget.value;
+                const pos = e.currentTarget.selectionStart;
+                if (pos && current[pos - 1] === "-") {
+                  e.preventDefault();
+                  const newValue = current.slice(0, pos - 1) + current.slice(pos);
+                  setValue("bizNo", newValue, {
+                    shouldValidate: true,
+                    shouldTouch: true,
+                  });
+                }
+              }
+            }}
           />
           {showBizNoError && (
             <p id="bizNo-error" className="field-error">
@@ -133,7 +171,12 @@ export default function BusinessForm({
           <label className="form-label" htmlFor="bizCategory">
             업종
           </label>
-          <input id="bizCategory" className="input" {...register("bizCategory", { required: true })} />
+          <input
+            id="bizCategory"
+            className="input"
+            placeholder="식당, 카페, 술집, 베이커리"
+            {...register("bizCategory", { required: true })}
+          />
         </div>
 
         {/* 사업장 주소 - 우편번호 */}

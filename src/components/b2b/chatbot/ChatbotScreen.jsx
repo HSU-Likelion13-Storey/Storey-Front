@@ -9,6 +9,7 @@ import { mapBotChunksToMsgs } from "./mapper";
 import profile from "@/assets/profile.svg";
 import LoadingModal from "./LoadingModal.jsx";
 import "./ChatbotScreen.scss";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const uid = () => Math.random().toString(36).slice(2);
 const MOOD_OPTIONS = ["아늑한", "고급스러운", "힙한", "활기찬", "자연친화적인", "유쾌한", "로맨틱", "모던"];
@@ -21,6 +22,12 @@ const INTRO_MSGS = () => [
     role: "bot",
     type: "text",
     text: "사장님의 가게 이야기를\n귀여운 캐릭터로 만들어 손님이 찾아와\n캐릭터를 수집하게 도와드려요.😚",
+  },
+  {
+    id: uid(),
+    role: "bot",
+    type: "text",
+    text: "몇 가지 질문만 답해주시면\n바로 캐릭터를 만들어드릴게요!\n그럼 시작할게요!",
   },
   { id: uid(), role: "bot", type: "text", text: "먼저 가게 분위기를 골라주세요!" },
   { id: uid(), role: "bot", type: "choices", options: MOOD_OPTIONS },
@@ -53,6 +60,36 @@ export function ChatbotScreen({ onDone }) {
 
     push({ role: "user", type: "text", text });
     setInput("");
+
+    const isFinalStep = userStep >= 5;
+
+    if (isFinalStep) {
+      push({
+        role: "bot",
+        type: "text",
+        text: "감사합니다!\n사장님의 이야기가 담긴\n캐릭터를 곧 만들어드릴게요~\n잠시만 기다려주세요 :)",
+      });
+
+      setTimeout(async () => {
+        setLoading(true);
+        try {
+          const chunks = await fetchBotReply({
+            step: userStep,
+            userText: text,
+            context: { selectedMood, businessType },
+            setLoading,
+          });
+          push(...mapBotChunksToMsgs(chunks));
+        } catch (e) {
+          push({ role: "bot", type: "text", text: "캐릭터 생성 중 오류가 발생했어요." });
+          console.error(e);
+        } finally {
+          setLoading(false);
+        }
+      }, 500);
+
+      return;
+    }
 
     setTyping(true);
     try {
@@ -101,23 +138,27 @@ export function ChatbotScreen({ onDone }) {
       return;
     }
 
+    const { setCharacterId } = useAuthStore.getState();
+
     // 다시 만들래요 버튼 클릭 시 캐릭터 재생성 API 호출
     if (/다시/.test(label)) {
       setLoading(true);
       try {
         const res = await regenerateOwnerCharacter();
         if (res?.isSuccess) {
+          const char = res.data;
+          setCharacterId(char.characterId);
           push(
             { role: "bot", type: "text", text: "새로운 캐릭터가 생성되었어요! 🎉" },
             {
               role: "bot",
               type: "card",
-              imageSrc: res.data.imageUrl,
-              name: res.data.name,
-              speech: res.data.tagline,
-              description: res.data.description,
+              imageSrc: char.imageUrl,
+              name: char.name,
+              speech: char.tagline,
+              description: char.description,
             },
-            { role: "bot", type: "text", text: `한줄 요약: ${res.data.narrativeSummary}` },
+            { role: "bot", type: "text", text: `한줄 요약: ${char.narrativeSummary}` },
             { role: "bot", type: "choices", options: ["다시 만들래요", "등록할게요!"] },
           );
         } else {
@@ -132,7 +173,7 @@ export function ChatbotScreen({ onDone }) {
       return;
     }
 
-    // 그 외 → 초기화
+    // 초기화
     setSelectedMood(null);
     setMessages(INTRO_MSGS());
   }
@@ -151,7 +192,12 @@ export function ChatbotScreen({ onDone }) {
     if (m.type === "text") {
       return (
         <div key={m.id} className={`bubble ${m.role}`}>
-          {m.text}
+          {m.text.split("\n").map((line, i) => (
+            <span key={i}>
+              {line}
+              <br />
+            </span>
+          ))}
         </div>
       );
     }
