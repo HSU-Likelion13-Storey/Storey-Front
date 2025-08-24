@@ -21,11 +21,7 @@
     .back-icon {
       width: 24px;
       height: 24px;
-      transition: filter 0.3s ease;
-      &:hover {
-        cursor: pointer;
-        filter: brightness(0.9);
-      }
+      @include hoverEvent();
     }
     .header-title {
       font-size: 20px;

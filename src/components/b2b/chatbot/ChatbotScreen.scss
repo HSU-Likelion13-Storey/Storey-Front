@@ -16,26 +16,24 @@
   position: sticky;
   top: 0;
   width: 100%;
-  height: vh(120px);
+  height: vh(110px);
   background: #fff;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04);
   z-index: 1;
   color: #747474;
-  padding: vh(27px) 36px;
+  padding: vh(18px) 27px;
   position: relative;
 
   .headerTitle {
+    width: 100%;
     position: absolute;
+    text-align: center;
     left: 50%;
     transform: translateX(-50%);
     color: #747474;
     font-size: rem(20px);
     font-weight: 600;
     letter-spacing: -0.5px;
-
-    @media (max-width: 400px) {
-      font-size: rem(17px);
-    }
   }
 
   .icon {
