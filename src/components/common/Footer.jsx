@@ -35,13 +35,22 @@ export const Footer = () => {
 
 const FooterItem = ({ path = "", children, role = "" }) => {
   const location = useLocation();
+  const { characterId } = useAuthStore();
 
   // 현재 위치와 path가 일치할 경우 활성화(색상 변경)
   const checkPath = (path) => (location.pathname.split("/").includes(path) ? "active" : "");
 
+  const getPath = () => {
+    if (path === "home" && role === "owner") {
+      // 사장님은 캐릭터 여부에 따라 분기
+      return characterId ? "/home/owner" : "/home/owner/pre";
+    }
+    return `/${path}/${role}`;
+  };
+
   return (
     <div className={"item"}>
-      <Link to={`/${path}/${role}`} className={checkPath(path)}>
+      <Link to={getPath()} className={checkPath(path)}>
         {children}
       </Link>
     </div>
