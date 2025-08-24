@@ -9,6 +9,7 @@ import { mapBotChunksToMsgs } from "./mapper";
 import profile from "@/assets/profile.svg";
 import LoadingModal from "./LoadingModal.jsx";
 import "./ChatbotScreen.scss";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const uid = () => Math.random().toString(36).slice(2);
 const MOOD_OPTIONS = ["아늑한", "고급스러운", "힙한", "활기찬", "자연친화적인", "유쾌한", "로맨틱", "모던"];
@@ -101,6 +102,8 @@ export function ChatbotScreen({ onDone }) {
       return;
     }
 
+    const { setCharacterId } = useAuthStore.getState();
+
     // 다시 만들래요 버튼 클릭 시 캐릭터 재생성 API 호출
     if (/다시/.test(label)) {
       setLoading(true);
@@ -108,6 +111,7 @@ export function ChatbotScreen({ onDone }) {
         const res = await regenerateOwnerCharacter();
         if (res?.isSuccess) {
           const char = res.data;
+          setCharacterId(char.characterId);
           push(
             { role: "bot", type: "text", text: "새로운 캐릭터가 생성되었어요! 🎉" },
             {

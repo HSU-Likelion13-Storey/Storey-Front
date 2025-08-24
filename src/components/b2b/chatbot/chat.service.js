@@ -1,5 +1,6 @@
 import { createInterview, submitInterview } from "@/apis/chatbot/interviewApi";
 import { confirmOwnerCharacter } from "@/apis/chatbot/ownerCharacterApi";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export function getUserStep(messages) {
   return messages.filter((m) => m.role === "user" && m.type === "text").length;
@@ -19,11 +20,15 @@ export async function fetchBotReply({ step, userText, context }) {
     return [{ type: "text", text: res?.data?.nextQuestion }];
   }
 
+  const { setCharacterId } = useAuthStore.getState();
+
   if (step >= MAX_QUESTIONS) {
     const res = await confirmOwnerCharacter();
     if (!res?.isSuccess) throw new Error("캐릭터 생성 실패");
 
     const char = res.data;
+    setCharacterId(char.characterId);
+
     return [
       { type: "text", text: "사장님 가게만의 캐릭터가 완성되었어요! 🎉" },
       {
