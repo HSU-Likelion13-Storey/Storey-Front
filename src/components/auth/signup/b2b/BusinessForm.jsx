@@ -136,6 +136,20 @@ export default function BusinessForm({
                 if (errors.bizNo?.type === "server") clearErrors("bizNo");
               },
             })}
+            onKeyDown={(e) => {
+              if (e.key === "Backspace") {
+                const current = e.currentTarget.value;
+                const pos = e.currentTarget.selectionStart;
+                if (pos && current[pos - 1] === "-") {
+                  e.preventDefault();
+                  const newValue = current.slice(0, pos - 1) + current.slice(pos);
+                  setValue("bizNo", newValue, {
+                    shouldValidate: true,
+                    shouldTouch: true,
+                  });
+                }
+              }
+            }}
           />
           {showBizNoError && (
             <p id="bizNo-error" className="field-error">
