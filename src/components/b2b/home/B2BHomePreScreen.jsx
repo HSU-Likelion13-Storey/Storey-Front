@@ -13,7 +13,7 @@ export default function B2BHomePreScreen() {
   const bannerData = {
     title: "깜짝 이벤트 올리기!",
     subtitle: "오늘은 햄버거 추천 어때요?",
-    onClick: () => nav("/home/b2b/event"),
+    onClick: () => nav("/home/owner/event"),
   };
 
   return (
