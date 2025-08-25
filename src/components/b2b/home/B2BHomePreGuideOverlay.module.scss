@@ -1,0 +1,75 @@
+@use "@/styles/_variables" as *;
+@use "@/styles/_function" as *;
+
+.container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 10;
+  color: #fff;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  .topGuide {
+    @include flex(column, flex-start, $gap: 14px);
+    position: absolute;
+    top: 236px;
+    left: 53px;
+    .topArrow {
+      transform: rotate(-10deg);
+      position: relative;
+      z-index: 12;
+      margin-left: 17px;
+    }
+  }
+
+  .bottomGuide {
+    @include flex(column, flex-end, $gap: 14px);
+    position: absolute;
+    top: 470px;
+    right: 52px;
+    z-index: 12;
+    .bottomArrow {
+      transform: rotate(-190deg);
+      margin-right: 71px;
+    }
+  }
+
+  .buttonWrapper {
+    @include flex($justify-content: space-between);
+    padding: 0 25px;
+    width: 100%;
+    position: absolute;
+    bottom: 93px;
+    .leftButton {
+      @include flex($gap: 12px);
+      @include hoverEvent(0.7);
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: -0.18px;
+      .icon {
+        width: 20px;
+        height: 20px;
+        &.check {
+          background: #9f89e7;
+          border-radius: 100px;
+        }
+      }
+    }
+    .rightButton {
+      @include flex();
+      @include hoverEvent(0.5);
+
+      padding: 10px 17px;
+      border-radius: 10px;
+      border: 1px solid #fff;
+    }
+  }
+}
+
+.pointText {
+  color: #9f89e7;
+  font-weight: 700;
+}

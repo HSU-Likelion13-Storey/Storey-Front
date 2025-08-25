@@ -21,14 +21,14 @@
     .qr-header {
       @include flex($justify-content: space-between);
       position: absolute;
-      top: vh(80px);
+      top: vh(75px);
       left: 0;
       width: 100%;
-      padding: 0 30px;
+      padding: 0 27px;
       .icon {
         color: white;
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
       }
     }
     .qr-caption {

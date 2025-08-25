@@ -21,7 +21,7 @@ export default function CharacterBlock({
             <textarea value={speech} onChange={(e) => onChangeSpeech?.(e.target.value)} rows={2} maxLength={30} />
           </div>
         ) : (
-          <div className="block-bubble">{`“${speech}”`}</div>
+          <div className="block-bubble">{`${speech}`}</div>
         )}
 
         <img className="block-img" src={imageSrc} alt={name} />
@@ -45,6 +45,7 @@ export default function CharacterBlock({
             value={description}
             onChange={(e) => onChangeDescription?.(e.target.value)}
             rows={3}
+            maxLength={70}
           />
         ) : (
           <p className="block-desc">{description}</p>

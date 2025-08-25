@@ -5,10 +5,19 @@ import BrandHeading from "./BrandHeading.jsx";
 import Button from "./Button.jsx";
 import mascot from "../../../../assets/logo-mascot.svg";
 import "./SignupComplete.scss";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function SignupComplete() {
   const nav = useNavigate();
-  const goStart = () => nav("/");
+  const { role } = useAuthStore();
+
+  const goStart = () => {
+    if (role === "owner") {
+      nav("/home/owner/pre");
+    } else {
+      nav("/");
+    }
+  };
 
   return (
     <>

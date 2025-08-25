@@ -1,22 +1,63 @@
-# [주제 미정] - Frontend
+# 🏪 Storey - AI 기반 소상공인 마스코트 브랜딩 서비스
 
-> 한성대학교 멋쟁이사자처럼 13기 중앙톤 프론트엔드
+> 한성대학교 멋쟁이사자처럼 13기 중앙톤 프론트엔드    
+
 
 ---
 
 ## 📌 프로젝트 소개
 
-(미정)
+Storey는 AI 인터뷰로 가게 스토리를 수집하고 전용 마스코트 캐릭터를 생성하는 혁신적인 브랜딩 플랫폼
 
+## ✨ 핵심 기능
+### 🤖 AI 인터뷰 & 캐릭터 생성
+
+- 가게 특성에 맞는 맞춤형 인터뷰 질문 생성
+- 스토리를 반영한 고품질 마스코트 이미지 생성
+- 인터뷰 내용을 브랜드 핵심 메시지로 압축
+
+### 🗺️ 위치 기반 수집 게임
+
+- 카카오맵 연동: 실제 가게 위치 기반 지도 서비스
+- QR 스캔 해금: 실제 방문해야만 캐릭터 수집 가능
+- 수집 도감: 방문한 가게들의 캐릭터 컬렉션
+
+### 💼 비즈니스 관리
+
+- 구독 서비스: 토스페이먼츠 연동 자동 결제 (월 29,900원)
+- 사업자 검증: 공공 API로 사업자등록번호 실시간 검증
+- 이벤트 관리: 가게별 프로모션 정보 관리
 ---
 
 ## 🛠 기술 스택
 
-- **Language**: Javascript
-- **Framework**: React + Vite
-- **Styling**: SCSS
+
+| 구분        | 기술 |
+|------------|------|
+| 프레임워크  | <img src="https://img.shields.io/badge/React 18-61DAFB?style=flat-square&logo=react&logoColor=black" /> <img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white" /> |
+| 상태관리    | <img src="https://img.shields.io/badge/Zustand-FF6B6B?style=flat-square&logo=zustand&logoColor=white" /> |
+| 스타일링    | <img src="https://img.shields.io/badge/SCSS-CC6699?style=flat-square&logo=sass&logoColor=white" /> |
+
 
 ---
+
+## 🏗 프로젝트 구조
+
+```text
+src/
+├── components/         # 재사용 가능한 컴포넌트
+│   ├── auth/           # 인증 관련 컴포넌트
+│   ├── b2b/            # 사장님용 컴포넌트
+│   ├── user/           # 고객용 컴포넌트
+│   └── common/         # 공통 컴포넌트
+├── pages/              # 페이지 컴포넌트
+├── apis/               # API 호출 로직
+├── hooks/              # 커스텀 훅
+├── store/              # Zustand 상태 관리
+├── routes/             # 라우팅 설정
+├── styles/             # SCSS 스타일 파일
+└── assets/             # 정적 리소스
+```
 
 ## ✏️ 커밋 메시지 규칙
 

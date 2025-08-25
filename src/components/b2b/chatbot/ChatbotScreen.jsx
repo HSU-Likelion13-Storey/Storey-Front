@@ -3,13 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import { FaArrowUpLong } from "react-icons/fa6";
 import CharacterBlock from "../home/CharacterBlock";
-import { getUserStep, fetchBotReply, createCharacterOnServer } from "./chat.service";
+import { getUserStep, fetchBotReply, CATEGORY_OPTIONS } from "./chat.service";
+import { regenerateOwnerCharacter } from "@/apis/chatbot/ownerCharacterApi";
 import { mapBotChunksToMsgs } from "./mapper";
 import profile from "@/assets/profile.svg";
 import LoadingModal from "./LoadingModal.jsx";
 import "./ChatbotScreen.scss";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const uid = () => Math.random().toString(36).slice(2);
+const MOOD_OPTIONS = ["아늑한", "고급스러운", "힙한", "활기찬", "자연친화적인", "유쾌한", "로맨틱", "모던"];
 
 const INTRO_MSGS = () => [
   { id: uid(), role: "bot", type: "profile", name: "밍구", avatar: profile },
@@ -24,17 +27,25 @@ const INTRO_MSGS = () => [
     id: uid(),
     role: "bot",
     type: "text",
-    text: "몇 가지 질문만 답해 주시면\n바로 캐릭터를 만들어 드릴게요!\n가게 이름의 뜻은 무엇인가요?",
+    text: "몇 가지 질문만 답해주시면\n바로 캐릭터를 만들어드릴게요!\n그럼 시작할게요!",
   },
+  { id: uid(), role: "bot", type: "text", text: "먼저 가게 분위기를 골라주세요!" },
+  { id: uid(), role: "bot", type: "choices", options: MOOD_OPTIONS },
 ];
 
 export function ChatbotScreen({ onDone }) {
   const nav = useNavigate();
 
+  const [businessType] = useState(() => localStorage.getItem("business_type") || "기타");
   const [messages, setMessages] = useState(INTRO_MSGS());
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [selectedMood, setSelectedMood] = useState(null);
+
+  // 추가: 마지막 선택 저장
+  const [lastAnswer, setLastAnswer] = useState(null);
+  const [lastCategory, setLastCategory] = useState(null);
 
   const listRef = useRef(null);
   useEffect(() => {
@@ -42,12 +53,11 @@ export function ChatbotScreen({ onDone }) {
   }, [messages, typing]);
 
   const userStep = useMemo(() => getUserStep(messages), [messages]);
-
   const push = (...msgs) => setMessages((prev) => [...prev, ...msgs.map((m) => ({ id: uid(), ...m }))]);
 
   async function handleSend(e) {
     e.preventDefault();
-    if (loading) return;
+    if (loading || !selectedMood) return;
 
     const text = input.trim();
     if (!text) return;
@@ -55,12 +65,17 @@ export function ChatbotScreen({ onDone }) {
     push({ role: "user", type: "text", text });
     setInput("");
 
-    // 챗봇 응답 처리
     setTyping(true);
     try {
-      const chunks = await fetchBotReply({ step: userStep, userText: text });
-      const botMsgs = mapBotChunksToMsgs(chunks);
-      push(...botMsgs);
+      const chunks = await fetchBotReply({
+        step: userStep,
+        userText: text,
+        context: { selectedMood, businessType },
+      });
+      push(...mapBotChunksToMsgs(chunks));
+    } catch (e) {
+      push({ role: "bot", type: "text", text: "오류가 발생했어요. 잠시 후 다시 시도해 주세요." });
+      console.error(e);
     } finally {
       setTyping(false);
     }
@@ -68,24 +83,112 @@ export function ChatbotScreen({ onDone }) {
 
   async function onChoiceClick(label) {
     if (loading) return;
-    push({ role: "user", type: "text", text: label });
 
-    if (/등록/.test(label)) {
+    // 분위기 선택
+    if (MOOD_OPTIONS.includes(label)) {
+      setSelectedMood(label);
+      push({ role: "user", type: "text", text: `분위기: ${label}` });
+
+      setTyping(true);
+      try {
+        const chunks = await fetchBotReply({
+          step: 0,
+          userText: "",
+          context: { selectedMood: label, businessType },
+        });
+        push(...mapBotChunksToMsgs(chunks));
+      } catch (e) {
+        push({ role: "bot", type: "text", text: "첫 질문을 불러오지 못했어요." });
+        console.error(e);
+      } finally {
+        setTyping(false);
+      }
+      return;
+    }
+
+    // 카테고리 선택 (동물/사물/음식/사람/스토리)
+    if (Object.keys(CATEGORY_OPTIONS).includes(label)) {
+      push({ role: "user", type: "text", text: `카테고리: ${label}` });
+      push({ role: "bot", type: "choices", options: CATEGORY_OPTIONS[label] });
+      return;
+    }
+
+    // 카테고리 세부 옵션 선택
+    const parentCategory = Object.entries(CATEGORY_OPTIONS).find(([cat, opts]) => opts.includes(label))?.[0];
+
+    if (parentCategory) {
+      // 마지막 선택 저장
+      setLastAnswer(label);
+      setLastCategory(parentCategory);
+
+      push({ role: "user", type: "text", text: `선택: ${label}` });
+
       setLoading(true);
       try {
-        const result = await createCharacterOnServer({ from: messages });
-        if (result?.ok) {
-          if (typeof onDone === "function") onDone();
-          else nav("/chatbot/complete");
-        } else {
-          push({ role: "bot", type: "text", text: "오류가 발생했어요. 잠시 후 다시 시도해 주세요." });
-        }
+        const chunks = await fetchBotReply({
+          step: 5,
+          userText: label,
+          context: { answer: label, category: parentCategory },
+          setLoading,
+        });
+        push(...mapBotChunksToMsgs(chunks));
+      } catch (e) {
+        console.error(e);
+        push({ role: "bot", type: "text", text: "캐릭터 생성 중 에러가 발생했어요." });
       } finally {
         setLoading(false);
       }
-    } else {
-      setMessages(INTRO_MSGS());
+      return;
     }
+
+    // 등록 버튼 클릭 시 확정
+    if (/등록/.test(label)) {
+      onDone ? onDone() : nav("/chatbot/complete");
+      return;
+    }
+
+    const { setCharacterId } = useAuthStore.getState();
+
+    // 다시 만들래요 버튼 클릭 시
+    if (/다시/.test(label)) {
+      setLoading(true);
+      try {
+        const res = await regenerateOwnerCharacter({
+          answer: lastAnswer,
+          category: lastCategory,
+        });
+
+        if (res?.isSuccess) {
+          const char = res.data;
+          setCharacterId(char.characterId);
+          push(
+            { role: "bot", type: "text", text: "새로운 캐릭터가 생성되었어요! 🎉" },
+            {
+              role: "bot",
+              type: "card",
+              imageSrc: char.imageUrl,
+              name: char.name,
+              speech: char.tagline,
+              description: char.description,
+            },
+            { role: "bot", type: "text", text: `한줄 요약: ${char.narrativeSummary}` },
+            { role: "bot", type: "choices", options: ["다시 만들래요", "등록할게요!"] },
+          );
+        } else {
+          push({ role: "bot", type: "text", text: "캐릭터 재생성에 실패했어요. 다시 시도해주세요." });
+        }
+      } catch (e) {
+        console.error(e);
+        push({ role: "bot", type: "text", text: "에러가 발생했어요. 잠시 후 다시 시도해주세요." });
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
+    // 초기화
+    setSelectedMood(null);
+    setMessages(INTRO_MSGS());
   }
 
   function renderMessage(m) {
@@ -102,11 +205,16 @@ export function ChatbotScreen({ onDone }) {
     if (m.type === "text") {
       return (
         <div key={m.id} className={`bubble ${m.role}`}>
-          {m.text}
+          {m.text.split("\n").map((line, i) => (
+            <span key={i}>
+              {line}
+              <br />
+            </span>
+          ))}
         </div>
       );
     }
-    if (m.type === "choices") {
+    if (m.type === "choices" || m.type === "categories") {
       return (
         <div key={m.id} className="choices">
           {m.options.map((opt) => (
@@ -155,10 +263,10 @@ export function ChatbotScreen({ onDone }) {
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="메시지를 입력해주세요"
-          disabled={loading}
+          placeholder={selectedMood ? "메시지를 입력해주세요" : "먼저 분위기를 선택해 주세요"}
+          disabled={loading || !selectedMood}
         />
-        <button type="submit" className="send-btn" disabled={loading || !input.trim()}>
+        <button type="submit" className="send-btn" disabled={loading || !input.trim() || !selectedMood}>
           <FaArrowUpLong className="send-icon" />
         </button>
       </form>

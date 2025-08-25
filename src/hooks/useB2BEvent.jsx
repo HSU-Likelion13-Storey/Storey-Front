@@ -105,7 +105,7 @@ export function useB2BEvent() {
       caption: <span style={{ color: "#2A2A2A" }}>가게를 등록한 뒤 이벤트를 추가해보세요!</span>,
       cancelFn: () => {
         setIsOpenTimerModal(false);
-        nav("/home/owner", { replace: true });
+        nav(-1);
       },
       autoCloseSec: 1.5,
     }));

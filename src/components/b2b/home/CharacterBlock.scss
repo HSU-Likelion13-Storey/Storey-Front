@@ -72,8 +72,9 @@
     width: rem(168px);
     height: auto;
     display: block;
-    margin: 0 auto 0;
+    margin: rem(20px) auto 0;
     filter: drop-shadow(0 rem(8px) rem(14px) rgba(0, 0, 0, 0.12)); // 이미지 그림자 효과(삭제해도 OK)
+    border-radius: rem(20px);
   }
 
   .block-name {
@@ -95,6 +96,7 @@
     font-weight: 700;
     letter-spacing: -0.6px;
     color: #3c3c3c;
+    width: 100%;
   }
 
   .block-desc {

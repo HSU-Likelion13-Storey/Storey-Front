@@ -11,14 +11,14 @@
   .header {
     @include flex($align-items: flex-end, $justify-content: space-between);
     width: 100%;
-    height: vh(120px);
+    height: vh(110px);
     background: #fff;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04);
     z-index: 1;
     position: absolute;
     top: 0;
     color: #747474;
-    padding: vh(27px) 36px;
+    padding: vh(16px) 27px;
     img {
       width: 89px;
     }
@@ -31,7 +31,7 @@
     .icon {
       width: 24px;
       height: 24px;
-      @include hoverEvent(0.5);
+      @include hoverEvent(0.6);
     }
   }
   .content {

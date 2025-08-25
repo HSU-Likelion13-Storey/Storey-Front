@@ -5,16 +5,16 @@
   width: 100%;
   height: rem(88px);
   flex-shrink: 0;
-
+  position: relative;
+  z-index: 11;
   border: none;
-  cursor: pointer;
   border-radius: rem(18px);
   padding: rem(24px) rem(26px);
   color: #fff;
 
   background: linear-gradient(94deg, #8b75d3 3.49%, #6c4fcc 110.23%);
   @include flex(center, center, space-between);
-
+  @include hoverEvent();
   .banner__left {
     @include flex(center, flex-start);
     gap: rem(24px);

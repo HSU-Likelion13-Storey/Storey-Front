@@ -34,7 +34,7 @@ export const CharacterDetail = () => {
   useEffect(() => {
     const getDetailData = async () => {
       try {
-        const res = await api.get(`characters/${id}`);
+        const res = await api.get(`user/characters/${id}`);
         if (res.data.isSuccess) setDetail(res.data.data);
       } catch (error) {
         console.error(error);

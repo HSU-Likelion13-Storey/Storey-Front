@@ -87,6 +87,12 @@ const B2BSignupPage = () => {
       return;
     }
 
+    // 로컬 스토리지에 사업자 정보 저장
+    try {
+      localStorage.setItem("business_type", biz.bizType || "");
+      localStorage.setItem("store_name", biz.bizName || "");
+    } catch {}
+
     nav("/signup/complete", { replace: true });
   };
 

@@ -5,38 +5,48 @@ import SummaryBlock from "./SummaryBlock";
 import Modal from "./Modal";
 import logo from "../../../assets/logo-text.svg";
 import "./B2BHomeScreen.scss";
-import { testlogo } from "@/assets";
 import { useNavigate } from "react-router-dom";
+import { getMyCharacter, updateCharacter } from "@/apis/character/characterApi";
 
 export default function B2BHomeScreen() {
   const [data, setData] = useState(null);
-  const [showGuide, setShowGuide] = useState(false);
-
-  const [isEditing, setIsEditing] = useState(false);
   const [draft, setDraft] = useState(null);
+  const [showGuide, setShowGuide] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const nav = useNavigate();
 
+  // 캐릭터 조회
   useEffect(() => {
-    const initial = {
-      banner: {
-        title: "깜짝 이벤트 올리기!",
-        subtitle: "오늘은 햄버거 추천 어때요?",
-        onClick: () => nav("/home/owner/event"),
-      },
-      character: {
-        speech: "행복한 하루와 위로를 선물해드릴게요.",
-        imageSrc: testlogo,
-        name: "하루치",
-        description: `하루치는 따뜻하고 말이 느린 아이에요, ‘버거는 패스트푸드가 아니다. 정성이 담긴 슬로우푸드다'가 좌우명이랍니다.`,
-      },
-      summary: {
-        title: "가게 요약 서사",
-        content: `“하루 한 끼, 진심으로 위로받는 식사"를 만들기 위해 퇴사 후 작은 가게를 연 사장님의 이야기가 담겨 있는 캐릭터로 하루 30개 한정의 수제버거, 그리고 ‘고추마요 쉬림프버거’에 담긴 정성이 이 가게의 심장이다.`,
-      },
+    const fetchCharacter = async () => {
+      try {
+        const char = await getMyCharacter();
+        if (char?.hasCharacter) {
+          const initial = {
+            banner: {
+              title: "깜짝 이벤트 올리기!",
+              subtitle: "오늘은 햄버거 추천 어때요?",
+              onClick: () => nav("/home/owner/event"),
+            },
+            character: {
+              speech: char.tagline || "",
+              imageSrc: char.imageUrl,
+              name: char.name,
+              description: char.description,
+            },
+            summary: {
+              title: "가게 요약 서사",
+              content: char.narrativeSummary || "",
+            },
+          };
+          setData(initial);
+          setDraft(initial);
+        }
+      } catch (e) {
+        console.error("캐릭터 조회 실패:", e);
+      }
     };
-    setData(initial);
-    setDraft(initial);
+    fetchCharacter();
 
     const hidden = localStorage.getItem("hideB2BHomeGuide") === "1";
     if (!hidden) setShowGuide(true);
@@ -63,10 +73,41 @@ export default function B2BHomeScreen() {
     setDraft(data);
     setIsEditing(false);
   };
+
+  // 캐릭터 수정
   const saveEdit = async () => {
-    // TODO: API 연동
-    setData(draft);
-    setIsEditing(false);
+    try {
+      const payload = {
+        name: draft.character.name,
+        description: draft.character.description,
+        tagline: draft.character.speech,
+        narrativeSummary: draft.summary.content,
+      };
+      const updated = await updateCharacter(payload);
+
+      console.log("업데이트 응답:", updated);
+
+      if (updated) {
+        const newData = {
+          ...data,
+          character: {
+            ...data.character,
+            name: updated.name,
+            description: updated.description,
+            speech: updated.tagline,
+          },
+          summary: {
+            ...data.summary,
+            content: updated.narrativeSummary,
+          },
+        };
+        setData(newData);
+        setDraft(newData);
+        setIsEditing(false);
+      }
+    } catch (e) {
+      console.error("캐릭터 수정 실패:", e);
+    }
   };
 
   const setDraftCharacter = (patch) => setDraft((p) => ({ ...p, character: { ...p.character, ...patch } }));

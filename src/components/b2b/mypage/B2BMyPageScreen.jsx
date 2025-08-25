@@ -90,9 +90,7 @@ export const B2BMyPageScreen = () => {
       {/* 네비게이션, 로그아웃 */}
       <div className={styles["list-content"]}>
         <MyPageListItem text={"QR코드 다운 받기"} onClick={() => nav("/mypage/owner/download")} />
-        <MyPageListItem text={"계정"} />
         <MyPageListItem text={"구독 목록"} onClick={() => handleSubscribe(false)} />
-        <MyPageListItem text={"고객센터"} />
         <MyPageListItem text={"로그아웃"} onClick={() => setLogoutModal(true)} />
       </div>
 
