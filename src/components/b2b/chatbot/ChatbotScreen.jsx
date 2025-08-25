@@ -66,6 +66,10 @@ export function ChatbotScreen({ onDone }) {
     push({ role: "user", type: "text", text });
     setInput("");
 
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+    }
+
     setTyping(true);
     try {
       const chunks = await fetchBotReply({
@@ -266,8 +270,8 @@ export function ChatbotScreen({ onDone }) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onInput={(e) => {
-            e.target.style.height = "auto"; // 높이 초기화
-            e.target.style.height = `${e.target.scrollHeight}px`; // 내용에 맞춰 늘리기
+            e.target.style.height = "auto";
+            e.target.style.height = `${e.target.scrollHeight}px`;
           }}
           placeholder={selectedMood ? "메시지를 입력해주세요" : "먼저 분위기를 선택해 주세요"}
           disabled={loading || !selectedMood}
