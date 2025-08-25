@@ -10,7 +10,7 @@ import { B2BHomePreGuideOverlay } from "./B2BHomePreGuideOverlay";
 
 export default function B2BHomePreScreen() {
   const nav = useNavigate();
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(true); // 가이드 마운트 여부
 
   const bannerData = {
     title: "깜짝 이벤트 올리기!",
@@ -30,7 +30,7 @@ export default function B2BHomePreScreen() {
         <img src={logo} alt="스토어리 로고" />
       </header>
 
-      <main className="b2b-home">
+      <main className={`b2b-home ${visible && "none-guide"}`}>
         <Banner {...bannerData} />
 
         <EmptyStateCard onBtnClick={() => nav("/chatbot")} />
