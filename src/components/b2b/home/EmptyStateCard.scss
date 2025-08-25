@@ -46,7 +46,7 @@
   font-weight: 700;
   font-size: rem(18px);
   box-shadow: 0 rem(4px) rem(4px) 0 rgba(0, 0, 0, 0.04);
-  z-index: 11;
+
   cursor: pointer;
   @include hoverEvent();
   transition:
@@ -60,4 +60,8 @@
     outline: rem(2px) solid rgba(123, 97, 255, 0.8);
     outline-offset: rem(2px);
   }
+}
+
+.empty-btn-visible {
+  z-index: 11;
 }

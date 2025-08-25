@@ -33,7 +33,7 @@ export default function B2BHomePreScreen() {
       <main className={`b2b-home ${visible && "none-guide"}`}>
         <Banner {...bannerData} />
 
-        <EmptyStateCard onBtnClick={() => nav("/chatbot")} />
+        <EmptyStateCard onBtnClick={() => nav("/chatbot")} visible={visible} />
 
         <section className="summary">
           <p className="summary-title">가게 요약 서사</p>
