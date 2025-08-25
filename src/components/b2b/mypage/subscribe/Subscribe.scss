@@ -27,11 +27,12 @@
   .header {
     @include flex($align-items: flex-end, $justify-content: space-between, $gap: 20px);
     width: 100%;
+    max-width: 430px;
     height: vh(110px);
     background: #fff;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04);
     z-index: 1;
-    position: absolute;
+    position: fixed;
     top: 0;
     color: #747474;
     padding: vh(16px) 27px;
