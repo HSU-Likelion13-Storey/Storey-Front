@@ -1,3 +1,4 @@
+@use "@/styles/_variables" as *;
 @use "@/styles/_function" as *;
 
 .qrmodal-backdrop {
@@ -5,53 +6,109 @@
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 50;
 }
 
-.qrmodal-imgwrap {
-  position: relative;
+.qrmodal-panel {
+  width: 80%;
+  max-width: rem(360px);
+  background: #fff;
+  border-radius: rem(22px);
+  padding: rem(38px) rem(30px) rem(28px);
+  box-shadow: 0 rem(4px) rem(12px) rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.qrmodal-img {
-  display: block;
+.qrmodal-content {
   width: 100%;
-  height: auto;
-  pointer-events: none;
+  text-align: center;
+}
+
+.qrmodal-step {
+  display: flex;
+  align-items: flex-start;
+  gap: rem(14px);
+  margin-bottom: rem(10px);
+
+  .step-num {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: rem(28px);
+    height: rem(28px);
+    border-radius: 50%;
+    background: $color-primary;
+    color: #fff;
+    font-size: rem(16px);
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  p {
+    font-size: rem(16px);
+    font-weight: 600;
+    color: $color-font-main;
+    text-align: left;
+    line-height: rem(24px);
+    margin: 0;
+  }
+}
+
+.qrmodal-footerimgwrap {
+  display: flex;
+  justify-content: center;
+  margin: 0 rem(20px) rem(29px);
+
+  .qrmodal-footerimg {
+    width: 100%;
+    max-width: rem(240px);
+    height: auto;
+  }
+}
+
+.qrmodal-qrwrap {
+  margin: rem(16px) 0;
+  display: flex;
+  justify-content: center;
+
+  .qrmodal-qr {
+    width: rem(76px);
+    height: rem(76px);
+  }
 }
 
 .qrmodal-button {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: rem(22px);
-  min-width: 80%;
-  height: rem(54px);
-  border: 0;
-  border-radius: rem(12px);
-  font-weight: 600;
-  font-size: rem(16px);
+  width: 100%;
+  background: $color-primary;
   color: #fff;
+  padding: rem(16px) rem(30px);
+  border-radius: rem(10px);
+  font-weight: bold;
+  font-size: rem(15px);
+  border: none;
   cursor: pointer;
-  background: #664bbf;
+  margin-top: rem(12px);
 
   &:hover {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%), #664bbf;
+    filter: brightness(0.95);
   }
 }
 
 .qrmodal-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  margin-top: rem(12px);
 
-.qrmodal-link {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: rem(14px);
-  font-weight: 500;
-  color: #fff;
+  .qrmodal-link {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: rem(14px);
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }

@@ -142,13 +142,14 @@
   position: sticky;
   bottom: 0;
   display: flex;
+  align-items: flex-end;
   gap: rem(20px);
   padding: rem(16px) rem(12px) rem(34px) rem(30px);
-  border: 1px solid var(--, #f0f0f0);
+  border: 1px solid #f0f0f0;
   background: #fff;
   box-shadow: 0 -4px 4px 0 rgba(0, 0, 0, 0.02);
 
-  input {
+  textarea.chat-textarea {
     flex: 1;
     padding: rem(16px) rem(20px);
     border: 1px solid #f0f0f0;
@@ -160,17 +161,23 @@
     color: #2a2a2a;
     opacity: 0.7;
 
+    resize: none;
+    min-height: rem(50px);
+    max-height: rem(150px);
+    overflow-y: auto;
+    line-height: 1.4;
+
     &::placeholder {
       color: #868686;
     }
   }
 
   .send-btn {
+    align-self: flex-end;
     display: flex;
-    align-items: center;
     justify-content: center;
     width: rem(40px);
-    height: rem(50px);
+    height: rem(40px);
     border: none;
     background: transparent;
     cursor: pointer;
