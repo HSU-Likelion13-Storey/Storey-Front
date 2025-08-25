@@ -9,6 +9,14 @@ export function getUserStep(messages) {
 // 질문 총 개수
 const MAX_QUESTIONS = 5;
 
+// 카테고리 + 세부 옵션
+export const CATEGORY_OPTIONS = {
+  동물: ["동물", "고양이", "강아지", "토끼", "다람쥐", "곰", "여우"],
+  사물: ["사물", "커피잔", "빵", "전등", "의자", "화분"],
+  음식: ["음식", "떡볶이", "치킨", "햄버거", "피자"],
+  "사람/스토리": ["사람", "사장님", "단골", "손님"],
+};
+
 export async function fetchBotReply({ step, userText, context, setLoading }) {
   // 첫 질문 (가게 분위기 선택 후 시작)
   if (step === 0 && context?.selectedMood) {
@@ -22,11 +30,20 @@ export async function fetchBotReply({ step, userText, context, setLoading }) {
 
   const { setCharacterId } = useAuthStore.getState();
 
-  // 캐릭터 생성
+  // 마지막 질문 단계 → 카테고리 질문
+  if (step === MAX_QUESTIONS - 1) {
+    return [
+      { type: "text", text: "원하는 캐릭터 종류를 선택해 주세요!" },
+      { type: "categories", options: Object.keys(CATEGORY_OPTIONS) },
+    ];
+  }
+
+  // 최종 캐릭터 생성
   if (step >= MAX_QUESTIONS) {
     if (setLoading) setLoading(true);
     try {
-      const res = await confirmOwnerCharacter();
+      const { answer, category } = context;
+      const res = await confirmOwnerCharacter({ answer, category });
       if (!res?.isSuccess) throw new Error("캐릭터 생성 실패");
 
       const char = res.data;
@@ -49,7 +66,7 @@ export async function fetchBotReply({ step, userText, context, setLoading }) {
     }
   }
 
-  // 중간 질문 (2~5번째)
+  // 중간 질문 (2~4번째)
   const res = await submitInterview({ answer: userText });
   if (!res?.isSuccess) throw new Error("답변 제출 실패");
 
