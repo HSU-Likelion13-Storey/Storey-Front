@@ -26,7 +26,7 @@ Storey는 AI 인터뷰로 가게 스토리를 수집하고 전용 마스코트 �
 
 - 구독 서비스: 토스페이먼츠 연동 자동 결제 (월 29,900원)
 - 사업자 검증: 공공 API로 사업자등록번호 실시간 검증
-이벤트 관리: 가게별 프로모션 정보 관리
+- 이벤트 관리: 가게별 프로모션 정보 관리
 ---
 
 ## 🛠 기술 스택
@@ -37,14 +37,7 @@ Storey는 AI 인터뷰로 가게 스토리를 수집하고 전용 마스코트 �
 | 프레임워크  | <img src="https://img.shields.io/badge/React 18-61DAFB?style=flat-square&logo=react&logoColor=black" /> <img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white" /> |
 | 상태관리    | <img src="https://img.shields.io/badge/Zustand-FF6B6B?style=flat-square&logo=zustand&logoColor=white" /> |
 | 스타일링    | <img src="https://img.shields.io/badge/SCSS-CC6699?style=flat-square&logo=sass&logoColor=white" /> |
-| 폼 관리     | <img src="https://img.shields.io/badge/React Hook Form-EC5990?style=flat-square&logo=reacthookform&logoColor=white" /> |
-| 라우팅      | <img src="https://img.shields.io/badge/React Router-CA4245?style=flat-square&logo=reactrouter&logoColor=white" /> |
-| HTTP 클라이언트 | <img src="https://img.shields.io/badge/Axios-5A29E4?style=flat-square&logo=axios&logoColor=white" /> |
-| QR 코드     | <img src="https://img.shields.io/badge/QR Scanner-000000?style=flat-square&logo=qr-code&logoColor=white" /> <img src="https://img.shields.io/badge/QR Code Canvas-4285F4?style=flat-square&logo=qrcode&logoColor=white" /> |
-| 지도 API    | <img src="https://img.shields.io/badge/Kakao Map-FFCD00?style=flat-square&logo=kakao&logoColor=black" /> |
-| 주소 검색   | <img src="https://img.shields.io/badge/Daum Postcode-FFCD00?style=flat-square&logo=kakao&logoColor=black" /> |
-| 이미지 처리 | <img src="https://img.shields.io/badge/html2canvas-FF6B6B?style=flat-square&logoColor=white" /> |
-| 빌드 & 배포 | <img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white" /> |
+
 
 ---
 
