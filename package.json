@@ -11,6 +11,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@tosspayments/tosspayments-sdk": "^2.3.7",
     "axios": "^1.11.0",
     "html2canvas": "^1.4.1",
     "qr-scanner": "^1.4.2",
