@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import { FaArrowUpLong } from "react-icons/fa6";
 import CharacterBlock from "../home/CharacterBlock";
-import { getUserStep, fetchBotReply } from "./chat.service";
+import { getUserStep, fetchBotReply, CATEGORY_OPTIONS } from "./chat.service";
 import { regenerateOwnerCharacter } from "@/apis/chatbot/ownerCharacterApi";
 import { mapBotChunksToMsgs } from "./mapper";
 import profile from "@/assets/profile.svg";
@@ -43,6 +43,10 @@ export function ChatbotScreen({ onDone }) {
   const [loading, setLoading] = useState(false);
   const [selectedMood, setSelectedMood] = useState(null);
 
+  // 추가: 마지막 선택 저장
+  const [lastAnswer, setLastAnswer] = useState(null);
+  const [lastCategory, setLastCategory] = useState(null);
+
   const listRef = useRef(null);
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
@@ -60,36 +64,6 @@ export function ChatbotScreen({ onDone }) {
 
     push({ role: "user", type: "text", text });
     setInput("");
-
-    const isFinalStep = userStep >= 5;
-
-    if (isFinalStep) {
-      push({
-        role: "bot",
-        type: "text",
-        text: "감사합니다!\n사장님의 이야기가 담긴\n캐릭터를 곧 만들어드릴게요~\n잠시만 기다려주세요 :)",
-      });
-
-      setTimeout(async () => {
-        setLoading(true);
-        try {
-          const chunks = await fetchBotReply({
-            step: userStep,
-            userText: text,
-            context: { selectedMood, businessType },
-            setLoading,
-          });
-          push(...mapBotChunksToMsgs(chunks));
-        } catch (e) {
-          push({ role: "bot", type: "text", text: "캐릭터 생성 중 오류가 발생했어요." });
-          console.error(e);
-        } finally {
-          setLoading(false);
-        }
-      }, 500);
-
-      return;
-    }
 
     setTyping(true);
     try {
@@ -132,7 +106,42 @@ export function ChatbotScreen({ onDone }) {
       return;
     }
 
-    // 등록 버튼 클릭 시 확정 (API 호출 X, 바로 완료 페이지 이동)
+    // 카테고리 선택 (동물/사물/음식/사람/스토리)
+    if (Object.keys(CATEGORY_OPTIONS).includes(label)) {
+      push({ role: "user", type: "text", text: `카테고리: ${label}` });
+      push({ role: "bot", type: "choices", options: CATEGORY_OPTIONS[label] });
+      return;
+    }
+
+    // 카테고리 세부 옵션 선택
+    const parentCategory = Object.entries(CATEGORY_OPTIONS).find(([cat, opts]) => opts.includes(label))?.[0];
+
+    if (parentCategory) {
+      // 마지막 선택 저장
+      setLastAnswer(label);
+      setLastCategory(parentCategory);
+
+      push({ role: "user", type: "text", text: `선택: ${label}` });
+
+      setLoading(true);
+      try {
+        const chunks = await fetchBotReply({
+          step: 5,
+          userText: label,
+          context: { answer: label, category: parentCategory },
+          setLoading,
+        });
+        push(...mapBotChunksToMsgs(chunks));
+      } catch (e) {
+        console.error(e);
+        push({ role: "bot", type: "text", text: "캐릭터 생성 중 에러가 발생했어요." });
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
+    // 등록 버튼 클릭 시 확정
     if (/등록/.test(label)) {
       onDone ? onDone() : nav("/chatbot/complete");
       return;
@@ -140,11 +149,15 @@ export function ChatbotScreen({ onDone }) {
 
     const { setCharacterId } = useAuthStore.getState();
 
-    // 다시 만들래요 버튼 클릭 시 캐릭터 재생성 API 호출
+    // 다시 만들래요 버튼 클릭 시
     if (/다시/.test(label)) {
       setLoading(true);
       try {
-        const res = await regenerateOwnerCharacter();
+        const res = await regenerateOwnerCharacter({
+          answer: lastAnswer,
+          category: lastCategory,
+        });
+
         if (res?.isSuccess) {
           const char = res.data;
           setCharacterId(char.characterId);
@@ -201,7 +214,7 @@ export function ChatbotScreen({ onDone }) {
         </div>
       );
     }
-    if (m.type === "choices") {
+    if (m.type === "choices" || m.type === "categories") {
       return (
         <div key={m.id} className="choices">
           {m.options.map((opt) => (
