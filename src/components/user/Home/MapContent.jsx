@@ -7,7 +7,7 @@ export const MapContent = () => {
   const [zoomable, setZoomable] = useState(true); // 확대/축소 기능 제어
   const [draggable, setDraggable] = useState(true); // 드래그 제어
   const [activeMarker, setActiveMarker] = useState(null); // 클릭된 마커 id/인덱스
-  const [currentPosition, setCurrentPosition] = useState({ lat: 37.588877588035935, lng: 127.00944853922176 }); // 현재 위치 설정할 포지션
+  const [currentPosition, setCurrentPosition] = useState({ lat: 37.5880741, lng: 127.0076486 }); // 현재 위치 설정할 포지션
   const [markerData, setMarkerData] = useState([
     {
       storeId: 0,
